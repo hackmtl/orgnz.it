@@ -1,0 +1,24 @@
+Mongodb driver:
+git@github.com:paisible/node-mongodb-native.git
+
+Connect (web framework-middleware)
+https://github.com/senchalabs/connect.git
+
+Express (web framework)
+
+TDD
+npm install nodeunit
+http://caolanmcmahon.com/posts/unit_testing_in_node_js
+
+Debugging
+http://nodeguide.com/beginner.html
+
+Templating
+Jade
+https://github.com/visionmedia/jade
+
+Caching
+?
+
+Sockets
+Socket.io

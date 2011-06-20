@@ -1,0 +1,175 @@
+- Objects:
+	
+	##########################
+	
+	- User
+		- id
+	
+	- Document
+		- id
+		- properties: {id, name, value} // i.e: name of document
+		- data
+		+++++++++++
+		- new() // generates new random id ; creates doc in db ;
+	
+	- Table
+		- [ row.id ]
+		- [ col.id ]
+		+++++++++
+		- addRow()
+		- deleteRow(Row.id)
+		- addCol()
+		- deleteCol(Col.id)
+		---------
+		- render(options) // options include filtering, paging, message toggle
+	
+	- Row
+		- id
+		- [ { col.id : { value } } ]
+		- Conversation
+		+++++++++
+		- getConversation()
+	
+	- Column
+		- id
+		- name
+		- type
+		+++++++++
+		- lock()
+		- unlock()
+		- setName()
+		- getName()
+		- setWidth(width)
+	
+	- Cell
+		- id
+		- position: {row,column}
+		- (private) idle : bool
+		+++++++++++++++++
+		- update()
+		- check()
+		- lock()
+		- unlock()
+		-----------------
+		- render() // different rendering based on state (locked/unlocked)
+	
+	- Conversation
+		- [ comment.id ]
+		+++++++++++++++++
+		- addComment()
+	
+	- Comment
+		- id
+		- user
+		- value
+		- timestamp
+	
+	#########################
+	
+	- Activity_Monitor
+		// checks whether user has been active in the last 5 secs
+		// if hasn't, releases locked resources
+		++++++++++++
+		- checkActivity() // main loop, called every 5 seconds
+			/*
+				for editor in Editors:
+					if now() - editor.timestamp > 5s:
+						Editors.removeEditor(editor.id)
+			*/
+	
+	- Editors
+		// list of users currently editing the document
+		- [ editor.id ]
+		++++++++++++
+		- addEditor(editor.id)
+		- removeEditor(editor.id)
+		- getEditor(user.id)
+			/*
+				// possibly check if user is allowed to edit this doc
+				for editor in self:
+					if editor.user_id == user.id : return editor
+				// otherwise
+				editor = new Editor(user.id + "_" + doc.id)
+				self.addEditor(editor.id)
+			*/
+	
+	- Editor
+		- id (user.id + "_" + doc.id)
+		- user_id
+		- last_activity : timestamp
+		++++++++++++
+		- refresh(id) // updates the last_activity with fresh timestamp
+		- new(user.id, doc.id)
+
+	- LResources: // resource that can be locked
+				  // i.e: cell, column name, row, doc name etc..
+		[ lresource.id ]
+		++++++++++++
+		- unlockResource(id)
+	
+	- LResource
+		- id
+		- editor.id
+	
+	- Lock_Master
+		// In charge of setting/releasing lock on resources
+		// Resources can be : cells, column names
+		+++++++++++++++
+		- locked(id) // returns True if resource is locked
+		- lock(id,editor) // adds lock on resource "id" for editor "editor"
+		- unlock(id)
+			/*
+				editor = Editors.getEditor(user.id)
+			*/
+		- removeEditorLocks(id) 
+			// unlocks resources associated to this particular editor
+			/* for locked_cell in Locked_Cells:
+					if editor.id == id:
+						Locked_Cells.unlockCell(locked_cell.id)
+					Editors.removeEditor(id)
+			*/
+		
+	###########################
+	
+	- Client.MessageHandler
+		// Client-side. Handles incoming messages from the server
+		- handleMessage(msg) // msg is {type,args} where args is data || id
+		- update(data) // called when an update has been made to the data
+					   // updates the model, and re-renders the table
+		- lock(id)	   // modifies view + model
+		- unlock(id)   // modifies view + model
+	
+	- Server.MessageHandler
+		// Server-side. Handles messages from server
+		- [ connections ] // list of open connections
+		+++++++++++++++++
+		- notify(data)
+	
+	###########################
+	
+	- DataProxy
+	// gets / updates data in cache/db for particular doc
+	// if doesn't exist in cache, load from db
+	- id
+	- listeners : [ listener ]
+	+++++++++++++++++++++++++++
+	- get()
+	- update(data)
+		/*
+			update data() in cache and db...
+			for listener in self.listeners:
+				listener.notify({event:"update",})
+		*/
+	- addListener(listener) // DataProxy calls listener.notify() method to notify of changes to the data
+	
+	- Cache
+		- id
+		- data
+		+++++++++++++++
+		- get()
+		- update()
+	
+	###########################
+	
+	
+	 
