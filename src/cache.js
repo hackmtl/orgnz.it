@@ -1,1 +1,1 @@
-var cache = exports.cache = {}
+var cache = exports.cache = {};

@@ -1,17 +1,16 @@
-var mongoose = require('mongoose')
+var dataProxy = require('./dataProxy').proxy,
+	utils = require('./utils').utils;
 
 var doc = module.exports = function doc(id){
-	this.id = id;
-	this.properties = {}
-	this.table = {}
-	// get data from db
+	this.id = id || utils.rand(),
+	this.data = this.data();
 };
 
 doc.prototype = {
-	update : function(){},
-	rows = function(){},
-	row = function(id){},
-	cols = function(){},
-	col = function(id){},
-	cell = function(id){}
+	data: function(){
+		return dataProxy.get(this.id);
+	},
+	
+	update : function(){
+	}
 }
