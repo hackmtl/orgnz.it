@@ -28,16 +28,23 @@ orgnzit = {
 };
 
 orgnzit.utils = {
+	/*
+		generates random id
+	*/
 	rand: function(){
-		var chars = "0123456789";
-		var alpha = "abcdefghijklmnopqrstuvwxyz";
-		var randomstring = '';
+		var chars = "0123456789",
+			alpha = "abcdefghijklmnopqrstuvwxyz",
+			randomstring = '';
+			
 		for (var i=0; i < 8; i++) {
 			var rnum = Math.floor(Math.random() * alpha.length);
 			randomstring += alpha.substring(rnum,rnum+1);
 		}
 		return randomstring;
 	},
+	/*
+		extracts room id from url
+	*/
 	room: function(){
 		var tokens = location.pathname.replace(/^\//,"").split('/');
 		if(tokens[0] == 'doc' && tokens.length > 1) return tokens[1];

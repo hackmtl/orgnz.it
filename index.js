@@ -35,10 +35,16 @@ var connections = {}
 io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 
 var locked = require('./src/locked').locked;
+
+locked.on('unlocked',function(cell){
+	io.sockets.in(room).emit('unlock', { cell:cell.cell, user:cell.user});
+});
+
 var open_sockets = {};
 monitor.start();
 
 var unlock = function(room,user){
+	if(locked[room])
 	for(cell in locked[room]){
 		if(locked[room][cell].user == user){
 			try{
