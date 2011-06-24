@@ -10,7 +10,6 @@
 		- properties: {id, name, value} // i.e: name of document
 		- data
 		+++++++++++
-		- new() // generates new random id ; creates doc in db ;
 	
 	- Table
 		- [ row.id ]
