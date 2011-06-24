@@ -36,12 +36,14 @@ var default_doc = function(){
 		{ 
 			id: 'col1',
 			type: 'string',
+			name: 'column 1',
 			options: {},
 			width: 'auto'
 		 },
 		{
 			id: 'col2',
 			type: 'string',
+			name: 'column 2',
 			options: {},
 			width: 'auto'
 		}
