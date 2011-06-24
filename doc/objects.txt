@@ -1,3 +1,5 @@
+// Draft for basic objects 
+
 - Objects:
 	
 	##########################

@@ -1,4 +1,4 @@
-var dataProxy = require('./dataProxy').proxy,
+var db = require('./db').proxy,
 	utils = require('./utils').utils;
 
 var doc = module.exports = function doc(id, callback){
@@ -10,7 +10,7 @@ var doc = module.exports = function doc(id, callback){
 doc.prototype = {
 	get_data: function(callback){
 		that = this;
-		dataProxy.get(this.id, function(data){
+		db.get(this.id, function(data){
 			if(data){
 				that.data = data;
 				callback();
@@ -26,7 +26,7 @@ doc.prototype = {
 	},
 	
 	save: function(callback){
-		dataProxy.save(this, callback);
+		db.save(this, callback);
 	}
 }
 

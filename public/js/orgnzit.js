@@ -22,7 +22,6 @@ orgnzit.UI = {
 		// initialize rows
 		for(var i = 0; i < orgnzit.doc.rows.length; i++){
 			var a_row = orgnzit.doc.rows[i];
-			//for(key in a_row) var a_row_id = key; // get row.id
 			row = orgnzit.UI.render_row(a_row);
 			$(rows).append(row);
 		}
@@ -46,19 +45,14 @@ orgnzit.UI = {
 		return row;
 	},
 	
-	/* 
-		Render cell 
-		id = col_row
-	*/
+	/* Render cell */
 	render_cell: function(a_cell){
 		var cell = $("<div class='cell' id='" + a_cell.id + "'></div>");
 		$(cell).html(a_cell.value) // ! other types of data (i.e: dropdowns) will need to render accordingly
 		return cell;
 	},
 	
-	/*
-		Display cell as unlocked
-	*/
+	/* Display cell as unlocked */
 	unlock : function(cell){
 		cell = (typeof cell == 'string') ? cell : cell.cell;
 		$("#"+cell).removeClass("locked mine").click(function(){
@@ -66,9 +60,7 @@ orgnzit.UI = {
 		});
 	},
 
-	/*
-		Display cell as locked by someone else
-	*/
+	/* Display cell as locked by someone else */
 	lock : function(cell){
 		$("#"+cell.cell).addClass("locked").click(function(){
 			orgnzit.socket.emit('unlock', $(this).attr("id"));
@@ -78,16 +70,12 @@ orgnzit.UI = {
 		}
 	},
 	
-	/*
-		Displays cell as being locked by me
-	*/
+	/* Displays cell as being locked by me */
 	mine : function(cell){
 		$("#"+cell).addClass("mine");
 	},
 	
-	/*
-		Refreshes lock view
-	*/
+	/* Refreshes lock view */
 	refresh_locked : function(){
 		for(cell in orgnzit.locked){
 			orgnzit.UI.lock({cell:cell, user:orgnzit.locked[cell].user});

@@ -11,7 +11,7 @@ npm install nodeunit
 http://caolanmcmahon.com/posts/unit_testing_in_node_js
 
 Debugging
-http://nodeguide.com/beginner.html
+
 
 Templating
 Jade

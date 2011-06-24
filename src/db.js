@@ -1,20 +1,25 @@
 var cache = require('./cache').cache,
 	db = require('../node_modules/mongous').Mongous,
-	utils = require('./utils');
+	utils = require('./utils'),
+	config = require('./config')
 
+// Proxy maintains cache/db consistency */
 var proxy = exports.proxy = function(){};
-var counter = 0;
-var coll = db('test.ok');
 
-/*
-	static GET method
-*/
+// get connection */
+var coll = db(config.db_conn);
+
+// static get  */
 proxy.get = function(id, callback){
+	/* 
+		return cached version of doc if it exists - use Redis instead of in-memory ?
+		turned off for now 
+	*/
 	cache = cache ? cache : {};
 	if(cache[id]){
-		/* return cached version of doc */
 		//callback(cache[id]); return;
 	}
+	
 	coll.find(1, {'id':id}, function(reply){
 		if(reply.documents.length == 0){
 			callback(null);
@@ -28,11 +33,13 @@ proxy.get = function(id, callback){
 	});
 }
 
+// static save */
 proxy.save = function(doc,callback){
 	coll.save(doc.data);
 	callback();
 }
 
+// static update */
 proxy.update = function(id,data){
 	cache[id] = data;
 	db('test.ok').save(data);
