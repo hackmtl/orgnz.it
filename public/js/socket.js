@@ -4,11 +4,12 @@ orgnzit.socket = io.connect('http://localhost');
 */
 
 orgnzit.user = orgnzit.utils.rand();
+orgnzit.room = orgnzit.utils.room();
 orgnzit.locked = {};
 orgnzit.editors = {};
 
 orgnzit.socket.on('connect', function () {
-	orgnzit.socket.emit('user', {user:orgnzit.user});
+	orgnzit.socket.emit('hello', {user:orgnzit.user, room:orgnzit.room});
 	
 	orgnzit.socket.on('locked', function(locked){
 		orgnzit.locked = locked;

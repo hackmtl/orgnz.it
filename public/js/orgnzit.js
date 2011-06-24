@@ -37,5 +37,10 @@ orgnzit.utils = {
 			randomstring += alpha.substring(rnum,rnum+1);
 		}
 		return randomstring;
+	},
+	room: function(){
+		var tokens = location.pathname.replace(/^\//,"").split('/');
+		if(tokens[0] == 'doc' && tokens.length > 1) return tokens[1];
+		else return null;
 	}
 };

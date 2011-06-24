@@ -10,10 +10,12 @@ var coll = db('test.ok');
 */
 proxy.get = function(id, callback){
 	cache = cache ? cache : {};
-	/*if(cache[id]){
-		cache[id].counter += 1;
-		callback(cache[id]); return;
-	}*/
+	if(cache[id]){
+		/*
+			return cached version of doc
+		*/
+		//callback(cache[id]); return;
+	}
 	coll.find(1, {'id':id}, function(reply){
 		if(reply.documents.length == 0){
 			var doc = {'id':id,'counter':0}
