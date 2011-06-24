@@ -1,7 +1,7 @@
 var locked = require('./locked').locked;
 
 /*  
-	release stale locked cells
+	Loops every 'timeout' seconds and releases stale cells
 */
 activityMonitor = function(timeout){
 	this.timeout = timeout || 5;
@@ -10,9 +10,8 @@ activityMonitor = function(timeout){
 		@api private
 	*/
 	var loop = function(){
-		//console.log(locked);
 		for(room in locked){
-			if(room != "_events")
+			if(room != "_events") // "_events" is inherited from events.EventEmitter
 			for(cell in locked[room]){
 				if(locked[room][cell].time.is_stale(self.timeout)) {
 					// release this

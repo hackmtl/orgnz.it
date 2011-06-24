@@ -4,36 +4,31 @@ html
 		title Orgnz.it
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js")
 		script(src="../../socket.io/socket.io.js")
-		script(src="../js/orgnzit.js")
-		script(src="../js/socket.js")
+		script(src="../../js/orgnzit.js")
+		script(src="../../js/socket.js")
 		style
-			#testable{
-				font-size:2em;
-				cursor:pointer;
-				border:2px solid #000;
-				margin-top:20px;
-			}
-			#testable td{
-				padding:20px;
-			}
-			#testable td.locked{
-				background:#ededed;
-			}
-			#testable td.locked.mine{
-				background:#aaa;
-			}
+			#testable { font-size:2em; cursor:pointer; border:2px solid #000; margin-top:20px; }
+			#testable td {padding:20px; }
+			#testable td.locked { background:#ededed; }
+			#testable td.locked.mine { background:#aaa; }
 	body
-		table#testable
-			tr
-				td#11 1
-				td#12 2
-				td#13 3
-			tr
-				td#21 1
-				td#22 2
-				td#23 3
-				
+		div#doc
+			div#cols
+			div#rows
+		
 		script
-			$("#testable td").each(function(){
-				orgnzit.unlock($(this).attr("id"));
-			})
+			var set_doc = function(data){
+				orgnzit.doc = data;
+				orgnzit.UI.init();
+			}
+			$.ajax({
+				type:"GET",
+				url: "/doc/#{id}/json",
+				success: set_doc
+			});
+		
+		//script
+		//	$("#testable td").each(function(){
+		//		orgnzit.UI.unlock($(this).attr("id"));
+		//	});
+			

@@ -6,9 +6,11 @@ var express = require('express'),
 	user = require('./src/user')
 	monitor = require('./src/activityMonitor').monitor
 
-var pub = __dirname + '/public';
+/*
+	Configure Web Server
+*/
 var app = express.createServer();
-
+var pub = __dirname + '/public';
 app.use(app.router);
 app.use(express.static(pub));
 app.use(express.errorHandler({ dump: true, stack: true }));
@@ -16,6 +18,9 @@ app.use(express.errorHandler({ dump: true, stack: true }));
 app.set('view engine', 'jade');
 app.set('views', pub + "/views");
 
+/*
+	Routing
+*/
 app.get('/', function(req, res){
 	new_doc = new doc(null,function(){
 		res.redirect('/doc/' + new_doc.id, 301) // redirect to /new_doc
@@ -24,16 +29,30 @@ app.get('/', function(req, res){
 
 app.get('/doc/:id',function(req,res){
 	the_doc = new doc(req.params.id, function(){
-		res.render('index', {'id':the_doc.id, 'counter':the_doc.data.counter});
+		if(!req.params.format) // render html
+		res.render('layout',{ id: the_doc.data.id });
 	});
 });
 
+app.get('/doc/:id/json',function(req,res){
+	the_doc = new doc(req.params.id, function(){
+		res.send(the_doc.data);
+	});
+});
+
+/* Start web server */
 app.listen(3001);
 
+/* 
+	Configure Sockets
+*/
 var io = sio.listen(app);
 var connections = {}
 io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 
+/* 
+	Global lock list
+*/
 var locked = require('./src/locked').locked;
 
 locked.on('unlocked',function(cell){
@@ -41,6 +60,8 @@ locked.on('unlocked',function(cell){
 });
 
 var open_sockets = {};
+
+/* Activity monitor that will check for stale/dead connections */
 monitor.start();
 
 var unlock = function(room,user){
@@ -56,12 +77,14 @@ var unlock = function(room,user){
 }
 
 io.sockets.on('connection', function (socket) {
-	
+	/* 
+		'handshake'
+	*/
 	socket.on('hello', function(data){
 		if(data.user && data.room) {
 			// setup socket data
 			socket.user = data.user;
-			room = data.room;
+			room = data.room; // == doc.id
 			socket.room = room;
 			socket.join(room);
 			
@@ -77,6 +100,7 @@ io.sockets.on('connection', function (socket) {
 	
 	/* */
 	socket.on('lock', function(cell){
+		if(!locked[socket.room]) locked[socket.room] = {}
 		if(!locked[socket.room][cell]){
 			var user = socket.user,
 				time = new Date();

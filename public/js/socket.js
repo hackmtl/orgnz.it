@@ -13,14 +13,14 @@ orgnzit.socket.on('connect', function () {
 	
 	orgnzit.socket.on('locked', function(locked){
 		orgnzit.locked = locked;
-		orgnzit.refresh_locked();
+		orgnzit.UI.refresh_locked();
 	});
 	
 	orgnzit.socket.on('lock',function(cell){
-		orgnzit.lock(cell);
+		orgnzit.UI.lock(cell);
 	});
 
 	orgnzit.socket.on('unlock',function(cell){
-		orgnzit.unlock(cell);
+		orgnzit.UI.unlock(cell);
 	});
 });
