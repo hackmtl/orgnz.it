@@ -1,1 +1,18 @@
-Put Orgnz.it readme content here.
+Database:
+Mongodb
+
+Node.js package dependencies:
+- Express
+- Jade
+- Mongous
+- nodeunit
+- Socket.io
+
+To install packages, first install NPM (node package manager).
+Then for each package, run:
+sudo npm install <package>
+
+Install should be done from the project root, packages will be added to /node_modules directory
+
+Once all dependencies are installed:
+/sudo node index.js
