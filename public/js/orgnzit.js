@@ -57,7 +57,6 @@ orgnzit.UI = {
 	unlock : function(cell){
 		cell = (typeof cell == 'string') ? cell : cell.cell;
 		$("#"+cell).removeClass("locked mine").click(function(){
-			//alert("wtf");
 			orgnzit.socket.emit('request_lock', $(this).attr("id"));
 		});
 	},
@@ -65,7 +64,6 @@ orgnzit.UI = {
 	/* Display cell as locked by someone else */
 	lock : function(cell){
 		$("#"+cell.cell).addClass("locked").click(function(){
-			//alert("wtf2");
 			orgnzit.socket.emit('request_unlock', $(this).attr("id"));
 		});
 		if(cell.user == orgnzit.user){
