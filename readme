@@ -11,7 +11,7 @@ Node.js package dependencies:
 
 To install packages, first install NPM (node package manager).
 Then for each package, run:
-sudo npm install <package>
+sudo npm install -g <package>
 
 Install should be done from the project root, packages will be added to /node_modules directory
 
