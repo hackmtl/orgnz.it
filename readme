@@ -1,5 +1,7 @@
-Database:
-Mongodb
+Get your shit done <buzz>collaboratively</buzz>
+
+Database: Mongodb
+http://www.mongodb.org/display/DOCS/Quickstart+OS+X
 
 Node.js package dependencies:
 - Express
@@ -11,9 +13,10 @@ Node.js package dependencies:
 
 To install packages, first install NPM (node package manager).
 Then for each package, run:
-sudo npm install -g <package>
+sudo npm install <package>
 
 Install should be done from the project root, packages will be added to /node_modules directory
+To install locally, you should NOT use the -g switch.
 
 Once all dependencies are installed:
 /sudo node index.js
