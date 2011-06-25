@@ -7,6 +7,7 @@ Node.js package dependencies:
 - Mongous
 - nodeunit
 - Socket.io
+- LESS
 
 To install packages, first install NPM (node package manager).
 Then for each package, run:
@@ -16,3 +17,6 @@ Install should be done from the project root, packages will be added to /node_mo
 
 Once all dependencies are installed:
 /sudo node index.js
+
+Then:
+http://localhost:3001/
