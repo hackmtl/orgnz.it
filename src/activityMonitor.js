@@ -15,8 +15,9 @@ activityMonitor = function(timeout){
 			for(cell in locked[room]){
 				if(locked[room][cell].time.is_stale(self.timeout)) {
 					// release this
+					var user = locked[room][cell].user
 					delete locked[room][cell];
-					locked.emit('unlocked',{ room:room, cell:cell });
+					locked.emit('unlocked',{ room:room, cell:cell, user:user });
 				}
 			}
 		}

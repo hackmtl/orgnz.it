@@ -55,8 +55,8 @@ io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'js
 */
 var locked = require('./src/locked').locked;
 
-locked.on('unlocked',function(cell){
-	io.sockets.in(room).emit('unlock', { cell:cell.cell, user:cell.user});
+locked.on('unlocked',function(data){
+	io.sockets.in(room).emit('unlock', { cell:data.cell, user:data.user});
 });
 
 var open_sockets = {};
@@ -99,32 +99,29 @@ io.sockets.on('connection', function (socket) {
 	});
 	
 	/* */
-	socket.on('lock', function(cell){
+	socket.on('request_lock', function(cell){
 		if(!locked[socket.room]) locked[socket.room] = {}
 		if(!locked[socket.room][cell]){
 			var user = socket.user,
 				time = new Date();
 			locked[socket.room][cell] = { user: user, time: time};
-			try{
-				io.sockets.in(socket.room).emit('lock', { cell:cell, user:user });
-			}catch(exception){ console.log("ERROR: couldn't lock " + cell) }
+			io.sockets.in(socket.room).emit('lock', { cell:cell, user:user });
 		}
 	});
 	
 	/* */
-	socket.on('unlock',function(cell){
+	socket.on('request_unlock',function(cell){
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
+			var user = socket.user;
 			delete locked[socket.room][cell];
-			try{
-				io.sockets.in(socket.room).emit('unlock', { cell:cell, user:user });
-			}catch(exception){ console.log("ERROR: couldn't unlock " + cell) }
+			io.sockets.in(socket.room).emit('unlock', { cell:cell, user:user });
 		}
 	});
 	
 	/* remove socket on disconnect, unlock resources associated to this socket */
 	socket.on('disconnect', function () {
 		if(open_sockets[socket.room][socket.users]) delete open_sockets[socket.room][socket.user];
-		unlock(socket.room,socket.user);
+		unlock(socket.room, socket.user);
 		io.sockets.in(socket.room).emit('locked',locked[socket.room]);
 	});
 });
