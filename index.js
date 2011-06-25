@@ -14,7 +14,7 @@ var pub = __dirname + '/public';
 app.use(app.router);
 app.use(express.static(pub));
 app.use(express.errorHandler({ dump: true, stack: true }));
-
+app.use(express.compiler({src: pub , enable: ['less']}));
 app.set('view engine', 'jade');
 app.set('views', pub + "/views");
 

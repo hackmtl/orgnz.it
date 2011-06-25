@@ -1,3 +1,35 @@
-#testable{
-	font-size:2em;
+body #doc {
+  font-size: 1.5em;
+  border: 1px solid #000;
+  overflow: hidden;
+  padding: 5px;
+}
+body #doc #cols {
+  float: left;
+}
+body #doc #cols .col {
+  float: left;
+  width: 200px;
+  padding: 5px;
+}
+body #doc #rows {
+  float: left;
+  clear: left;
+}
+body #doc #rows .row {
+  float: left;
+  clear: left;
+}
+body #doc #rows .row .cell {
+  float: left;
+  width: 200px;
+  border: 1px solid #000;
+  padding: 5px;
+  margin: 2px;
+}
+body #doc #rows .row .cell .locked {
+  background: #ededed;
+}
+body #doc #rows .row .cell .locked .mine {
+  background: #aaa;
 }

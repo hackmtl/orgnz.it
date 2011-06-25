@@ -1,0 +1,41 @@
+body{
+	@default_width:200px;
+	@padding:5px;
+	
+	#doc{
+		font-size:1.5em;
+		border:1px solid #000;
+		overflow:hidden;
+		padding:@padding;
+		#cols{
+			float:left;
+			.col{
+				float:left;
+				width:@default_width;
+				padding:@padding;
+			}
+		}
+		
+		#rows{
+			float:left;
+			clear:left;
+			.row{
+				float:left;
+				clear:left;
+				.cell{
+					float: left;
+					width: @default_width;
+					border: 1px solid #000;
+					padding:@padding;
+					margin:2px;
+					.locked{
+						background: #ededed;
+						.mine{
+							background: #aaa;
+						}
+					}
+				}
+			}
+		}
+	}
+}
