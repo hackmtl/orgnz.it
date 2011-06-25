@@ -27,9 +27,9 @@ body #doc #rows .row .cell {
   padding: 5px;
   margin: 2px;
 }
-body #doc #rows .row .cell .locked {
+body #doc #rows .row .locked {
   background: #ededed;
 }
-body #doc #rows .row .cell .locked .mine {
+body #doc #rows .row .mine {
   background: #aaa;
 }

@@ -30,6 +30,24 @@ doc.prototype = {
 	}
 }
 
+/*doc.struct = function() { 
+	return {
+		id : utils.rand();
+		cols: function(){
+			return {
+				
+			}
+		}
+	} 
+}*/
+
+/*doc.struct.id = utils.rand();
+doc.struct.cols = [];
+doc.col = { id:utils.rand(), type:'string', name:'New Column', width:'auto' }
+doc.rows = []
+doc.row = { id:utils.rand(), cells:[] }
+doc.cells = */
+
 var default_doc = function(){
 	var id = utils.rand();
 	var cols = [

@@ -16,16 +16,14 @@ html
 		script
 			var set_doc = function(data){
 				orgnzit.doc = data;
-				orgnzit.UI.init();
+				orgnzit.UI.init(function(){
+					$(".cell").each(function(){
+						orgnzit.UI.unlock($(this).attr("id"));
+					});
+				});
 			}
 			$.ajax({
 				type:"GET",
 				url: "/doc/#{id}/json",
 				success: set_doc
 			});
-		
-		//script
-		//	$("#testable td").each(function(){
-		//		orgnzit.UI.unlock($(this).attr("id"));
-		//	});
-			

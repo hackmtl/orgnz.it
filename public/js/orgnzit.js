@@ -12,7 +12,7 @@ orgnzit.UI = {
 	/*
 		Initialize table
 	*/
-	init: function(){
+	init: function(callback){
 		// initialize cols
 		for(var i = 0; i < orgnzit.doc.cols.length; i++){
 			var a_col = orgnzit.doc.cols[i],
@@ -25,6 +25,7 @@ orgnzit.UI = {
 			row = orgnzit.UI.render_row(a_row);
 			$(rows).append(row);
 		}
+		callback();
 	},
 	
 	/* Render col */
