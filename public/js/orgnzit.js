@@ -46,19 +46,25 @@ orgnzit.UI = {
 	render_cell: function(data){
 		var cell = $("<div class='cell' id='" + data.id + "'></div>");
 		$(cell).html(data.value) // ! other types of data (i.e: dropdowns) will need to render accordingly
-		orgnzit.UI.bind(cell);
 		return cell;
 	},
 	
 	update_cell : function(data){
 		var new_cell = orgnzit.UI.render_cell(data),
 			_cell = $("#"+data.id);
+		orgnzit.UI.bind_lock(new_cell);
 		$(_cell).replaceWith(new_cell);
 	},
 	
-	bind: function(cell){
+	bind_lock: function(cell){
 		$(cell).click(function(){
 			orgnzit.socket.emit('request_lock', $(this).attr("id"));
+		});
+	},
+	
+	bind_unlock: function(cell){
+		$(cell).click(function(){
+			orgnzit.socket.emit('request_unlock', $(this).attr("id"));
 		});
 	},
 	
@@ -66,7 +72,7 @@ orgnzit.UI = {
 		id = data.id;
 		var _cell = $("#"+id);
 		$(_cell).removeClass("locked mine");
-		//orgnzit.UI.bind(_cell);
+		orgnzit.UI.bind_lock(_cell);
 		
 		if($('.editor', $(_cell)).length > 0){
 			var new_val = $('.editor',$(_cell)).val();
@@ -78,9 +84,8 @@ orgnzit.UI = {
 	lock : function(data){
 		id = data.id;
 		var _cell = $("#"+id)
-		$(_cell).addClass("locked").click(function(){
-			orgnzit.socket.emit('request_unlock', id);
-		});
+		$(_cell).addClass("locked");
+		orgnzit.UI.bind_unlock(_cell);
 	},
 	
 	edit : function(data){

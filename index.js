@@ -109,9 +109,11 @@ io.sockets.on('connection', function (socket) {
 			io.sockets.in(socket.room).emit('lock', { id:cell, user:user });
 			socket.emit('edit', { id: cell})
 		}
+		console.log(locked[socket.room]);
 	});
 	
 	socket.on('request_unlock',function(cell){
+		console.log(locked[socket.room]);
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			var user = socket.user;
 			delete locked[socket.room][cell];
