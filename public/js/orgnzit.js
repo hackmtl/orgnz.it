@@ -46,21 +46,27 @@ orgnzit.UI = {
 	render_cell: function(data){
 		var cell = $("<div class='cell' id='" + data.id + "'></div>");
 		$(cell).html(data.value) // ! other types of data (i.e: dropdowns) will need to render accordingly
+		orgnzit.UI.bind(cell);
 		return cell;
 	},
 	
 	update_cell : function(data){
 		var new_cell = orgnzit.UI.render_cell(data),
 			_cell = $("#"+data.id);
-		$(_cell).replaceWith(new_cell)
+		$(_cell).replaceWith(new_cell);
+	},
+	
+	bind: function(cell){
+		$(cell).click(function(){
+			orgnzit.socket.emit('request_lock', $(this).attr("id"));
+		});
 	},
 	
 	unlock : function(data){
 		id = data.id;
 		var _cell = $("#"+id);
-		$(_cell).removeClass("locked mine").click(function(){
-			orgnzit.socket.emit('request_lock', $(this).attr("id"));
-		});
+		$(_cell).removeClass("locked mine");
+		//orgnzit.UI.bind(_cell);
 		
 		if($('.editor', $(_cell)).length > 0){
 			var new_val = $('.editor',$(_cell)).val();

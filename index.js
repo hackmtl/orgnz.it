@@ -62,7 +62,7 @@ locked.on('unlocked',function(data){
 var open_sockets = {};
 
 /* Activity monitor that will check for stale/dead connections */
-monitor.start();
+//monitor.start();
 var counter = 0;
 
 var unlock = function(room,user){
