@@ -17,10 +17,10 @@ orgnzit.socket.on('connect', function () {
 	});
 	
 	orgnzit.socket.on('lock',function(cell){
-		orgnzit.UI.lock(cell);
+		setTimeout(orgnzit.UI.lock(cell));
 	});
 
 	orgnzit.socket.on('unlock',function(cell){
-		orgnzit.UI.unlock(cell);
+		setTimeout(orgnzit.UI.unlock(cell));
 	});
 });

@@ -30,13 +30,13 @@ app.get('/', function(req, res){
 app.get('/doc/:id',function(req,res){
 	the_doc = new doc(req.params.id, function(){
 		if(!req.params.format) // render html
-		res.render('layout',{ id: the_doc.data.id });
+		res.render('layout',{ id: the_doc.id });
 	});
 });
 
 app.get('/doc/:id/json',function(req,res){
 	the_doc = new doc(req.params.id, function(){
-		res.send(the_doc.data);
+		res.send(the_doc);
 	});
 });
 
@@ -48,7 +48,7 @@ app.listen(3001);
 */
 var io = sio.listen(app);
 var connections = {}
-io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+//io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 
 /* 
 	Global lock list
@@ -63,6 +63,7 @@ var open_sockets = {};
 
 /* Activity monitor that will check for stale/dead connections */
 monitor.start();
+var counter = 0;
 
 var unlock = function(room,user){
 	if(locked[room])
@@ -100,6 +101,7 @@ io.sockets.on('connection', function (socket) {
 	
 	/* */
 	socket.on('request_lock', function(cell){
+		console.log("requested lock " + counter++)
 		if(!locked[socket.room]) locked[socket.room] = {}
 		if(!locked[socket.room][cell]){
 			var user = socket.user,
@@ -111,6 +113,7 @@ io.sockets.on('connection', function (socket) {
 	
 	/* */
 	socket.on('request_unlock',function(cell){
+		console.log("requested unlock " + counter++)
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			var user = socket.user;
 			delete locked[socket.room][cell];
@@ -120,7 +123,8 @@ io.sockets.on('connection', function (socket) {
 	
 	/* remove socket on disconnect, unlock resources associated to this socket */
 	socket.on('disconnect', function () {
-		if(open_sockets[socket.room][socket.users]) delete open_sockets[socket.room][socket.user];
+		console.log('!!! client disconnected');
+		if(open_sockets[socket.room][socket.user]) delete open_sockets[socket.room][socket.user];
 		unlock(socket.room, socket.user);
 		io.sockets.in(socket.room).emit('locked',locked[socket.room]);
 	});

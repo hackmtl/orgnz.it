@@ -13,7 +13,7 @@ activityMonitor = function(timeout){
 		for(room in locked){
 			if(room != "_events") // "_events" is inherited from events.EventEmitter
 			for(cell in locked[room]){
-				if(locked[room][cell].time.is_stale(self.timeout)) {
+				if(locked[room][cell].time.is_stale(5)) {
 					// release this
 					var user = locked[room][cell].user
 					delete locked[room][cell];
