@@ -2,13 +2,10 @@ var db = require('./db').proxy,
 	utils = require('./utils').utils,
 	config = require('./config');
 
-var doc = module.exports = function doc(id, callback){
-	var columns,
-		rows;
+doc = module.exports = function doc(id, callback){
 	this.id = id || utils.rand();
-	self = this;
 	
-	this.get_data(function(){
+	this.data(function(){
 		callback();
 	});
 }
@@ -19,7 +16,7 @@ var doc = module.exports = function doc(id, callback){
 
 doc.prototype = {
 	
-	get_data: function(callback){
+	data: function(callback){
 		self = this;
 		db.get(this.id, function(data){
 			if(data){
@@ -145,57 +142,3 @@ doc.prototype = {
 	
 	remove_column : function(id){}
 }
-
-/*var default_doc = function(){
-	var id = utils.rand();
-	var cols = [
-		{ 
-			id: 'col1',
-			type: 'string',
-			name: 'column 1',
-			options: {},
-			width: 'auto'
-		 },
-		{
-			id: 'col2',
-			type: 'string',
-			name: 'column 2',
-			options: {},
-			width: 'auto'
-		}
-	];
-	var rows = [
-		{
-			id: 'row1',
-			cells: [
-				{
-					id: 'row1_col1',
-					value: 'foo'
-				},
-				{
-					id: 'row1_col2',
-					value: 'bar'
-				}
-			]
-		}
-		,
-		{
-			id: 'row2',
-			cells: [
-				{
-					id: 'row2_col1',
-					value: 'bar'
-				},
-				{
-					id: 'row2_col2',
-					value: 'foo'
-				}
-			]
-		}
-	];
-	return {
-		id: id,
-		cols: cols,
-		rows: rows
-	}
-}*/
