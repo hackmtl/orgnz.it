@@ -33,7 +33,10 @@ doc.prototype = {
 	},
 		
 	save: function(callback){
-		console.log('hmm')
+		db.save(this,callback);
+	},
+	
+	update: function(callback){
 		db.update(this,callback);
 	},
 	
@@ -102,7 +105,7 @@ doc.prototype = {
 				var a_cell = row.cells[j];
 				if(a_cell.id === id){
 					a_cell.value = val;
-					this.save(function(){
+					this.update(function(){
 						return;
 					});
 				}

@@ -61,6 +61,7 @@ orgnzit.UI = {
 		$(_cell).removeClass("locked mine").click(function(){
 			orgnzit.socket.emit('request_lock', $(this).attr("id"));
 		});
+		
 		if($('.editor', $(_cell)).length > 0){
 			var new_val = $('.editor',$(_cell)).val();
 			orgnzit.socket.emit('cell_updated', {id:id, value:new_val});
