@@ -56,7 +56,7 @@ var connections = {}
 var locked = require('./src/locked').locked;
 
 locked.on('unlocked',function(data){
-	io.sockets.in(room).emit('unlock', { cell:data.cell, user:data.user});
+	io.sockets.in(room).emit('unlock', { id:data.cell, user:data.user});
 });
 
 var open_sockets = {};
@@ -70,7 +70,7 @@ var unlock = function(room,user){
 	for(cell in locked[room]){
 		if(locked[room][cell].user == user){
 			try{
-				io.sockets.in(room).emit('unlock', { cell:cell, user:user});
+				io.sockets.in(room).emit('unlock', { id:cell, user:user});
 			}catch(exception){ console.log("ERROR: couldn't unlock user " + user) }
 			delete locked[room][cell];
 		}
@@ -101,13 +101,13 @@ io.sockets.on('connection', function (socket) {
 	
 	/* */
 	socket.on('request_lock', function(cell){
-		console.log("requested lock " + counter++)
 		if(!locked[socket.room]) locked[socket.room] = {}
 		if(!locked[socket.room][cell]){
 			var user = socket.user,
 				time = new Date();
 			locked[socket.room][cell] = { user: user, time: time};
-			io.sockets.in(socket.room).emit('lock', { cell:cell, user:user });
+			io.sockets.in(socket.room).emit('lock', { id:cell, user:user });
+			socket.emit('grant', { id: cell})
 		}
 	});
 	
@@ -117,7 +117,7 @@ io.sockets.on('connection', function (socket) {
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			var user = socket.user;
 			delete locked[socket.room][cell];
-			io.sockets.in(socket.room).emit('unlock', { cell:cell, user:user });
+			io.sockets.in(socket.room).emit('unlock', { id:cell, user:user });
 		}
 	});
 	

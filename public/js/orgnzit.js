@@ -54,26 +54,29 @@ orgnzit.UI = {
 	},
 	
 	/* Display cell as unlocked */
-	unlock : function(cell){
-		cell = (typeof cell == 'string') ? cell : cell.cell;
-		$("#"+cell).removeClass("locked mine").click(function(){
+	unlock : function(id){
+		var _cell = $("#"+id);
+		$(_cell).removeClass("locked mine").click(function(){
 			orgnzit.socket.emit('request_lock', $(this).attr("id"));
 		});
+		var new_val = $('.editor',$(_cell)).val();
+		$('.editor',$(_cell)).replaceWith(new_val);
 	},
 
 	/* Display cell as locked by someone else */
-	lock : function(cell){
-		$("#"+cell.cell).addClass("locked").click(function(){
-			orgnzit.socket.emit('request_unlock', $(this).attr("id"));
+	lock : function(id){
+		$(id).addClass("locked").click(function(){
+			orgnzit.socket.emit('request_unlock', id);
 		});
-		if(cell.user == orgnzit.user){
-			orgnzit.UI.mine(cell.cell);
-		}
 	},
 	
-	/* Displays cell as being locked by me */
-	mine : function(cell){
-		$("#"+cell).addClass("mine");
+	/* Give editing rights */
+	edit : function(id){
+		var _cell = $("#"+id);
+		var val = $(_cell).html();
+		$(_cell).addClass("mine");
+		$(_cell).html("<textarea id='edit_"+id+"' class='editor'>"+val+"</textarea>");
+		$(".editor",$(_cell)).focus();
 	},
 	
 	/* Refreshes lock view */

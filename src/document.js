@@ -4,7 +4,7 @@ var db = require('./db').proxy,
 
 doc = module.exports = function doc(id, callback){
 	this.id = id || utils.rand();
-	
+	this.rows, this.cols;
 	this.data(function(){
 		callback();
 	});
@@ -25,33 +25,28 @@ doc.prototype = {
 				callback();
 			}
 			else{
-				self.rows = self.get_rows();
-				self.cols = self.get_cols();
+				self.rows = self._rows();
+				self.cols = self._cols();
 				self.save(callback)
 			}
 		});
 	},
-	
-	update : function(){
-		/* db / cache saving */
-	},
-	
+		
 	save: function(callback){
 		db.save(this,callback);
 	},
 	
-	get_rows : function(){
+	_rows : function(){
 		if(!this.rows){
 			this.rows = [];
 			for(var i = 0; i < config.default_rows ; i++){
-				console.log(this._row);
 				this.rows.unshift(new this._row(this));
 			}
 		}
 		return this.rows;
 	},
 	
-	get_cols : function(){
+	_cols : function(){
 		if(!this.cols){
 			this.cols = [];
 			for(var i = 0; i < config.default_cols ; i++){

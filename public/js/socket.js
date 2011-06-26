@@ -16,11 +16,15 @@ orgnzit.socket.on('connect', function () {
 		orgnzit.UI.refresh_locked();
 	});
 	
-	orgnzit.socket.on('lock',function(cell){
-		setTimeout(orgnzit.UI.lock(cell));
+	orgnzit.socket.on('lock', function(data){
+		orgnzit.UI.lock(data.id);
 	});
 
-	orgnzit.socket.on('unlock',function(cell){
-		setTimeout(orgnzit.UI.unlock(cell));
+	orgnzit.socket.on('unlock', function(data){
+		orgnzit.UI.unlock(data.id);
 	});
+	
+	orgnzit.socket.on('grant', function(data){
+		orgnzit.UI.edit(data.id)
+	})
 });
