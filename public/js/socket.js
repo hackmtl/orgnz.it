@@ -17,14 +17,19 @@ orgnzit.socket.on('connect', function () {
 	});
 	
 	orgnzit.socket.on('lock', function(data){
-		orgnzit.UI.lock(data.id);
+		orgnzit.UI.lock(data);
 	});
 
 	orgnzit.socket.on('unlock', function(data){
-		orgnzit.UI.unlock(data.id);
+		orgnzit.UI.unlock(data);
 	});
 	
-	orgnzit.socket.on('grant', function(data){
-		orgnzit.UI.edit(data.id)
+	orgnzit.socket.on('edit', function(data){
+		orgnzit.UI.edit(data)
+	});
+	
+	// data updates
+	orgnzit.socket.on('update_cell', function(data){
+		orgnzit.UI.update_cell(data);
 	})
 });

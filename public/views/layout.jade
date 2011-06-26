@@ -27,9 +27,18 @@ html
 			var set_doc = function(data){
 				orgnzit.doc = data;
 				orgnzit.UI.init(function(){
-					$(".cell").each(function(){
+					for(var i = 0; i < data.rows.length; i++){
+						var row = data.rows[i];
+						for(var j = 0; j < row.cells.length; j++){
+							var cell = row.cells[j];
+							orgnzit.UI.unlock(cell);
+						}
+					}
+					
+					/*$(".cell").each(function(){
 						orgnzit.UI.unlock($(this).attr("id"));
-					});
+					});*/
+					
 				});
 			}
 			$.ajax({

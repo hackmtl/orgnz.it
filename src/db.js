@@ -27,7 +27,7 @@ proxy.get = function(id, callback){
 		else{
 			doc = reply.documents[0];
 			cache[id] = doc;
-			db(config.db_conn).update({'id':id},doc);
+			//db(config.db_conn).update({'id':id},doc);
 			callback(doc);
 		}
 	});
@@ -35,13 +35,12 @@ proxy.get = function(id, callback){
 
 // static save */
 proxy.save = function(doc,callback){
-	coll.save(doc);
+	db(config.db_conn).save(doc);
 	callback();
 }
 
 // static update */
-proxy.update = function(id,data){
-	cache[id] = data;
-	db('test.ok').save(data);
+proxy.update = function(data,callback){
+	db(config.db_conn).update({id:data.id},data);
 }
 

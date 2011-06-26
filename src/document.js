@@ -13,13 +13,13 @@ doc = module.exports = function doc(id, callback){
 /*
 	Model
 */
-
 doc.prototype = {
 	
 	data: function(callback){
 		self = this;
 		db.get(this.id, function(data){
 			if(data){
+				//console.log(data.rows[0].cells);
 				self.cols = data.cols;
 				self.rows = data.rows;
 				callback();
@@ -33,14 +33,15 @@ doc.prototype = {
 	},
 		
 	save: function(callback){
-		db.save(this,callback);
+		console.log('hmm')
+		db.update(this,callback);
 	},
 	
 	_rows : function(){
 		if(!this.rows){
 			this.rows = [];
 			for(var i = 0; i < config.default_rows ; i++){
-				this.rows.unshift(new this._row(this));
+				this.rows.unshift(new this._row(null,this));
 			}
 		}
 		return this.rows;
@@ -50,13 +51,13 @@ doc.prototype = {
 		if(!this.cols){
 			this.cols = [];
 			for(var i = 0; i < config.default_cols ; i++){
-				this.cols.unshift(new this._col(this));
+				this.cols.unshift(new this._col(null,this));
 			}
 		}
 		return this.cols;
 	},
 	
-	_col : function(self,id){
+	_col : function(id,self){
 		if(id){
 			for(var i = 0; i < self.cols.length; i++){
 				var a_col = self.cols[i];
@@ -75,36 +76,59 @@ doc.prototype = {
 		}
 	},
 	
-	_row : function(self,id){
+	_row : function(id,self){
+		that = this;
 		row = {};
 		if(id){
 			for(var row in self.rows){
-				if(self.id === id) return row
+				if(self.id === id){
+					return row;
+				}
 			}
 			return null;
 		}
 		row.id = utils.rand();
 		row.cells = [];
 		for(var i = 0; i < config.default_cols ; i++) {
-			row.cells.unshift(new self._cell(self));
+			row.cells.unshift(new self._cell(null,self));
 		}
 		return row;
 	},
+
+	update_cell: function(id,val){
+		for(var i = 0; i < this.rows.length; i++){
+			var row = this.rows[i];
+			for(var j = 0; j < row.cells.length; j++){
+				var a_cell = row.cells[j];
+				if(a_cell.id === id){
+					a_cell.value = val;
+					this.save(function(){
+						return;
+					});
+				}
+			}
+		}
+	},
 	
-	_cell : function(self,id){
+	_cell : function(id){
+		that = this;
+		cell = {}
 		if(id){
-			for(var i = 0; i < self.rows.length; i++){
-				var row = self.rows[i];
+			cell.id = id;
+			for(var i = 0; i < this.rows.length; i++){
+				var row = this.rows[i];
 				for(var j = 0; j < row.cells.length; j++){
-					var cell = row.cells[j];
-					if(cell.id === id){
-						return cell;
+					var a_cell = row.cells[j];
+					if(a_cell.id === id){
+						return a_cell;
 					}
 				}
 			}
 			return null;
 		}
-		return { id:utils.rand(), value: 'test'};
+		cell.id = utils.rand();
+		cell.value = "test";
+		return cell;
 	},
 	
 	add_row : function(){

@@ -107,18 +107,23 @@ io.sockets.on('connection', function (socket) {
 				time = new Date();
 			locked[socket.room][cell] = { user: user, time: time};
 			io.sockets.in(socket.room).emit('lock', { id:cell, user:user });
-			socket.emit('grant', { id: cell})
+			socket.emit('edit', { id: cell})
 		}
 	});
 	
-	/* */
 	socket.on('request_unlock',function(cell){
-		console.log("requested unlock " + counter++)
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			var user = socket.user;
 			delete locked[socket.room][cell];
 			io.sockets.in(socket.room).emit('unlock', { id:cell, user:user });
 		}
+	});
+	
+	socket.on('cell_updated', function(data){
+		the_doc = new doc(socket.room, function(){
+			the_doc.update_cell(data.id, data.value);
+			io.sockets.in(socket.room).emit('update_cell', data);
+		});
 	});
 	
 	/* remove socket on disconnect, unlock resources associated to this socket */
