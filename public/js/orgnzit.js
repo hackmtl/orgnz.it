@@ -36,13 +36,13 @@ orgnzit.UI = {
 	
 	insert_col: function(data){
 		// add column header
-		col = orgnzit.UI.render_col(data.col);
+		var col = orgnzit.UI.render_col(data.col);
 		$("#cols").append(col);
 		
 		rows = $(".row");
 		// add cells to each row
 		for(var i = 0; i < data.cells.length; i++){
-			var cell = orgnzit.UI.render_cell(data.cells[i]);
+			var cell = orgnzit.UI.render_cell(data.cells[i], orgnzit.doc.cols.length - 1);
 			$(rows[i]).append(cell);
 		}
 	},
@@ -70,7 +70,6 @@ orgnzit.UI = {
 		$(delete_row).click(function(){
 			orgnzit.socket.emit('delete_row', id);
 		});
-		
 		$(container).append(delete_row);
 		
 		for(var i = 0; i < a_row.cells.length; i++){
@@ -78,7 +77,6 @@ orgnzit.UI = {
 			var cell = orgnzit.UI.render_cell(a_cell, i); 
 			$(row).append(cell);
 		}
-		
 		return container;
 	},
 	

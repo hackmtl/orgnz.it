@@ -38,18 +38,38 @@ orgnzit.socket.on('connect', function () {
 	})
 	
 	orgnzit.socket.on('insert_col', function(data){
+		orgnzit.doc.cols.push(data.col);
+		for(var i = 0; i < data.cells.length; i++){
+			orgnzit.doc.rows[i].cells.push(data.cells[i]);
+		}
 		orgnzit.UI.insert_col(data);
 	});
 	
 	orgnzit.socket.on('insert_row', function(data){
+		orgnzit.doc.rows.push(data);
 		orgnzit.UI.insert_row(data);
 	});
 	
 	orgnzit.socket.on('delete_row', function(id){
+		for(var i = 0; i < orgnzit.doc.rows.length; i++){
+			var row = orgnzit.doc.rows[i];
+			if(row.id === id) orgnzit.doc.rows.splice(i,1);
+		}
 		orgnzit.UI.delete_row(id);
 	});
 	
 	orgnzit.socket.on('delete_col', function(id){
+		for(var i = 0 ; i < orgnzit.doc.cols.length; i++ ){
+			var col = orgnzit.doc.cols[i];
+			if(col.id === id){
+				offset = i;
+				orgnzit.doc.cols.splice(i,1);
+			}
+		}
+		if(offset)
+		for(var j = 0; j < orgnzit.doc.rows.length; j++){
+			orgnzit.doc.rows[j].cells.splice(offset,1);
+		}
 		orgnzit.UI.delete_col(id);
 	});
 });
