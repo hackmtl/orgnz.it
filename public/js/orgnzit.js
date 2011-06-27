@@ -47,8 +47,14 @@ orgnzit.UI = {
 		}
 	},
 	
+	delete_col: function(id){
+		$("#"+id).remove();
+		$(".col_"+id).remove(); // cells in this column
+	},
+	
 	render_col: function(a_col){
-		var col = $("<div class='col' id='"+a_col.id+"'></div>");
+		var id = a_col.id;
+		var col = $("<div class='col' id='"+id+"'></div>");
 		$(col).html(a_col.name);
 		orgnzit.UI.bind_lock(col);
 		return col;
@@ -69,15 +75,16 @@ orgnzit.UI = {
 		
 		for(var i = 0; i < a_row.cells.length; i++){
 			var a_cell = a_row.cells[i];
-			var cell = orgnzit.UI.render_cell(a_cell); 
+			var cell = orgnzit.UI.render_cell(a_cell, i); 
 			$(row).append(cell);
 		}
 		
 		return container;
 	},
 	
-	render_cell: function(data){
-		var cell = $("<div class='cell' id='" + data.id + "'></div>");
+	render_cell: function(data, col){
+		var col_id = (col) ? orgnzit.doc.cols[col].id : "";
+		var cell = $("<div class='cell col_"+col_id+"' id='" + data.id + "'></div>");
 		$(cell).html(data.value) // ! other types of data (i.e: dropdowns) will need to render accordingly
 		orgnzit.UI.bind_lock(cell);
 		return cell;
@@ -86,8 +93,11 @@ orgnzit.UI = {
 	update_cell : function(data){
 		var new_cell = orgnzit.UI.render_cell(data),
 			_cell = $("#" + data.id);
-		orgnzit.UI.bind_lock(new_cell);
-		$(_cell).replaceWith(new_cell);
+		//var col_id = $(_cell).class()
+		//orgnzit.UI.bind_lock(new_cell);
+		orgnzit.UI.bind_lock(_cell);
+		$(_cell).html($(new_cell).html());
+		//$(_cell).replaceWith(new_cell);
 	},
 	
 	update_col : function(data){
@@ -118,6 +128,8 @@ orgnzit.UI = {
 		id = data.id;
 		var _cell = $("#"+id);
 		$(_cell).removeClass("locked mine");
+		$('.remove_col',$(_cell)).remove();
+		
 		orgnzit.UI.bind_lock(_cell);
 		
 		if($('.editor', $(_cell)).length > 0){
@@ -147,6 +159,14 @@ orgnzit.UI = {
 		$(_cell).addClass("mine").html("").append(textarea);
 		$(textarea).focus().click(function(){ return false; });
 		$(textarea).css( {"left":pos.left + 60, "top":pos.top + 15} );
+		
+		if($(_cell).hasClass('col')){
+			var delete_col = $("<a id='delete_"+id+"' class='delete_col'><img src='../images/delete-icon.png'></img></a>");
+			$(delete_col).click(function(){
+				orgnzit.socket.emit('delete_col', id);
+			});
+			$(_cell).append(delete_col);
+		}
 	},
 	
 	refresh_locked : function(){

@@ -159,6 +159,14 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 	
+	socket.on('delete_col', function( col ){
+		the_doc = new doc(socket.room, function(){
+			the_doc.delete_col(col, function(){
+				io.sockets.in(socket.room).emit('delete_col', col);
+			});
+		});
+	});
+	
 	/* 
 		remove socket on disconnect, unlock resources associated to this socket 
 		!! seems to be causing echos - multiple messages being passed back and forth

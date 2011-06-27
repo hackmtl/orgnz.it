@@ -25,6 +25,14 @@ body #doc #cols .col.locked {
 body #doc #cols .col.mine {
   background: #aaaaaa;
 }
+body #doc #cols .delete_col {
+  position: relative;
+  cursor: pointer;
+}
+body #doc #cols .container {
+  clear: none;
+  float: left;
+}
 body #doc #rows {
   float: left;
   clear: left;

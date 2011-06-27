@@ -95,6 +95,22 @@ doc.prototype = {
 		});
 	},
 	
+	delete_col : function(id,callback){
+		var offset = null;
+		for(var i = 0 ; i < this.cols.length; i++ ){
+			var col = this.cols[i];
+			if(col.id === id){
+				offset = i;
+				this.cols.splice(i,1);
+			}
+		}
+		if(offset)
+		for(var j = 0; j < this.rows.length; j++){
+			this.rows[j].cells.splice(offset,1);
+		}
+		this.update(callback);
+	},
+	
 	update_col : function(id, data){
 		for(var i = 0; i < this.cols.length; i++){
 			var col = this.cols[i];

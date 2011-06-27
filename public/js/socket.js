@@ -48,4 +48,8 @@ orgnzit.socket.on('connect', function () {
 	orgnzit.socket.on('delete_row', function(id){
 		orgnzit.UI.delete_row(id);
 	});
+	
+	orgnzit.socket.on('delete_col', function(id){
+		orgnzit.UI.delete_col(id);
+	});
 });
