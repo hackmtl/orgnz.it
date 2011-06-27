@@ -72,4 +72,9 @@ orgnzit.socket.on('connect', function () {
 		}
 		orgnzit.UI.delete_col(id);
 	});
+	
+	orgnzit.socket.on('post_message', function(data){
+		var row = data.row;
+		orgnzit.UI.post_message(data, row);
+	});
 });

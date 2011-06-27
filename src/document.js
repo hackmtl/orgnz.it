@@ -163,6 +163,21 @@ doc.prototype = {
 		}
 	},
 	
+	post_message: function(data,callback){
+		var id = data.row,
+			user = data.user,
+			msg = data.msg;
+			
+		for(var i = 0 ; i < this.rows.length; i++){
+			var row = this.rows[i];
+			if(row.id === id){
+				if(!row.messages) row.messages = [];
+				row.messages.push({ user:user, msg:msg })
+				this.update(callback);
+			}
+		}
+	},
+	
 	_cell : function(id){
 		that = this;
 		cell = {}

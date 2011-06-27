@@ -73,9 +73,16 @@ body #doc #rows .messages {
   float: left;
   clear: left;
   width: 100%;
-  min-height: 40px;
-  border: 1px solid #aaa;
+  min-height: 60px;
+  border: 1px dashed #aaa;
   display: none;
+  margin-left: 2px;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+body #doc #rows .messages .add_message img {
+  float: right;
+  width: 30px;
 }
 body #doc #rows .messages.show {
   display: block;

@@ -76,7 +76,26 @@ orgnzit.UI = {
 		$(container).append(message_toggle);
 		
 		var messages = $("<div class='messages' id='"+id+"_messages'></div>");
+		var add_message = $("<a class='add_message' id='"+id+"_add_msg'><img src='../images/add_message.png'></img></a>");
+		$(messages).append(add_message);
+		$(add_message).click(function(){
+			var user = prompt("What name do you want to use ?");
+			if(user){
+				var msg = prompt("Enter your message");
+				if(msg){
+					orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
+				}
+			}
+		});
+		
 		$(container).append(messages);
+		
+		if(a_row.messages)
+		for(var i = 0; i < a_row.messages.length; i++){
+			var message = a_row.messages[i];
+			var message = orgnzit.UI.render_message(message);
+			$(messages).append(message);
+		}
 		
 		$(message_toggle).click(function(){
 			var messages = $('.messages',$(this).parent());
@@ -90,6 +109,18 @@ orgnzit.UI = {
 			$(row).append(cell);
 		}
 		return container;
+	},
+	
+	post_message: function(data, row){
+		var message = orgnzit.UI.render_message(data);
+		$("#" + row + "_messages").append(message);
+	},
+	
+	render_message: function(data){
+		var message = $("<div class='message'><a class='user'></a> wrote: <span class='msg'></span></div>");
+		$('.user', message).html(data.user);
+		$('.msg', message).html(data.msg);
+		return message;
 	},
 	
 	render_cell: function(data, col){
