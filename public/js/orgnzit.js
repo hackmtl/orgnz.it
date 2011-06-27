@@ -60,7 +60,7 @@ orgnzit.UI = {
 		var row = $("<div class='row' id='"+id+"'></div>");
 		$(container).append(row);
 		
-		var delete_row = $("<a id='delete_"+id+"' class='delete_row'>delete</a>");
+		var delete_row = $("<a id='delete_"+id+"' class='delete_row'><img src='../images/delete-icon.png'></img></a>");
 		$(delete_row).click(function(){
 			orgnzit.socket.emit('delete_row', id);
 		});
