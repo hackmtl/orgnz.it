@@ -112,7 +112,7 @@ io.sockets.on('connection', function (socket) {
 		}
 	});
 	
-	socket.on('request_unlock',function(cell){
+	socket.on('request_unlock',function( cell ){
 		console.log('request unlock');
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			var user = socket.user;
@@ -121,14 +121,14 @@ io.sockets.on('connection', function (socket) {
 		}
 	});
 	
-	socket.on('cell_updated', function(data){
+	socket.on('cell_updated', function( data ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.update_cell(data.id, data.value);
 			io.sockets.in(socket.room).emit('update_cell', data);
 		});
 	});
 	
-	socket.on('col_updated', function(data){
+	socket.on('col_updated', function( data ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.update_col(data.id, data);
 			io.sockets.in(socket.room).emit('update_col', data);
@@ -139,6 +139,14 @@ io.sockets.on('connection', function (socket) {
 		the_doc = new doc(socket.room, function(){
 			the_doc.insert_row(function(new_row){
 				io.sockets.in(socket.room).emit('insert_row', new_row);
+			});
+		});
+	});
+	
+	socket.on('delete_row', function( row ){
+		the_doc = new doc(socket.room, function(){
+			the_doc.delete_row(row, function(){
+				io.sockets.in(socket.room).emit('delete_row', row);
 			});
 		});
 	});

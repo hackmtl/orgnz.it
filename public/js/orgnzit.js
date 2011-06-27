@@ -16,7 +16,6 @@ orgnzit.UI = {
 			var a_col = orgnzit.doc.cols[i],
 				col = orgnzit.UI.render_col(a_col);
 			$(cols).append(col);
-			//orgnzit.UI.insert_col(col);
 		}
 		
 		for(var i = 0; i < orgnzit.doc.rows.length; i++){
@@ -29,6 +28,10 @@ orgnzit.UI = {
 	insert_row: function(row){
 		row = orgnzit.UI.render_row(row);
 		$("#rows").append(row);
+	},
+	
+	delete_row: function(id){
+		$("#"+id).parent().remove();
 	},
 	
 	insert_col: function(data){
@@ -52,13 +55,25 @@ orgnzit.UI = {
 	},
 	
 	render_row: function(a_row){
-		var row = $("<div class='row' id='"+a_row.id+"'></div>");
+		var id = a_row.id;
+		var container = $("<div id='"+id+"_container' class='container'><div>");
+		var row = $("<div class='row' id='"+id+"'></div>");
+		$(container).append(row);
+		
+		var delete_row = $("<a id='delete_"+id+"' class='delete_row'>delete</a>");
+		$(delete_row).click(function(){
+			orgnzit.socket.emit('delete_row', id);
+		});
+		
+		$(container).append(delete_row);
+		
 		for(var i = 0; i < a_row.cells.length; i++){
 			var a_cell = a_row.cells[i];
 			var cell = orgnzit.UI.render_cell(a_cell); 
 			$(row).append(cell);
 		}
-		return row;
+		
+		return container;
 	},
 	
 	render_cell: function(data){

@@ -31,7 +31,6 @@ body #doc #rows {
 }
 body #doc #rows .row {
   float: left;
-  clear: left;
 }
 body #doc #rows .row .cell {
   float: left;
@@ -42,6 +41,17 @@ body #doc #rows .row .cell {
   font-size: 1em;
   height: 1em;
   overflow: hidden;
+}
+body #doc #rows .container {
+  float: left;
+  clear: left;
+}
+body #doc #rows .delete_row {
+  float: left;
+  font-size: 0.8em;
+  cursor: pointer;
+  margin-top: 10px;
+  color: #aaa;
 }
 body #doc .locked {
   background: #ededed;

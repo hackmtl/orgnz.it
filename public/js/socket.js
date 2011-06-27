@@ -44,4 +44,8 @@ orgnzit.socket.on('connect', function () {
 	orgnzit.socket.on('insert_row', function(data){
 		orgnzit.UI.insert_row(data);
 	});
+	
+	orgnzit.socket.on('delete_row', function(id){
+		orgnzit.UI.delete_row(id);
+	});
 });

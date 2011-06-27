@@ -137,6 +137,16 @@ doc.prototype = {
 		});
 	},
 	
+	delete_row : function(id,callback){
+		for(var i = 0 ; i < this.rows.length; i++){
+			var row = this.rows[i];
+			if(row.id === id){
+				this.rows.splice(i,0);
+				this.update(callback);
+			}
+		}
+	},
+	
 	_cell : function(id){
 		that = this;
 		cell = {}
