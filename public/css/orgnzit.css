@@ -66,10 +66,10 @@ body #menu {
   font-size: 1.2em;
 }
 body #menu a {
-  color: #003399;
-  text-decoration: underline;
-  font-weight: bold;
+  color: #000;
+  text-decoration: none;
   cursor: pointer;
   float: left;
   margin-right: 20px;
+  text-shadow: 1px 1px #aaa;
 }
