@@ -102,11 +102,11 @@ orgnzit.UI = {
 		
 		if($('.editor', $(_cell)).length > 0){
 			var new_val = $('.editor',$(_cell)).val();
+			$('.editor',$(_cell)).replaceWith(new_val);
 			if($(_cell).hasClass('col'))
 				orgnzit.socket.emit('col_updated', {id:id, name:new_val});
 			else
 				orgnzit.socket.emit('cell_updated', {id:id, value:new_val});
-			$('.editor',$(_cell)).replaceWith(new_val);
 		}
 	},
 
@@ -126,7 +126,7 @@ orgnzit.UI = {
 
 		$(_cell).addClass("mine").append(textarea);
 		$(textarea).focus().click(function(){ return false; });
-		$(textarea).css( {"left":pos.left + 40, "top":pos.top + 15} );
+		$(textarea).css( {"left":pos.left + 60, "top":pos.top + 15} );
 	},
 	
 	refresh_locked : function(){

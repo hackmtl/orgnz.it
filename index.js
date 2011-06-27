@@ -101,6 +101,7 @@ io.sockets.on('connection', function (socket) {
 	
 	/* */
 	socket.on('request_lock', function(cell){
+		console.log('request lock');
 		if(!locked[socket.room]) locked[socket.room] = {}
 		if(!locked[socket.room][cell]){
 			var user = socket.user,
@@ -109,11 +110,10 @@ io.sockets.on('connection', function (socket) {
 			io.sockets.in(socket.room).emit('lock', { id:cell, user:user });
 			socket.emit('edit', { id: cell})
 		}
-		console.log(locked[socket.room]);
 	});
 	
 	socket.on('request_unlock',function(cell){
-		console.log(locked[socket.room]);
+		console.log('request unlock');
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			var user = socket.user;
 			delete locked[socket.room][cell];
@@ -155,7 +155,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('disconnect', function () {
 		console.log('!!! client disconnected');
 		if(open_sockets[socket.room][socket.user]) delete open_sockets[socket.room][socket.user];
-		unlock(socket.room, socket.user);
+		//unlock(socket.room, socket.user);
 		io.sockets.in(socket.room).emit('locked',locked[socket.room]);
 	});
 });

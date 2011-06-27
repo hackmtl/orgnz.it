@@ -24,8 +24,8 @@ doc.prototype = {
 				callback();
 			}
 			else{
-				self.rows = self._rows();
 				self.cols = self._cols();
+				self.rows = self._rows();
 				self.save(callback)
 			}
 		});
@@ -109,7 +109,7 @@ doc.prototype = {
 		}
 	},
 	
-	_row : function(id){
+	_row : function(id, self){
 		row = {};
 		if(id){
 			for(var row in this.rows){
@@ -122,7 +122,7 @@ doc.prototype = {
 		row.id = utils.rand();
 		row.cells = [];
 		var num_cols = config.default_cols;
-		if(this.cols) num_cols = this.cols.length;
+		if(self) num_cols = self.cols.length;
 		for(var i = 0; i < num_cols ; i++) {
 			row.cells.unshift(new self._cell());
 		}
@@ -130,7 +130,7 @@ doc.prototype = {
 	},
 	
 	insert_row : function(callback){
-		new_row = new this._row();
+		new_row = new this._row(null,this);
 		this.rows.push(new_row);
 		this.update(function(){
 			callback(new_row);
