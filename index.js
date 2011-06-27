@@ -127,10 +127,27 @@ io.sockets.on('connection', function (socket) {
 			io.sockets.in(socket.room).emit('update_cell', data);
 		});
 	});
+	
 	socket.on('col_updated', function(data){
 		the_doc = new doc(socket.room, function(){
 			the_doc.update_col(data.id, data);
 			io.sockets.in(socket.room).emit('update_col', data);
+		});
+	});
+	
+	socket.on('insert_row', function(){
+		the_doc = new doc(socket.room, function(){
+			the_doc.insert_row(function(new_row){
+				io.sockets.in(socket.room).emit('insert_row', new_row);
+			});
+		});
+	});
+	
+	socket.on('insert_col', function(){
+		the_doc = new doc(socket.room, function(){
+			the_doc.insert_col(function(new_col, new_cells){
+				io.sockets.in(socket.room).emit('insert_col', { col:new_col, cells:new_cells });
+			});
 		});
 	});
 	

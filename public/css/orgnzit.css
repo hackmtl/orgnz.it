@@ -1,5 +1,5 @@
 body #doc {
-  font-size: 1.5em;
+  font-size: 1.2em;
   border: 1px solid #000;
   overflow: hidden;
   padding: 5px;
@@ -9,8 +9,9 @@ body #doc #cols {
 }
 body #doc #cols .col {
   float: left;
-  width: 200px;
+  width: 100px;
   padding: 5px;
+  margin: 2px;
 }
 body #doc #rows {
   float: left;
@@ -22,14 +23,24 @@ body #doc #rows .row {
 }
 body #doc #rows .row .cell {
   float: left;
-  width: 200px;
-  border: 1px solid #000;
+  width: 100px;
+  border: 1px solid #aaa;
   padding: 5px;
   margin: 2px;
+  font-size: 1em;
+  height: 1em;
+  overflow: hidden;
 }
-body #doc #rows .row .locked {
+body #doc .locked {
   background: #ededed;
 }
-body #doc #rows .row .mine {
+body #doc .mine {
   background: #aaa;
+}
+body #doc textarea {
+  position: fixed;
+  width: 400px;
+  height: 60px;
+  border: 1px solid #000;
+  -webkit-box-shadow: 2px 2px 5px #000;
 }

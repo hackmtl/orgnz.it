@@ -1,9 +1,9 @@
 body{
-	@default_width:200px;
+	@default_width:100px;
 	@padding:5px;
 	
 	#doc{
-		font-size:1.5em;
+		font-size:1.2em;
 		border:1px solid #000;
 		overflow:hidden;
 		padding:@padding;
@@ -13,9 +13,9 @@ body{
 				float:left;
 				width:@default_width;
 				padding:@padding;
+				margin:2px;
 			}
 		}
-		
 		#rows{
 			float:left;
 			clear:left;
@@ -25,17 +25,26 @@ body{
 				.cell{
 					float: left;
 					width: @default_width;
-					border: 1px solid #000;
+					border: 1px solid #aaa;
 					padding:@padding;
 					margin:2px;
-				}
-				.locked{
-					background: #ededed;
-				}
-				.mine{
-					background: #aaa;
+					font-size:1em;
+					height:1em;
 				}
 			}
+		}
+		.locked{
+			background: #ededed;
+		}
+		.mine{
+			background: #aaa;
+		}
+		textarea{
+			position:fixed;
+			width:400px;
+			height:60px;
+			border:1px solid #000;
+			-webkit-box-shadow:2px 2px 5px #000;
 		}
 	}
 }

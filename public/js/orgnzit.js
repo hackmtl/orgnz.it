@@ -12,24 +12,42 @@ orgnzit.UI = {
 	
 	// Initialize table */
 	init: function(callback){
-		
 		for(var i = 0; i < orgnzit.doc.cols.length; i++){
 			var a_col = orgnzit.doc.cols[i],
 				col = orgnzit.UI.render_col(a_col);
 			$(cols).append(col);
+			//orgnzit.UI.insert_col(col);
 		}
 		
 		for(var i = 0; i < orgnzit.doc.rows.length; i++){
-			var a_row = orgnzit.doc.rows[i];
-			row = orgnzit.UI.render_row(a_row);
-			$(rows).append(row);
+			var row = orgnzit.doc.rows[i];
+			orgnzit.UI.insert_row(row);
 		}
 		callback();
+	},
+	
+	insert_row: function(row){
+		row = orgnzit.UI.render_row(row);
+		$(rows).append(row);
+	},
+	
+	insert_col: function(data){
+		// add column header
+		col = orgnzit.UI.render_col(data.col);
+		$(cols).append(col);
+		
+		rows = $(".row");
+		// add cells to each row
+		for(var i = 0; i < data.cells.length; i++){
+			var cell = orgnzit.UI.render_cell(data.cells[i]);
+			$(rows[i]).append(cell);
+		}
 	},
 	
 	render_col: function(a_col){
 		var col = $("<div class='col' id='"+a_col.id+"'></div>");
 		$(col).html(a_col.name);
+		orgnzit.UI.bind_lock(col);
 		return col;
 	},
 	
@@ -46,6 +64,7 @@ orgnzit.UI = {
 	render_cell: function(data){
 		var cell = $("<div class='cell' id='" + data.id + "'></div>");
 		$(cell).html(data.value) // ! other types of data (i.e: dropdowns) will need to render accordingly
+		orgnzit.UI.bind_lock(cell);
 		return cell;
 	},
 	
@@ -100,11 +119,14 @@ orgnzit.UI = {
 	
 	edit : function(data){
 		id = data.id;
-		var _cell = $("#"+id);
-		var val = $(_cell).html();
-		$(_cell).addClass("mine");
-		$(_cell).html("<textarea id='edit_"+id+"' class='editor'>"+val+"</textarea>");
-		$(".editor",$(_cell)).focus().click(function(){return false;});
+		var _cell = $("#"+id),
+			val = $(_cell).html(),
+			textarea = $("<textarea id='edit_"+id+"' class='editor'>"+val+"</textarea>"),
+			pos = $(_cell).offset();
+
+		$(_cell).addClass("mine").append(textarea);
+		$(textarea).focus().click(function(){ return false; });
+		$(textarea).css( {"left":pos.left + 40, "top":pos.top + 15} );
 	},
 	
 	refresh_locked : function(){

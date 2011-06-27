@@ -20,14 +20,19 @@ html
 				margin-right:20px;
 				margin-top:20px;
 				cursor:pointer;
+				float:left;
+				text-decoration:none;
+				font-weight:bold;
+				font-size:1.3em;
 			}
-		//a#addRow Add Row
-		//a#addCol Add Col
+		a#addRow Add Row
+		a#addCol Add Col
 		
 		script
 			var set_doc = function(data){
 				orgnzit.doc = data;
 				orgnzit.UI.init(function(){
+				
 					for(var i = 0; i < data.rows.length; i++){
 						var row = data.rows[i];
 						for(var j = 0; j < row.cells.length; j++){
@@ -40,9 +45,12 @@ html
 						orgnzit.UI.unlock(col);
 					}
 					
-					/*$(".cell").each(function(){
-						orgnzit.UI.unlock($(this).attr("id"));
-					});*/
+					$("#addRow").click(function(){
+						orgnzit.socket.emit('insert_row');
+					});
+					$("#addCol").click(function(){
+						orgnzit.socket.emit('insert_col');
+					});
 					
 				});
 			}

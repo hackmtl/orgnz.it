@@ -34,13 +34,15 @@ proxy.get = function(id, callback){
 }
 
 // static save */
-proxy.save = function(doc,callback){
+proxy.save = function(doc, callback){
 	db(config.db_conn).save(doc);
 	callback();
 }
 
 // static update */
 proxy.update = function(data,callback){
-	db(config.db_conn).update({id:data.id},data);
+	db(config.db_conn).update({id:data.id}, data);
+	console.log(callback);
+	callback();
 }
 

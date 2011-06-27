@@ -19,7 +19,6 @@ doc.prototype = {
 		self = this;
 		db.get(this.id, function(data){
 			if(data){
-				//console.log(data.rows[0].cells);
 				self.cols = data.cols;
 				self.rows = data.rows;
 				callback();
@@ -79,6 +78,23 @@ doc.prototype = {
 		}
 	},
 	
+	insert_col : function(callback){
+		new_col = new this._col();
+		this.cols.push(new_col);
+		new_cells = [];
+		
+		for(var i = 0; i < this.rows.length; i++){
+			var row = this.rows[i],
+				new_cell = new this._cell();
+			row.cells.push(new_cell);
+			new_cells.unshift(new_cell);
+		}
+		
+		this.update(function(){
+			callback(new_col, new_cells);
+		});
+	},
+	
 	update_col : function(id, data){
 		for(var i = 0; i < this.cols.length; i++){
 			var col = this.cols[i];
@@ -93,12 +109,11 @@ doc.prototype = {
 		}
 	},
 	
-	_row : function(id,self){
-		that = this;
+	_row : function(id){
 		row = {};
 		if(id){
-			for(var row in self.rows){
-				if(self.id === id){
+			for(var row in this.rows){
+				if(row.id === id){
 					return row;
 				}
 			}
@@ -106,25 +121,20 @@ doc.prototype = {
 		}
 		row.id = utils.rand();
 		row.cells = [];
-		for(var i = 0; i < config.default_cols ; i++) {
-			row.cells.unshift(new self._cell(null,self));
+		var num_cols = config.default_cols;
+		if(this.cols) num_cols = this.cols.length;
+		for(var i = 0; i < num_cols ; i++) {
+			row.cells.unshift(new self._cell());
 		}
 		return row;
 	},
-
-	update_cell: function(id,val){
-		for(var i = 0; i < this.rows.length; i++){
-			var row = this.rows[i];
-			for(var j = 0; j < row.cells.length; j++){
-				var a_cell = row.cells[j];
-				if(a_cell.id === id){
-					a_cell.value = val;
-					this.update(function(){
-						return;
-					});
-				}
-			}
-		}
+	
+	insert_row : function(callback){
+		new_row = new this._row();
+		this.rows.push(new_row);
+		this.update(function(){
+			callback(new_row);
+		});
 	},
 	
 	_cell : function(id){
@@ -144,11 +154,26 @@ doc.prototype = {
 			return null;
 		}
 		cell.id = utils.rand();
-		cell.value = "test";
+		cell.value = "";
 		return cell;
 	},
 	
-	add_row : function(){
+	update_cell: function(id,val){
+		for(var i = 0; i < this.rows.length; i++){
+			var row = this.rows[i];
+			for(var j = 0; j < row.cells.length; j++){
+				var a_cell = row.cells[j];
+				if(a_cell.id === id){
+					a_cell.value = val;
+					this.update(function(){
+						return;
+					});
+				}
+			}
+		}
+	},
+	
+	/*add_row : function(){
 		self = this;
 		this.after = function(id){
 			for(var i = 0; i < self.rows.length; i++){
@@ -168,7 +193,7 @@ doc.prototype = {
 			}
 		}
 		return this;
-	},
+	},*/
 	
 	add_column : function(options){
 		self = this;
