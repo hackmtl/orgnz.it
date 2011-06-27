@@ -28,13 +28,13 @@ orgnzit.UI = {
 	
 	insert_row: function(row){
 		row = orgnzit.UI.render_row(row);
-		$(rows).append(row);
+		$("#rows").append(row);
 	},
 	
 	insert_col: function(data){
 		// add column header
 		col = orgnzit.UI.render_col(data.col);
-		$(cols).append(col);
+		$("#cols").append(col);
 		
 		rows = $(".row");
 		// add cells to each row

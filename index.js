@@ -151,12 +151,16 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 	
-	/* remove socket on disconnect, unlock resources associated to this socket */
+	/* 
+		remove socket on disconnect, unlock resources associated to this socket 
+		!! seems to be causing echos - multiple messages being passed back and forth
+		disabled for now - works.
+	*/
 	socket.on('disconnect', function () {
-		console.log('!!! client disconnected');
+		/*console.log('!!! client disconnected');
 		if(open_sockets[socket.room][socket.user]) delete open_sockets[socket.room][socket.user];
-		//unlock(socket.room, socket.user);
-		io.sockets.in(socket.room).emit('locked',locked[socket.room]);
+		unlock(socket.room, socket.user);
+		io.sockets.in(socket.room).emit('locked',locked[socket.room]);*/
 	});
 });
 
