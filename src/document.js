@@ -79,6 +79,20 @@ doc.prototype = {
 		}
 	},
 	
+	update_col : function(id, data){
+		for(var i = 0; i < this.cols.length; i++){
+			var col = this.cols[i];
+			if(col.id === id){
+				for(var key in data){
+					col[key] = data[key];
+				}
+				this.update(function(){
+					return;
+				});
+			}
+		}
+	},
+	
 	_row : function(id,self){
 		that = this;
 		row = {};

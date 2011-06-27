@@ -3,6 +3,7 @@ html
 	head
 		title Orgnz.it
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js")
+		//script(src="../../js/jquery-1.3.2.min.js")
 		script(src="../../socket.io/socket.io.js")
 		script(src="../../js/orgnzit.js")
 		script(src="../../js/socket.js")
@@ -33,6 +34,10 @@ html
 							var cell = row.cells[j];
 							orgnzit.UI.unlock(cell);
 						}
+					}
+					for(var i = 0; i < data.cols.length; i++){
+						var col = data.cols[i];
+						orgnzit.UI.unlock(col);
 					}
 					
 					/*$(".cell").each(function(){

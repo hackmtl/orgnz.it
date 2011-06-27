@@ -51,9 +51,16 @@ orgnzit.UI = {
 	
 	update_cell : function(data){
 		var new_cell = orgnzit.UI.render_cell(data),
-			_cell = $("#"+data.id);
+			_cell = $("#" + data.id);
 		orgnzit.UI.bind_lock(new_cell);
 		$(_cell).replaceWith(new_cell);
+	},
+	
+	update_col : function(data){
+		var new_col = orgnzit.UI.render_col(data),
+			_col = $("#" + data.id);
+		orgnzit.UI.bind_lock(new_col);
+		$(_col).replaceWith(new_col);
 	},
 	
 	bind_lock: function(cell){
@@ -76,7 +83,10 @@ orgnzit.UI = {
 		
 		if($('.editor', $(_cell)).length > 0){
 			var new_val = $('.editor',$(_cell)).val();
-			orgnzit.socket.emit('cell_updated', {id:id, value:new_val});
+			if($(_cell).hasClass('col'))
+				orgnzit.socket.emit('col_updated', {id:id, name:new_val});
+			else
+				orgnzit.socket.emit('cell_updated', {id:id, value:new_val});
 			$('.editor',$(_cell)).replaceWith(new_val);
 		}
 	},

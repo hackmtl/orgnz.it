@@ -31,5 +31,10 @@ orgnzit.socket.on('connect', function () {
 	// data updates
 	orgnzit.socket.on('update_cell', function(data){
 		orgnzit.UI.update_cell(data);
+	});
+	
+	// data updates
+	orgnzit.socket.on('update_col', function(data){
+		orgnzit.UI.update_col(data);
 	})
 });

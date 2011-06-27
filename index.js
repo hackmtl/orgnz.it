@@ -127,6 +127,12 @@ io.sockets.on('connection', function (socket) {
 			io.sockets.in(socket.room).emit('update_cell', data);
 		});
 	});
+	socket.on('col_updated', function(data){
+		the_doc = new doc(socket.room, function(){
+			the_doc.update_col(data.id, data);
+			io.sockets.in(socket.room).emit('update_col', data);
+		});
+	});
 	
 	/* remove socket on disconnect, unlock resources associated to this socket */
 	socket.on('disconnect', function () {
