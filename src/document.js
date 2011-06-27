@@ -141,7 +141,7 @@ doc.prototype = {
 		for(var i = 0 ; i < this.rows.length; i++){
 			var row = this.rows[i];
 			if(row.id === id){
-				this.rows.splice(i,0);
+				this.rows.splice(i,1);
 				this.update(callback);
 			}
 		}
