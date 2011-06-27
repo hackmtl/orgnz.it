@@ -72,6 +72,18 @@ orgnzit.UI = {
 		});
 		$(container).append(delete_row);
 		
+		var message_toggle = $("<a class='toggle_msg'><img src='../images/message.png'></img></a>");
+		$(container).append(message_toggle);
+		
+		var messages = $("<div class='messages' id='"+id+"_messages'></div>");
+		$(container).append(messages);
+		
+		$(message_toggle).click(function(){
+			var messages = $('.messages',$(this).parent());
+			if($(messages).hasClass('show')) $(messages).removeClass('show');
+			else $(messages).addClass('show');
+		});
+		
 		for(var i = 0; i < a_row.cells.length; i++){
 			var a_cell = a_row.cells[i];
 			var cell = orgnzit.UI.render_cell(a_cell, i); 
