@@ -72,9 +72,9 @@ doc.prototype = {
 		return {
 			id : utils.rand(),
 			type : 'string' ,
-			name : 'Col name' ,
+			name : '' ,
 			options : {} ,
-			width : 'auto' 
+			width : 'auto'
 		}
 	},
 	

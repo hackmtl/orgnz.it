@@ -1,19 +1,34 @@
 body{
 	@default_width:100px;
 	@padding:5px;
+	@default_height:1em;
+	@col_color:#e3e9ff;
+	@locked:#ededed;
+	@mine:#aaa;
 	
+	font-family:arial;
 	#doc{
 		font-size:1.2em;
-		border:1px solid #000;
 		overflow:hidden;
-		padding:@padding;
+		clear:left;
+		
 		#cols{
 			float:left;
 			.col{
+				background:@col_color;
 				float:left;
 				width:@default_width;
 				padding:@padding;
 				margin:2px;
+				overflow:hidden;
+				height:@default_height;
+				border:1px solid @col_color;
+			}
+			.col.locked{
+				background: @locked;
+			}
+			.col.mine{
+				background: @mine;
 			}
 		}
 		#rows{
@@ -29,10 +44,12 @@ body{
 					padding:@padding;
 					margin:2px;
 					font-size:1em;
-					height:1em;
+					height:@default_height;
+					overflow:hidden;
 				}
 			}
 		}
+		
 		.locked{
 			background: #ededed;
 		}
@@ -45,6 +62,22 @@ body{
 			height:60px;
 			border:1px solid #000;
 			-webkit-box-shadow:2px 2px 5px #000;
+			opacity:0.9;
+			font-size:1em;
+		}
+	}
+	#menu{
+		margin-top:10px;
+		margin-bottom:20px;
+		float:left;
+		font-size:1.2em;
+		a {
+			color:#003399;
+			text-decoration:underline;
+			font-weight:bold;
+			cursor:pointer;
+			float:left;
+			margin-right:20px;
 		}
 	}
 }

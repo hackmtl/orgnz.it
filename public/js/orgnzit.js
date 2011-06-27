@@ -84,9 +84,10 @@ orgnzit.UI = {
 	
 	bind_lock: function(cell){
 		$(cell).click(function(){
+			var that = this;
 			$(".editor").each(function(){
 				var id = $(this).parent().attr("id");
-				orgnzit.socket.emit('request_unlock', id);
+				if(id != $(that).attr("id")) orgnzit.socket.emit('request_unlock', id);
 			});
 			orgnzit.socket.emit('request_lock', $(this).attr("id"));
 		});
@@ -128,7 +129,7 @@ orgnzit.UI = {
 			textarea = $("<textarea id='edit_"+id+"' class='editor'>"+val+"</textarea>"),
 			pos = $(_cell).offset();
 
-		$(_cell).addClass("mine").append(textarea);
+		$(_cell).addClass("mine").html("").append(textarea);
 		$(textarea).focus().click(function(){ return false; });
 		$(textarea).css( {"left":pos.left + 60, "top":pos.top + 15} );
 	},
