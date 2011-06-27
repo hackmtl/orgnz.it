@@ -42,7 +42,6 @@ proxy.save = function(doc, callback){
 // static update */
 proxy.update = function(data,callback){
 	db(config.db_conn).update({id:data.id}, data);
-	console.log(callback);
 	callback();
 }
 

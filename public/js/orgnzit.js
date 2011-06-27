@@ -84,6 +84,10 @@ orgnzit.UI = {
 	
 	bind_lock: function(cell){
 		$(cell).click(function(){
+			$(".editor").each(function(){
+				var id = $(this).parent().attr("id");
+				orgnzit.socket.emit('request_unlock', id);
+			});
 			orgnzit.socket.emit('request_lock', $(this).attr("id"));
 		});
 	},
