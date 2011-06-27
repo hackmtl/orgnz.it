@@ -61,6 +61,7 @@ body #doc textarea {
 body #menu {
   margin-top: 10px;
   margin-bottom: 20px;
+  margin-left: 5px;
   float: left;
   font-size: 1.2em;
 }
