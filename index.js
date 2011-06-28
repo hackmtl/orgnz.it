@@ -105,25 +105,29 @@ io.sockets.on('connection', function (socket) {
 	
 	/* */
 	socket.on('request_lock', function(cell){
-		if(!locked[socket.room]) locked[socket.room] = {}
-		if(!locked[socket.room][cell]){
-			var user = socket.user,
-				time = new Date();
-			var token = utils.rand();
-			locked[socket.room][cell] = { user: user, time: time};
-			io.sockets.in(socket.room).emit('lock', { id:cell, user:user, token:token });
-			token = utils.rand();
-			socket.emit('edit', { id: cell, token:token });
-		}
+		try{
+			if(!locked[socket.room]) locked[socket.room] = {}
+			if(!locked[socket.room][cell]){
+				var user = socket.user,
+					time = new Date();
+				var token = utils.rand();
+				locked[socket.room][cell] = { user: user, time: time};
+				io.sockets.in(socket.room).emit('lock', { id:cell, user:user, token:token });
+				token = utils.rand();
+				socket.emit('edit', { id: cell, token:token });
+			}
+		}catch(exception){}
 	});
 	
 	socket.on('request_unlock',function( cell ){
-		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
-			var user = socket.user;
-			var token = utils.rand();
-			delete locked[socket.room][cell];
-			io.sockets.in(socket.room).emit('unlock', { id:cell, user:user, token:token});
-		}
+		try{
+			if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
+				var user = socket.user;
+				var token = utils.rand();
+				delete locked[socket.room][cell];
+				io.sockets.in(socket.room).emit('unlock', { id:cell, user:user, token:token});
+			}
+		}catch(exception){}
 	});
 	
 	socket.on('cell_updated', function( data ){
