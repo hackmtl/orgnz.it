@@ -7,6 +7,8 @@ orgnzit.user = orgnzit.utils.rand();
 orgnzit.room = orgnzit.utils.room();
 orgnzit.locked = {};
 orgnzit.editors = {};
+orgnzit.editing = null;
+orgnzit.tokens = {};
 
 orgnzit.socket.on('connect', function () {
 	orgnzit.socket.emit('hello', {user:orgnzit.user, room:orgnzit.room});
@@ -17,20 +19,41 @@ orgnzit.socket.on('connect', function () {
 	});
 	
 	orgnzit.socket.on('lock', function(data){
-		orgnzit.UI.lock(data);
+		var token = data.token;
+		if(!orgnzit.tokens[token]){
+			orgnzit.tokens[token] = true;
+			orgnzit.UI.lock(data);
+			console.log('lock ' + data.id);
+		}
 	});
 
 	orgnzit.socket.on('unlock', function(data){
-		orgnzit.UI.unlock(data);
+		var token = data.token;
+		if(!orgnzit.tokens[token]){
+			orgnzit.tokens[token] = true;
+			orgnzit.UI.unlock(data);
+		}
 	});
 	
 	orgnzit.socket.on('edit', function(data){
-		orgnzit.UI.edit(data)
+		var token = data.token;
+		if(!orgnzit.tokens[token]){
+			orgnzit.tokens[token] = true;
+			var id = data.id; // cell that is to be edited
+			orgnzit.editing = id;
+			orgnzit.UI.edit(data);
+			console.log('edit ' + id);
+		}
 	});
 	
 	// data updates
 	orgnzit.socket.on('update_cell', function(data){
-		orgnzit.UI.update_cell(data);
+		var token = data.token;
+		if(!orgnzit.tokens[token]){
+			orgnzit.tokens[token] = true;
+			orgnzit.UI.update_cell(data);
+			console.log('update cell ' + data.id);
+		}
 	});
 	
 	orgnzit.socket.on('update_col', function(data){

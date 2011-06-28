@@ -56,7 +56,7 @@ orgnzit.UI = {
 		var id = a_col.id;
 		var col = $("<div class='col' id='"+id+"'></div>");
 		$(col).html(a_col.name);
-		orgnzit.UI.bind_lock(col);
+		orgnzit.UI.bind_click(col);
 		return col;
 	},
 	
@@ -127,41 +127,35 @@ orgnzit.UI = {
 		var col_id = (col) ? orgnzit.doc.cols[col].id : "";
 		var cell = $("<div class='cell col_"+col_id+"' id='" + data.id + "'></div>");
 		$(cell).html(data.value) // ! other types of data (i.e: dropdowns) will need to render accordingly
-		orgnzit.UI.bind_lock(cell);
+		orgnzit.UI.bind_click(cell);
 		return cell;
 	},
 	
 	update_cell : function(data){
 		var new_cell = orgnzit.UI.render_cell(data),
 			_cell = $("#" + data.id);
-		//var col_id = $(_cell).class()
-		//orgnzit.UI.bind_lock(new_cell);
-		orgnzit.UI.bind_lock(_cell);
 		$(_cell).html($(new_cell).html());
-		//$(_cell).replaceWith(new_cell);
 	},
 	
 	update_col : function(data){
 		var new_col = orgnzit.UI.render_col(data),
 			_col = $("#" + data.id);
-		orgnzit.UI.bind_lock(new_col);
 		$(_col).replaceWith(new_col);
 	},
 	
-	bind_lock: function(cell){
+	bind_click: function(cell){
 		$(cell).click(function(){
 			var that = this;
-			$(".editor").each(function(){
-				var id = $(this).parent().attr("id");
-				if(id != $(that).attr("id")) orgnzit.socket.emit('request_unlock', id);
-			});
-			orgnzit.socket.emit('request_lock', $(this).attr("id"));
-		});
-	},
-	
-	bind_unlock: function(cell){
-		$(cell).click(function(){
-			orgnzit.socket.emit('request_unlock', $(this).attr("id"));
+			if($(cell).hasClass('locked')){
+				orgnzit.socket.emit('request_unlock', $(this).attr("id"));
+			}
+			else{
+				$(".editor").each(function(){
+					var id = $(this).parent().attr("id");
+					if(id != $(that).attr("id")) orgnzit.socket.emit('request_unlock', id);
+				});
+				orgnzit.socket.emit('request_lock', $(this).attr("id"));
+			}
 		});
 	},
 	
@@ -171,9 +165,7 @@ orgnzit.UI = {
 		$(_cell).removeClass("locked mine");
 		$('.remove_col',$(_cell)).remove();
 		
-		orgnzit.UI.bind_lock(_cell);
-		
-		if($('.editor', $(_cell)).length > 0){
+		if(orgnzit.editing === id){
 			var new_val = $('.editor',$(_cell)).val();
 			$('.editor',$(_cell)).replaceWith(new_val);
 			if($(_cell).hasClass('col'))
@@ -187,7 +179,6 @@ orgnzit.UI = {
 		id = data.id;
 		var _cell = $("#"+id)
 		$(_cell).addClass("locked");
-		orgnzit.UI.bind_unlock(_cell);
 	},
 	
 	edit : function(data){

@@ -1,10 +1,11 @@
-require.paths.unshift(__dirname + '/node_modules/socket.io/lib/');
+require.paths.unshift(__dirname + '/socket.io/lib/');
 
 var express = require('express'),
 	sio = require('socket.io'),
 	doc = require('./src/document'),
-	user = require('./src/user')
-	monitor = require('./src/activityMonitor').monitor
+	user = require('./src/user'),
+	monitor = require('./src/activityMonitor').monitor,
+	utils = require('./src/utils').utils;
 
 /*
 	Configure Web Server
@@ -54,6 +55,7 @@ var connections = {}
 	Global lock list
 */
 var locked = require('./src/locked').locked;
+var tokens = {}
 
 locked.on('unlocked',function(data){
 	io.sockets.in(room).emit('unlock', { id:data.cell, user:data.user});
@@ -83,6 +85,8 @@ io.sockets.on('connection', function (socket) {
 	*/
 	socket.on('hello', function(data){
 		if(data.user && data.room) {
+			console.log('hello');
+			console.log(locked);
 			// setup socket data
 			socket.user = data.user;
 			room = data.room; // == doc.id
@@ -95,7 +99,7 @@ io.sockets.on('connection', function (socket) {
 			if(!locked[room]) locked[room] = {}
 			
 			// send user current state of room
-			socket.emit('locked',locked[room]);
+			socket.emit('locked', locked[room]);
 		}
 	});
 	
@@ -107,8 +111,13 @@ io.sockets.on('connection', function (socket) {
 			var user = socket.user,
 				time = new Date();
 			locked[socket.room][cell] = { user: user, time: time};
-			io.sockets.in(socket.room).emit('lock', { id:cell, user:user });
-			socket.emit('edit', { id: cell})
+			var token = utils.rand();
+			io.sockets.in(socket.room).emit('lock', { id:cell, user:user, token:token });
+			token = utils.rand();
+			socket.emit('edit', { id: cell, token:token})
+		}
+		else{
+			console.log('aha!');
 		}
 	});
 	
@@ -117,13 +126,16 @@ io.sockets.on('connection', function (socket) {
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			var user = socket.user;
 			delete locked[socket.room][cell];
-			io.sockets.in(socket.room).emit('unlock', { id:cell, user:user });
+			var token = utils.rand();
+			io.sockets.in(socket.room).emit('unlock', { id:cell, user:user, token:token });
 		}
 	});
 	
 	socket.on('cell_updated', function( data ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.update_cell(data.id, data.value);
+			var token = utils.rand();
+			data['token'] = token;
 			io.sockets.in(socket.room).emit('update_cell', data);
 		});
 	});
@@ -131,6 +143,8 @@ io.sockets.on('connection', function (socket) {
 	socket.on('col_updated', function( data ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.update_col(data.id, data);
+			var token = utils.rand();
+			data['token'] = token;
 			io.sockets.in(socket.room).emit('update_col', data);
 		});
 	});
@@ -138,6 +152,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('insert_row', function(){
 		the_doc = new doc(socket.room, function(){
 			the_doc.insert_row(function(new_row){
+				var token = utils.rand();
 				io.sockets.in(socket.room).emit('insert_row', new_row);
 			});
 		});
