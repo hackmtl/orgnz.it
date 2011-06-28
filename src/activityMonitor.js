@@ -21,8 +21,6 @@ activityMonitor = function(timeout){
 				}
 			}
 		}
-		console.log('looped');
-		console.log(locked);
 		setTimeout(function(){ loop() }, 2000);
 	}
 	/*

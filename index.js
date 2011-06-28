@@ -57,7 +57,8 @@ var connections = {}
 var locked = require('./src/locked').locked;
 
 locked.on('unlocked',function(data){
-	io.sockets.in(room).emit('unlock', { id:data.cell, user:data.user});
+	var token = utils.rand();
+	io.sockets.in(room).emit('unlock', { id:data.cell, user:data.user, token:token });
 });
 
 var open_sockets = {};
@@ -70,7 +71,8 @@ var unlock = function(room,user){
 	for(cell in locked[room]){
 		if(locked[room][cell].user == user){
 			try{
-				io.sockets.in(room).emit('unlock', { id:cell, user:user});
+				var token = utils.rand();
+				io.sockets.in(room).emit('unlock', { id:cell, user:user, token:token });
 			}catch(exception){ console.log("ERROR: couldn't unlock user " + user) }
 			delete locked[room][cell];
 		}
@@ -107,23 +109,28 @@ io.sockets.on('connection', function (socket) {
 		if(!locked[socket.room][cell]){
 			var user = socket.user,
 				time = new Date();
+			var token = utils.rand();
 			locked[socket.room][cell] = { user: user, time: time};
-			io.sockets.in(socket.room).emit('lock', { id:cell, user:user });
-			socket.emit('edit', { id: cell})
+			io.sockets.in(socket.room).emit('lock', { id:cell, user:user, token:token });
+			token = utils.rand();
+			socket.emit('edit', { id: cell, token:token });
 		}
 	});
 	
 	socket.on('request_unlock',function( cell ){
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			var user = socket.user;
+			var token = utils.rand();
 			delete locked[socket.room][cell];
-			io.sockets.in(socket.room).emit('unlock', { id:cell, user:user});
+			io.sockets.in(socket.room).emit('unlock', { id:cell, user:user, token:token});
 		}
 	});
 	
 	socket.on('cell_updated', function( data ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.update_cell(data.id, data.value);
+			var token = utils.rand();
+			data['token'] = token;
 			io.sockets.in(socket.room).emit('update_cell', data);
 		});
 	});
@@ -131,6 +138,8 @@ io.sockets.on('connection', function (socket) {
 	socket.on('col_updated', function( data ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.update_col(data.id, data);
+			var token = utils.rand();
+			data['token'] = token;
 			io.sockets.in(socket.room).emit('update_col', data);
 		});
 	});
@@ -138,7 +147,9 @@ io.sockets.on('connection', function (socket) {
 	socket.on('insert_row', function(){
 		the_doc = new doc(socket.room, function(){
 			the_doc.insert_row(function(new_row){
-				io.sockets.in(socket.room).emit('insert_row', new_row);
+				var token = utils.rand();
+				var data = {row:new_row, token:token};
+				io.sockets.in(socket.room).emit('insert_row', data);
 			});
 		});
 	});
@@ -146,7 +157,9 @@ io.sockets.on('connection', function (socket) {
 	socket.on('delete_row', function( row ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.delete_row(row, function(){
-				io.sockets.in(socket.room).emit('delete_row', row);
+				var token = utils.rand();
+				var data = {row:row, token:token};
+				io.sockets.in(socket.room).emit('delete_row', data);
 			});
 		});
 	});
@@ -154,7 +167,8 @@ io.sockets.on('connection', function (socket) {
 	socket.on('insert_col', function(){
 		the_doc = new doc(socket.room, function(){
 			the_doc.insert_col(function(new_col, new_cells){
-				io.sockets.in(socket.room).emit('insert_col', { col:new_col, cells:new_cells });
+				var token = utils.rand();
+				io.sockets.in(socket.room).emit('insert_col', { col:new_col, cells:new_cells, token:token });
 			});
 		});
 	});
@@ -162,7 +176,9 @@ io.sockets.on('connection', function (socket) {
 	socket.on('delete_col', function( col ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.delete_col(col, function(){
-				io.sockets.in(socket.room).emit('delete_col', col);
+				var token = utils.rand();
+				var data = {col:col, token:token};
+				io.sockets.in(socket.room).emit('delete_col', data);
 			});
 		});
 	});
@@ -170,6 +186,8 @@ io.sockets.on('connection', function (socket) {
 	socket.on('post_message', function(data){
 		the_doc = new doc(socket.room, function(){
 			the_doc.post_message(data, function(){
+				var token = utils.rand();
+				data['token'] = token;
 				io.sockets.in(socket.room).emit('post_message', data);
 			});
 		});
@@ -187,9 +205,11 @@ io.sockets.on('connection', function (socket) {
 		remove socket on disconnect, unlock resources associated to this socket
 	*/
 	socket.on('disconnect', function () {
-		if(open_sockets[socket.room][socket.user]) delete open_sockets[socket.room][socket.user];
-		unlock(socket.room, socket.user);
-		io.sockets.in(socket.room).emit('locked',locked[socket.room]);
+		try{
+			if(open_sockets[socket.room][socket.user]) delete open_sockets[socket.room][socket.user];
+			unlock(socket.room, socket.user);
+			io.sockets.in(socket.room).emit('locked',locked[socket.room]);
+		}catch(exception){}
 	});
 });
 
