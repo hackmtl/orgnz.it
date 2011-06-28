@@ -55,7 +55,6 @@ var connections = {}
 	Global lock list
 */
 var locked = require('./src/locked').locked;
-var tokens = {}
 
 locked.on('unlocked',function(data){
 	io.sockets.in(room).emit('unlock', { id:data.cell, user:data.user});
@@ -64,8 +63,7 @@ locked.on('unlocked',function(data){
 var open_sockets = {};
 
 /* Activity monitor that will check for stale/dead connections */
-//monitor.start();
-var counter = 0;
+monitor.start();
 
 var unlock = function(room,user){
 	if(locked[room])
@@ -105,37 +103,27 @@ io.sockets.on('connection', function (socket) {
 	
 	/* */
 	socket.on('request_lock', function(cell){
-		console.log('request lock');
 		if(!locked[socket.room]) locked[socket.room] = {}
 		if(!locked[socket.room][cell]){
 			var user = socket.user,
 				time = new Date();
 			locked[socket.room][cell] = { user: user, time: time};
-			var token = utils.rand();
-			io.sockets.in(socket.room).emit('lock', { id:cell, user:user, token:token });
-			token = utils.rand();
-			socket.emit('edit', { id: cell, token:token})
-		}
-		else{
-			console.log('aha!');
+			io.sockets.in(socket.room).emit('lock', { id:cell, user:user });
+			socket.emit('edit', { id: cell})
 		}
 	});
 	
 	socket.on('request_unlock',function( cell ){
-		console.log('request unlock');
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			var user = socket.user;
 			delete locked[socket.room][cell];
-			var token = utils.rand();
-			io.sockets.in(socket.room).emit('unlock', { id:cell, user:user, token:token });
+			io.sockets.in(socket.room).emit('unlock', { id:cell, user:user});
 		}
 	});
 	
 	socket.on('cell_updated', function( data ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.update_cell(data.id, data.value);
-			var token = utils.rand();
-			data['token'] = token;
 			io.sockets.in(socket.room).emit('update_cell', data);
 		});
 	});
@@ -143,8 +131,6 @@ io.sockets.on('connection', function (socket) {
 	socket.on('col_updated', function( data ){
 		the_doc = new doc(socket.room, function(){
 			the_doc.update_col(data.id, data);
-			var token = utils.rand();
-			data['token'] = token;
 			io.sockets.in(socket.room).emit('update_col', data);
 		});
 	});
@@ -152,7 +138,6 @@ io.sockets.on('connection', function (socket) {
 	socket.on('insert_row', function(){
 		the_doc = new doc(socket.room, function(){
 			the_doc.insert_row(function(new_row){
-				var token = utils.rand();
 				io.sockets.in(socket.room).emit('insert_row', new_row);
 			});
 		});
@@ -190,16 +175,21 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 	
+	socket.on('ping', function(cell){
+		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
+			console.log('pingd');
+			date = new Date();
+			locked[socket.room][cell].time = date;
+		}
+	});
+	
 	/* 
-		remove socket on disconnect, unlock resources associated to this socket 
-		!! seems to be causing echos - multiple messages being passed back and forth
-		disabled for now - works.
+		remove socket on disconnect, unlock resources associated to this socket
 	*/
 	socket.on('disconnect', function () {
-		/*console.log('!!! client disconnected');
 		if(open_sockets[socket.room][socket.user]) delete open_sockets[socket.room][socket.user];
 		unlock(socket.room, socket.user);
-		io.sockets.in(socket.room).emit('locked',locked[socket.room]);*/
+		io.sockets.in(socket.room).emit('locked',locked[socket.room]);
 	});
 });
 

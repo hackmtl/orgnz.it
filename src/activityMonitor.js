@@ -21,7 +21,9 @@ activityMonitor = function(timeout){
 				}
 			}
 		}
-		setTimeout(function(){ loop() },2000);
+		console.log('looped');
+		console.log(locked);
+		setTimeout(function(){ loop() }, 2000);
 	}
 	/*
 		@api public

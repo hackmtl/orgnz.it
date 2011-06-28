@@ -189,7 +189,14 @@ orgnzit.UI = {
 			pos = $(_cell).offset();
 
 		$(_cell).addClass("mine").html("").append(textarea);
-		$(textarea).focus().click(function(){ return false; });
+		
+		$(textarea).focus().click(function(){
+			return false;
+		});
+		$(textarea).keyup(function(){
+			orgnzit.socket.emit('ping', id);
+		});
+		
 		$(textarea).css( {"left":pos.left + 60, "top":pos.top + 15} );
 		
 		if($(_cell).hasClass('col')){

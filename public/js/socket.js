@@ -19,41 +19,22 @@ orgnzit.socket.on('connect', function () {
 	});
 	
 	orgnzit.socket.on('lock', function(data){
-		var token = data.token;
-		if(!orgnzit.tokens[token]){
-			orgnzit.tokens[token] = true;
-			orgnzit.UI.lock(data);
-			console.log('lock ' + data.id);
-		}
+		orgnzit.UI.lock(data);
 	});
 
 	orgnzit.socket.on('unlock', function(data){
-		var token = data.token;
-		if(!orgnzit.tokens[token]){
-			orgnzit.tokens[token] = true;
-			orgnzit.UI.unlock(data);
-		}
+		orgnzit.UI.unlock(data);
 	});
 	
 	orgnzit.socket.on('edit', function(data){
-		var token = data.token;
-		if(!orgnzit.tokens[token]){
-			orgnzit.tokens[token] = true;
-			var id = data.id; // cell that is to be edited
-			orgnzit.editing = id;
-			orgnzit.UI.edit(data);
-			console.log('edit ' + id);
-		}
+		var id = data.id; // cell that is to be edited
+		orgnzit.editing = id;
+		orgnzit.UI.edit(data);
 	});
 	
 	// data updates
 	orgnzit.socket.on('update_cell', function(data){
-		var token = data.token;
-		if(!orgnzit.tokens[token]){
-			orgnzit.tokens[token] = true;
-			orgnzit.UI.update_cell(data);
-			console.log('update cell ' + data.id);
-		}
+		orgnzit.UI.update_cell(data);
 	});
 	
 	orgnzit.socket.on('update_col', function(data){
