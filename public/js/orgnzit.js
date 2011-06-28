@@ -22,6 +22,12 @@ orgnzit.UI = {
 			var row = orgnzit.doc.rows[i];
 			orgnzit.UI.insert_row(row);
 		}
+		
+		$("html").click(function(){
+			
+			if(orgnzit.editing != null) orgnzit.socket.emit('request_unlock', orgnzit.editing);
+			//orgnzit.UI.unlock({ id: orgnzit.editing });
+		});
 		callback();
 	},
 	
@@ -172,6 +178,7 @@ orgnzit.UI = {
 				orgnzit.socket.emit('col_updated', {id:id, name:new_val});
 			else
 				orgnzit.socket.emit('cell_updated', {id:id, value:new_val});
+			orgnzit.editing = null;
 		}
 	},
 

@@ -194,11 +194,13 @@ io.sockets.on('connection', function (socket) {
 	});
 	
 	socket.on('ping', function(cell){
+		try{
 		if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
 			console.log('pingd');
 			date = new Date();
 			locked[socket.room][cell].time = date;
 		}
+		}catch(exception){}
 	});
 	
 	/* 
