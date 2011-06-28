@@ -49,7 +49,7 @@ app.listen(3001);
 */
 var io = sio.listen(app);
 var connections = {}
-//io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 
 /* 
 	Global lock list
@@ -61,7 +61,6 @@ locked.on('unlocked',function(data){
 	io.sockets.in(room).emit('unlock', { id:data.cell, user:data.user, token:token });
 });
 
-var open_sockets = {};
 
 /* Activity monitor that will check for stale/dead connections */
 monitor.start();
@@ -85,18 +84,13 @@ io.sockets.on('connection', function (socket) {
 	*/
 	socket.on('hello', function(data){
 		if(data.user && data.room) {
-			console.log('hello');
-			console.log(locked);
 			// setup socket data
 			socket.user = data.user;
 			room = data.room; // == doc.id
 			socket.room = room;
 			socket.join(room);
-			
-			// if new room, set it up on server
-			if(!open_sockets[room]) open_sockets[room] = {};
-			open_sockets[room][data.user] = socket;
-			if(!locked[room]) locked[room] = {}
+
+			if(room && !locked[room]) locked[room] = {}
 			
 			// send user current state of room
 			socket.emit('locked', locked[room]);
@@ -121,10 +115,12 @@ io.sockets.on('connection', function (socket) {
 	
 	socket.on('request_unlock',function( cell ){
 		try{
-			if(locked[socket.room][cell] && locked[socket.room][cell].user == socket.user){
+			var is_mine = locked[socket.room][cell] && locked[socket.room][cell].user == socket.user;
+			var no_ones = !locked[socket.room][cell];
+			if(is_mine || no_ones){
 				var user = socket.user;
 				var token = utils.rand();
-				delete locked[socket.room][cell];
+				if(is_mine) delete locked[socket.room][cell];
 				io.sockets.in(socket.room).emit('unlock', { id:cell, user:user, token:token});
 			}
 		}catch(exception){}
@@ -212,7 +208,6 @@ io.sockets.on('connection', function (socket) {
 	*/
 	socket.on('disconnect', function () {
 		try{
-			if(open_sockets[socket.room][socket.user]) delete open_sockets[socket.room][socket.user];
 			unlock(socket.room, socket.user);
 			io.sockets.in(socket.room).emit('locked',locked[socket.room]);
 		}catch(exception){}
@@ -221,5 +216,4 @@ io.sockets.on('connection', function (socket) {
 
 // needed for testing
 module.exports.io = io;
-module.exports.open_sockets = open_sockets;
 module.exports.app = app;

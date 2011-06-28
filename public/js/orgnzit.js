@@ -24,9 +24,7 @@ orgnzit.UI = {
 		}
 		
 		$("html").click(function(){
-			
 			if(orgnzit.editing != null) orgnzit.socket.emit('request_unlock', orgnzit.editing);
-			//orgnzit.UI.unlock({ id: orgnzit.editing });
 		});
 		callback();
 	},
@@ -75,6 +73,7 @@ orgnzit.UI = {
 		var delete_row = $("<a id='delete_"+id+"' class='delete_row'><img src='../images/delete-icon.png'></img></a>");
 		$(delete_row).click(function(){
 			orgnzit.socket.emit('delete_row', id);
+			return false;
 		});
 		$(container).append(delete_row);
 		
@@ -162,6 +161,7 @@ orgnzit.UI = {
 				});
 				orgnzit.socket.emit('request_lock', $(this).attr("id"));
 			}
+			return false;
 		});
 	},
 	
@@ -180,6 +180,7 @@ orgnzit.UI = {
 				orgnzit.socket.emit('cell_updated', {id:id, value:new_val});
 			orgnzit.editing = null;
 		}
+		return false;
 	},
 
 	lock : function(data){

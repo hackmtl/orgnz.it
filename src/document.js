@@ -87,7 +87,7 @@ doc.prototype = {
 			var row = this.rows[i],
 				new_cell = new this._cell();
 			row.cells.push(new_cell);
-			new_cells.unshift(new_cell);
+			new_cells.push(new_cell);
 		}
 		
 		this.update(function(){
