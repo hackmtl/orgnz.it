@@ -297,39 +297,46 @@ input:focus, textarea:focus, select:focus {
 #table th, #table td {
   border-right: 1px solid #acacac;
   border-bottom: 1px solid #acacac;
+  position: relative;
   width: 300px;
   height: 48px;
 }
-/* line 29, frontend/layouts/_table.scss */
+/* line 30, frontend/layouts/_table.scss */
 #table th:last-child, #table td:last-child {
   border-right: none;
 }
-/* line 34, frontend/layouts/_table.scss */
+/* line 35, frontend/layouts/_table.scss */
 #table th {
   background: #acacac;
 }
-/* line 40, frontend/layouts/_table.scss */
+/* line 41, frontend/layouts/_table.scss */
 #table td.locked {
   background: #d4bdb6;
 }
-/* line 44, frontend/layouts/_table.scss */
+/* line 45, frontend/layouts/_table.scss */
 #table td.s-focus {
   background: #c6d2b6;
   outline: 1px solid #9aa58c;
 }
-/* line 50, frontend/layouts/_table.scss */
+/* line 51, frontend/layouts/_table.scss */
 #table thead {
   display: block;
   height: 48px;
 }
-/* line 54, frontend/layouts/_table.scss */
+/* line 55, frontend/layouts/_table.scss */
 #table thead tr {
   position: fixed;
   top: 0;
   left: 0;
   height: 48px;
 }
-/* line 61, frontend/layouts/_table.scss */
+/* line 62, frontend/layouts/_table.scss */
+#table .delete_col {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+/* line 67, frontend/layouts/_table.scss */
 #table .editor {
   background: transparent;
   border: none;
@@ -405,11 +412,22 @@ input:focus, textarea:focus, select:focus {
   -o-box-shadow: 0 0 2px 0 #1a1a1a;
   box-shadow: 0 0 2px 0 #1a1a1a;
   color: #FFF;
+  font-weight: bold;
   line-height: 36px;
   display: inline-block;
   margin: 0 0 12px;
   padding: 0 12px;
   height: 36px;
+}
+/* line 14, frontend/modules/_buttons.scss */
+.button:hover {
+  color: #FFF;
+}
+
+/* line 19, frontend/modules/_buttons.scss */
+#addCol, #addRow {
+  float: right;
+  margin-right: 24px;
 }
 
 /* line 4, frontend/base/_states.scss */

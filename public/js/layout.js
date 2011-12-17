@@ -16,4 +16,8 @@ $(function() {
         });
     }).trigger('resize');
 
+    $("#table").bind("DOMSubtreeModified", function() {
+        $(window).trigger('resize');
+    });
+
 });

@@ -24,6 +24,7 @@
     th, td {
         border-right: 1px solid $grey;
         border-bottom: 1px solid $grey;
+        position: relative;
         width: 300px; height: lh(2);
 
         &:last-child {
@@ -56,6 +57,11 @@
             top: 0; left: 0;
             height: lh(2);
         }
+    }
+
+    .delete_col {
+        position: absolute;
+        top: lh(.5); right: lh(.5);
     }
 
     .editor {
