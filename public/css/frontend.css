@@ -308,28 +308,28 @@ input:focus, textarea:focus, select:focus {
 #table th {
   background: #acacac;
 }
-/* line 39, frontend/layouts/_table.scss */
+/* line 40, frontend/layouts/_table.scss */
 #table td.locked {
   background: #d4bdb6;
 }
-/* line 43, frontend/layouts/_table.scss */
+/* line 44, frontend/layouts/_table.scss */
 #table td.s-focus {
   background: #c6d2b6;
   outline: 1px solid #9aa58c;
 }
-/* line 49, frontend/layouts/_table.scss */
+/* line 50, frontend/layouts/_table.scss */
 #table thead {
   display: block;
   height: 48px;
 }
-/* line 53, frontend/layouts/_table.scss */
+/* line 54, frontend/layouts/_table.scss */
 #table thead tr {
   position: fixed;
   top: 0;
   left: 0;
   height: 48px;
 }
-/* line 60, frontend/layouts/_table.scss */
+/* line 61, frontend/layouts/_table.scss */
 #table .editor {
   background: transparent;
   border: none;

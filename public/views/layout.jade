@@ -59,5 +59,8 @@ html
 			$.ajax({
 				type:"GET",
 				url: "/doc/#{id}/json",
-				success: set_doc
+				success: function(data) {
+					set_doc(data);
+					$(window).trigger('resize');
+				}
 			});
