@@ -1,5 +1,6 @@
 #active-conversations {
-    padding: lh();
+    @include clearfix;
+    padding: lh() lh() lh(3);
 
     textarea {
         border: 2px solid $grey;
@@ -12,6 +13,8 @@
     input[type=submit] {
         float: right;
     }
+
+    .message:last-child
 }
 
 .message {

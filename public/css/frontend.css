@@ -270,7 +270,7 @@ input:focus, textarea:focus, select:focus {
   position: fixed;
   top: 0;
   right: 0;
-  padding-bottom: 48px;
+  padding-bottom: 72px;
   width: 300px;
   height: 100%;
 }
@@ -279,7 +279,7 @@ input:focus, textarea:focus, select:focus {
   background: url(../images/logo.png) no-repeat 0 0;
   position: fixed;
   bottom: 12px;
-  right: 12px;
+  right: 24px;
   width: 100px;
   height: 27px;
 }
@@ -367,9 +367,12 @@ input:focus, textarea:focus, select:focus {
 
 /* line 1, frontend/modules/_messages.scss */
 #active-conversations {
-  padding: 24px;
+  overflow: hidden;
+  *zoom: 1;
+  padding: 24px 24px 72px;
+  .message: last-child;
 }
-/* line 4, frontend/modules/_messages.scss */
+/* line 5, frontend/modules/_messages.scss */
 #active-conversations textarea {
   border: 2px solid #acacac;
   -webkit-border-radius: 4px;
@@ -385,12 +388,12 @@ input:focus, textarea:focus, select:focus {
   padding: 12px;
   width: 100%;
 }
-/* line 12, frontend/modules/_messages.scss */
+/* line 13, frontend/modules/_messages.scss */
 #active-conversations input[type=submit] {
   float: right;
 }
 
-/* line 17, frontend/modules/_messages.scss */
+/* line 20, frontend/modules/_messages.scss */
 .message {
   border-bottom: 1px solid #acacac;
   overflow: hidden;
@@ -398,15 +401,15 @@ input:focus, textarea:focus, select:focus {
   margin: 0 0 23px;
   padding: 0 0 24px;
 }
-/* line 22, frontend/modules/_messages.scss */
+/* line 25, frontend/modules/_messages.scss */
 .message p {
   margin: 0;
 }
-/* line 26, frontend/modules/_messages.scss */
+/* line 29, frontend/modules/_messages.scss */
 .message a {
   color: #acacac;
 }
-/* line 30, frontend/modules/_messages.scss */
+/* line 33, frontend/modules/_messages.scss */
 .message .user {
   font-style: italic;
   float: right;
