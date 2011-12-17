@@ -31,7 +31,8 @@ app.get('/', function(req, res){
 app.get('/docs', function(req, res) {
   docs = new documents(function() {
     res.render('documents', {
-      docs : docs
+      docs : docs,
+      layout : false
     });
   });
 });
