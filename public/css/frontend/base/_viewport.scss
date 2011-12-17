@@ -1,0 +1,18 @@
+html, body {
+	margin: 0; padding: 0;
+	width: 100%; height: 100%;
+}
+
+body {
+  background: $background;
+  color: $text;
+  font-family: $font-sans;
+
+  min-height: 100%;
+}
+
+// Establishes a font baseline
+@include establish-baseline;
+
+// Set html5 element to block instead of inline
+@include reset-html5;

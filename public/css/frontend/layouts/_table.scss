@@ -1,0 +1,14 @@
+#table {
+    padding-top: lh(2); // #table-header
+
+    th, td {
+        width: 300px;
+    }
+
+
+    #table-header {
+        position: fixed;
+        top: 0; left: 0;
+        height: lh(2);
+    }
+}
