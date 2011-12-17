@@ -16,9 +16,9 @@
     th, td {
         border-right: 1px solid $grey;
         border-bottom: 1px solid $grey;
-        line-height: lh(2);
-        padding: 0 lh(.5);
-        width: 300px; height: lh(2);
+        line-height: lh(1.5);
+        padding: lh(.25) lh(.5);
+        width: 300px; height: lh(1.5);
 
         &:last-child {
             border-right: none;
@@ -28,6 +28,7 @@
     td {
         &.s-focus {
             @include single-box-shadow(#FFF, 0, 0, 0, 1px, inset);
+            outline: 1px solid #ed538f;
         }
     }
 
@@ -40,5 +41,16 @@
             top: 0; left: 0;
             height: lh(2);
         }
+    }
+
+    .editor {
+        background: transparent;
+        border: none;
+        line-height: lh(1.5);
+
+        @include box-sizing("border-box");
+        margin: 0; padding: 0;
+        width: 100%; height: lh(1.5);
+
     }
 }

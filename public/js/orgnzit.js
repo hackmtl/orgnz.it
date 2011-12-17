@@ -7,7 +7,7 @@ orgnzit = {};
 	Template methods
 */
 var tpl = {
-	del_row : _.template("<td><a id='delete_<%=id%>' class='delete_row'><img src='../images/delete-icon.png'></img></a></td>")
+	del_row : _.template("<td class='controls'><a id='delete_<%=id%>' class='delete_row'><img src='../images/delete-icon.png'></img></a></td>")
 };
 
 /*
@@ -45,19 +45,19 @@ orgnzit.UI = {
 	},
 	
 	delete_row: function(id){
-		$("#"+id).parent().remove();
+		$("#"+id).remove();
 	},
 	
 	insert_col: function(data){
 		// add column header
 		var col = orgnzit.UI.render_col(data.col);
-		$(cols).append(col);
+		col.insertBefore(this.cols + " .controls");
 		
 		rows = $(".row");
 		// add cells to each row
 		for(var i = 0; i < data.cells.length; i++){
 			var cell = orgnzit.UI.render_cell(data.cells[i], orgnzit.doc.cols.length - 1);
-			$(rows[i]).append(cell);
+			$(cell).insertBefore($(rows[i]).find(".controls"));
 		}
 	},
 	
@@ -78,7 +78,8 @@ orgnzit.UI = {
 		var id = a_row.id;
 		var row = $("<tr class='row' id='"+id+"'></div>");
 		
-    var delete_row = $(tpl.del_row({id:id}));
+    	var delete_row = $(tpl.del_row({id:id}));
+		
 		$(delete_row).click(function(){
 			orgnzit.socket.emit('delete_row', id);
 			return false;
@@ -91,43 +92,33 @@ orgnzit.UI = {
 		}		
 		$(row).append(delete_row);
 		
-		// var message_toggle = $("<a class='toggle_msg'><img src='../images/message.png'></img></a>");
-		// $(container).append(message_toggle);
+		var messages = $("<div class='messages' style='display:none;' id='"+id+"_messages'></div>");
+		$(row).find(".controls").append(messages);
+		if(a_row.messages)
+		for(var i = 0; i < a_row.messages.length; i++){
+			var message = a_row.messages[i];
+			var message = orgnzit.UI.render_message(message);
+			$(messages).append(message);
+		}
 		
-		// var messages = $("<div class='messages' id='"+id+"_messages'></div>");
-		// var add_message = $("<a class='add_message' id='"+id+"_add_msg'><img src='../images/add_message.png'></img></a>");
-		// $(messages).append(add_message);
-		// $(add_message).click(function(){
-		// 	var user = prompt("What name do you want to use ?");
-		// 	if(user){
-		// 		var msg = prompt("Enter your message");
-		// 		if(msg){
-		// 			orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
-		// 		}
-		// 	}
-		// });
-		// 
-		// $(container).append(messages);
-		// 
-		// if(a_row.messages)
-		// for(var i = 0; i < a_row.messages.length; i++){
-		// 	var message = a_row.messages[i];
-		// 	var message = orgnzit.UI.render_message(message);
-		// 	$(messages).append(message);
-		// }
-		// 
-		// $(message_toggle).click(function(){
-		// 	var messages = $('.messages',$(this).parent());
-		// 	if($(messages).hasClass('show')) $(messages).removeClass('show');
-		// 	else $(messages).addClass('show');
-		// });
+		var add_message = $("<textarea class='conversation-text' id='"+id+"_add_msg'></textarea><input data-id='"+id+"' id='"+id+"_post_msg' type='submit' value='Post' />");
+		$(messages).append(add_message);
+		$("#"+id+"_post_msg").live("click", function(){
+			id = $(this).data("id");
+			msg = $(this).siblings(".conversation-text").val();
+			user = "Chevreuil Rapide";
+			if(msg.length > 0) {
+				orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
+			}
+		});
 		
 		return row;
 	},
 	
 	post_message: function(data, row){
 		var message = orgnzit.UI.render_message(data);
-		$("#" + row + "_messages").append(message);
+		message.insertBefore($("#" + row + "_messages").find(".conversation-text"));
+		this.refresh_messages("#" + row + "_messages");
 	},
 	
 	render_message: function(data){
@@ -148,22 +139,23 @@ orgnzit.UI = {
 	update_cell : function(data){
 		var new_cell = orgnzit.UI.render_cell(data),
 			_cell = $("#" + data.id);
-		$(_cell).html($(new_cell).html());
+		
+		_cell.html($(new_cell).html());
 	},
 	
 	update_col : function(data){
 		var new_col = orgnzit.UI.render_col(data),
 			_col = $("#" + data.id);
-		$(_col).replaceWith(new_col);
+		
+		_col.replaceWith(new_col);
 	},
 	
 	bind_click: function(cell){
 		$(cell).click(function(){
 			var that = this;
-			if($(cell).hasClass('locked')){
+			if($(cell).hasClass('locked')) {
 				orgnzit.socket.emit('request_unlock', $(this).attr("id"));
-			}
-			else{
+			} else {
 				$(".editor").each(function(){
 					var id = $(this).parent().attr("id");
 					if(id != $(that).attr("id")) orgnzit.socket.emit('request_unlock', id);
@@ -177,7 +169,7 @@ orgnzit.UI = {
 	unlock : function(data){
 		id = data.id;
 		var _cell = $("#"+id);
-		$(_cell).removeClass("locked mine");
+		$(_cell).removeClass("locked s-focus");
 		$('.remove_col',$(_cell)).remove();
 		
 		if(orgnzit.editing === id){
@@ -202,27 +194,28 @@ orgnzit.UI = {
 		id = data.id;
 		var _cell = $("#"+id),
 			val = $(_cell).html(),
-			textarea = $("<textarea id='edit_"+id+"' class='editor'>"+val+"</textarea>"),
-			pos = $(_cell).offset();
+			editor = $('<input id="edit_"'+id+'" class="editor" value="'+val+'" />');
 
-		$(_cell).addClass("mine").html("").append(textarea);
+		_cell.addClass("s-focus").html("").append(editor);
 		
-		$(textarea).focus().click(function(){
-			return false;
-		});
-		$(textarea).keyup(function(){
-			orgnzit.socket.emit('ping', id);
-		});
-		
-		$(textarea).css( {"left":pos.left + 60, "top":pos.top + 15} );
+		editor
+			.focus()
+			.click(function(){ return false; })
+			.keyup(function(){ orgnzit.socket.emit('ping', id); });
 		
 		if($(_cell).hasClass('col')){
 			var delete_col = $("<a id='delete_"+id+"' class='delete_col'><img src='../images/delete-icon.png'></img></a>");
-			$(delete_col).click(function(){
+			
+			delete_col.click(function(){
 				orgnzit.socket.emit('delete_col', id);
 			});
 			$(_cell).append(delete_col);
 		}
+		this.refresh_messages($(_cell).siblings(".controls").find(".messages"));
+	},
+	
+	refresh_messages : function(messages){
+		$("#active-conversations").html($(messages).html());
 	},
 	
 	refresh_locked : function(){
