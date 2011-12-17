@@ -4,6 +4,13 @@
 orgnzit = {};
 
 /*
+	Template methods
+*/
+var tpl = {
+	del_row : _.template("<a id='delete_<%=id%>' class='delete_row'><img src='../images/delete-icon.png'></img></a>")
+};
+
+/*
 	UI methods
 */
 orgnzit.UI = {
@@ -12,6 +19,7 @@ orgnzit.UI = {
 	
 	// Initialize table */
 	init: function(callback){
+	  
 		for(var i = 0; i < orgnzit.doc.cols.length; i++){
 			var a_col = orgnzit.doc.cols[i],
 				col = orgnzit.UI.render_col(a_col);
@@ -26,6 +34,7 @@ orgnzit.UI = {
 		$("html").click(function(){
 			if(orgnzit.editing != null) orgnzit.socket.emit('request_unlock', orgnzit.editing);
 		});
+		
 		callback();
 	},
 	
@@ -70,7 +79,8 @@ orgnzit.UI = {
 		var row = $("<div class='row' id='"+id+"'></div>");
 		$(container).append(row);
 		
-		var delete_row = $("<a id='delete_"+id+"' class='delete_row'><img src='../images/delete-icon.png'></img></a>");
+    var delete_row = $(tpl.del_row({id:id}));
+    // var delete_row = $("<a id='delete_"+id+"' class='delete_row'><img src='../images/delete-icon.png'></img></a>");
 		$(delete_row).click(function(){
 			orgnzit.socket.emit('delete_row', id);
 			return false;
