@@ -300,52 +300,57 @@ input:focus, textarea:focus, select:focus {
 }
 /* line 16, frontend/layouts/_table.scss */
 #table tr:nth-child(even) th.s-focus, #table tr:nth-child(even) td.s-focus {
-  background: #c6d2b6;
+  background: #eaeaea;
 }
 /* line 24, frontend/layouts/_table.scss */
 #table th, #table td {
   border-right: 1px solid #acacac;
   border-bottom: 1px solid #acacac;
   position: relative;
+  margin: 0;
+  padding: 0;
   width: 300px;
   height: 48px;
 }
-/* line 30, frontend/layouts/_table.scss */
+/* line 31, frontend/layouts/_table.scss */
 #table th:last-child, #table td:last-child {
   border-right: none;
 }
-/* line 35, frontend/layouts/_table.scss */
+/* line 36, frontend/layouts/_table.scss */
 #table th {
   background: #acacac;
 }
-/* line 41, frontend/layouts/_table.scss */
+/* line 42, frontend/layouts/_table.scss */
 #table td.locked {
   background: #d4bdb6;
 }
-/* line 45, frontend/layouts/_table.scss */
+/* line 46, frontend/layouts/_table.scss */
 #table td.s-focus {
-  background: #c6d2b6;
-  outline: 1px solid #9aa58c;
+  background: #f3f3f3;
 }
-/* line 51, frontend/layouts/_table.scss */
+/* line 50, frontend/layouts/_table.scss */
+#table td.s-focus .editor {
+  outline: 2px solid #ed538f;
+}
+/* line 56, frontend/layouts/_table.scss */
 #table thead {
   display: block;
   height: 48px;
 }
-/* line 55, frontend/layouts/_table.scss */
+/* line 60, frontend/layouts/_table.scss */
 #table thead tr {
   position: fixed;
   top: 0;
   left: 0;
   height: 48px;
 }
-/* line 62, frontend/layouts/_table.scss */
+/* line 67, frontend/layouts/_table.scss */
 #table .delete_col {
   position: absolute;
   top: 12px;
   right: 12px;
 }
-/* line 67, frontend/layouts/_table.scss */
+/* line 72, frontend/layouts/_table.scss */
 #table .editor {
   background: transparent;
   border: none;
@@ -357,7 +362,7 @@ input:focus, textarea:focus, select:focus {
   margin: 0;
   padding: 6px 12px;
   width: 100%;
-  height: 36px;
+  height: 48px;
 }
 
 /* line 1, frontend/modules/_messages.scss */
