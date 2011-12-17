@@ -11,7 +11,6 @@ $(function() {
 
         $('#table tbody tr:first td').each(function() {
             $th.eq(i).width( $(this).width() );
-            console.log(i);
             i += 1;
         });
     }).trigger('resize');

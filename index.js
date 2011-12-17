@@ -215,16 +215,11 @@ io.sockets.on('connection', function (socket) {
 	
 	socket.on('post_message', function(data){
 	  console.log(data);
-	  var user = utils.getUserinfo(data.user);
+	  //var user = utils.getUserinfo(data.user);
 		the_doc = new doc(socket.room, function(){
 			the_doc.post_message(data, function(){
 				var token = utils.rand();
-	  console.log('*********');
-	  console.log(user);
 				data['token'] = token;
-				data['user'] = new Array();
-				data['user']['_id'] = 666;
-				data['user']['name'] = 'Mean mouse';
 				io.sockets.in(socket.room).emit('post_message', data);
 			});
 		});
