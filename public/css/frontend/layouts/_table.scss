@@ -25,6 +25,10 @@
         }
     }
 
+    th {
+        background: $grey;
+    }
+
     td {
         &.s-focus {
             @include single-box-shadow(#FFF, 0, 0, 0, 1px, inset);

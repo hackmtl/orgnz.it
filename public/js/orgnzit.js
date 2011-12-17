@@ -19,7 +19,7 @@ orgnzit.UI = {
 	
 	// Initialize table */
 	init: function(callback){
-	  
+	  	
 		for(var i = 0; i < orgnzit.doc.cols.length; i++){
 			var a_col = orgnzit.doc.cols[i],
 				col = this.render_col(a_col);
@@ -68,7 +68,7 @@ orgnzit.UI = {
 	
 	render_col: function(a_col){
 		var id = a_col.id;
-		var col = $("<th class='col' id='"+id+"'></div>");
+		var col = $("<th class='col' id='"+id+"'></th>");
 		$(col).html(a_col.name);
 		orgnzit.UI.bind_click(col);
 		return col;
@@ -76,7 +76,7 @@ orgnzit.UI = {
 	
 	render_row: function(a_row){
 		var id = a_row.id;
-		var row = $("<tr class='row' id='"+id+"'></div>");
+		var row = $("<tr class='row' id='"+id+"'></tr>");
 		
     	var delete_row = $(tpl.del_row({id:id}));
 		
@@ -129,9 +129,12 @@ orgnzit.UI = {
 	},
 	
 	render_cell: function(data, col){
-		var col_id = (col >= 0) ? orgnzit.doc.cols[col].id : "";
-		var cell = $("<td class='cell col_"+col_id+"' id='" + data.id + "'></div>");
-		$(cell).html(data.value) // ! other types of data (i.e: dropdowns) will need to render accordingly
+		var col_id = (col >= 0) ? orgnzit.doc.cols[col].id : "",
+			cell = $("<td class='cell col_"+col_id+"' id='" + data.id + "'></td>"),
+			editor = $('<input class="editor" value="'+data.value+'" readonly="readonly" />');
+		
+
+		$(cell).append(editor) // ! other types of data (i.e: dropdowns) will need to render accordingly
 		orgnzit.UI.bind_click(cell);
 		return cell;
 	},
@@ -151,16 +154,20 @@ orgnzit.UI = {
 	},
 	
 	bind_click: function(cell){
-		$(cell).click(function(){
-			var that = this;
-			if($(cell).hasClass('locked')) {
-				orgnzit.socket.emit('request_unlock', $(this).attr("id"));
+		var $cell = $(cell);
+
+		$cell.children('.editor').on('focus click', function(){
+			var that = this,
+				cellId = $cell.attr('id');
+
+			if($cell.hasClass('locked')) {
+				orgnzit.socket.emit('request_unlock', cellId);
 			} else {
-				$(".editor").each(function(){
+				$(".editor:not([readonly])").each(function(){
 					var id = $(this).parent().attr("id");
-					if(id != $(that).attr("id")) orgnzit.socket.emit('request_unlock', id);
+					if(id != cellId) orgnzit.socket.emit('request_unlock', id);
 				});
-				orgnzit.socket.emit('request_lock', $(this).attr("id"));
+				orgnzit.socket.emit('request_lock', cellId);
 			}
 			return false;
 		});
@@ -193,16 +200,20 @@ orgnzit.UI = {
 	edit : function(data){
 		id = data.id;
 		var _cell = $("#"+id),
-			val = $(_cell).html(),
-			editor = $('<input id="edit_"'+id+'" class="editor" value="'+val+'" />');
+			editor = $(_cell).children('input'),
+			val = editor.val();
 
-		_cell.addClass("s-focus").html("").append(editor);
+		_cell.addClass("s-focus");
+
+		// .html("").append(editor);
 		
 		editor
+			.removeAttr('readonly')
 			.focus()
 			.click(function(){ return false; })
 			.keyup(function(){ orgnzit.socket.emit('ping', id); });
 		
+
 		if($(_cell).hasClass('col')){
 			var delete_col = $("<a id='delete_"+id+"' class='delete_col'><img src='../images/delete-icon.png'></img></a>");
 			
