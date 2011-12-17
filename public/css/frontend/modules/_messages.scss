@@ -1,0 +1,34 @@
+#active-conversations {
+    padding: lh();
+
+    textarea {
+        border: 2px solid $grey;
+        @include border-radius(4px);
+        @include box-sizing("border-box");
+        margin: lh() 0; padding: lh(.5);
+        width: 100%;
+    }
+
+    input[type=submit] {
+        float: right;
+    }
+}
+
+.message {
+    border-bottom: 1px solid $grey;
+    @include clearfix;
+    margin: 0 0 lh() - 1px; padding: 0 0 lh();
+
+    p {
+        margin: 0;
+    }
+
+    a {
+       color: $grey; 
+    }
+
+    .user {
+        font-style: italic;
+        float: right;
+    }
+}
