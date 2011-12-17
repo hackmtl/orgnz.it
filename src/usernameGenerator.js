@@ -37,7 +37,7 @@ usernameGenerator.prototype = {
       for (i=0; (i < rndAnim.length && i < rndAdj.length );i = i+1)
       { 
 	  data = {name: (rndAdj[i] + " " + rndAnim[i]), taken:false}
-	  toto = db.usernames.update(data,data,true)
+	  toto = db.update(data,data,{ upsert : true })
 	  console.log(toto)
       }
       
@@ -46,7 +46,10 @@ usernameGenerator.prototype = {
   randomizeArray: function(orderedList)
   {
     var rndList = [];
-    var tmpList = orderedList;
+    var tmpList = [];
+    for(i =0; i< orderedList.length; i= i+1)
+	tmpList.push(orderedList[i]);
+
     while(tmpList.length > 0)
     { 
       var idx = Math.floor(Math.random()*tmpList.length)
