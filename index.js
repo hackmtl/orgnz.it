@@ -4,7 +4,7 @@ var express = require('express'),
 	sio = require('socket.io'),
 	documents = require('./src/documents'),
 	doc = require('./src/document'),
-        usernameGenerator = require('./src/usernameGenerator'),
+  usernameGenerator = require('./src/usernameGenerator'),
 	user = require('./src/user'),
 	users = require('./src/users'),
 	monitor = require('./src/activityMonitor').monitor,
@@ -42,7 +42,6 @@ app.get('/docs', function(req, res) {
 app.get('/users', function(req, res) {
   // return native mongodb row, should filter
   user_list = new users(function() {
-console.log(user_list);
     res.render('users', {
       users : user_list,
       layout : false
@@ -52,7 +51,6 @@ console.log(user_list);
 
 app.get('/usernameGenerator', function(req, res) {
    generator = new usernameGenerator(function() {
-       console.log("generator")
        res.render('usernameGenerator', {
       layout : false
     });
@@ -72,8 +70,6 @@ app.get('/doc/:id/json',function(req,res){
     res.send(the_doc);
   });
 });
-
-
 
 /* Start web server */
 app.listen(3001);
@@ -218,6 +214,8 @@ io.sockets.on('connection', function (socket) {
 	});
 	
 	socket.on('post_message', function(data){
+	  console.log(data);
+	  //var user = utils.getUserinfo(data.user);
 		the_doc = new doc(socket.room, function(){
 			the_doc.post_message(data, function(){
 				var token = utils.rand();
