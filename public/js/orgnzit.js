@@ -7,7 +7,7 @@ orgnzit = {};
 	Template methods
 */
 var tpl = {
-	del_row : _.template("<td><a id='delete_<%=id%>' class='delete_row'><img src='../images/delete-icon.png'></img></a></td>")
+	del_row : _.template("<td class='controls'><a id='delete_<%=id%>' class='delete_row'><img src='../images/delete-icon.png'></img></a></td>")
 };
 
 /*
@@ -45,19 +45,19 @@ orgnzit.UI = {
 	},
 	
 	delete_row: function(id){
-		$("#"+id).parent().remove();
+		$("#"+id).remove();
 	},
 	
 	insert_col: function(data){
 		// add column header
 		var col = orgnzit.UI.render_col(data.col);
-		$(cols).append(col);
+		col.insertBefore(this.cols + " .controls");
 		
 		rows = $(".row");
 		// add cells to each row
 		for(var i = 0; i < data.cells.length; i++){
 			var cell = orgnzit.UI.render_cell(data.cells[i], orgnzit.doc.cols.length - 1);
-			$(rows[i]).append(cell);
+			$(cell).insertBefore($(rows[i]).find(".controls"));
 		}
 	},
 	
