@@ -1,0 +1,130 @@
+
+// COLORS
+// ---------------------------------------------
+
+// grey scheme
+$grey                       : #e3e3e3;
+$dark-grey                  : #333;
+
+$orange: red;
+
+// success scheme
+$success-background       : #c6d2b6;
+$success-border           : #9aa58c;
+$success-text             : #33451C;
+
+// error scheme
+$error-background         : #d4bdb6;
+$error-border             : #ad8f86;
+$error-text               : #80584D;
+
+// notice scheme
+$notice-background        : #d4d4b6;
+$notice-border            : #adac85;
+$notice-text              : #737230;
+
+// info scheme
+$info-background          : #B5D4D1;
+$info-border              : #86ACA9;
+$info-text                : #406864;
+
+
+// layout
+$background               : $grey;
+
+$focus-color			  : $orange;
+
+$text                     : $dark-grey;
+$text-strong              : #000;
+$title                    : $dark-grey;
+$error                    : #f32639;
+$success                  : #99cc33;
+
+$link                     : $orange;
+$link-hover               : $orange;
+$link-active              : $orange;
+
+
+// Z-INDEX
+// ---------------------------------------------
+
+// Over 1000, over anything on the page (popup)
+$z-page-overlay: 1000;
+$z-page-popup: 1100;
+
+$z-high     : 9000;
+$z-highest  : 10000;
+
+
+// TYPOGRAPHY
+// ---------------------------------------------
+
+// baseline
+$base-font-size         : 16px;
+$base-line-height       : 24px;
+
+// font families
+$font-serif:  "Times New Roman", serif;
+$font-sans:   Helvetica, Verdana, Arial, sans-serif;
+$font-heading:  $font-sans;
+
+// font size
+$font-scale:    1.2;
+$font-large:    $base-font-size;
+$font-xlarge:   round($font-large * $font-scale);
+$font-xxlarge:  round($font-xlarge * $font-scale);
+$font-medium:   round($font-large / $font-scale);
+$font-small:    round($font-medium / $font-scale);
+$font-xsmall:   round($font-small / $font-scale);
+$font-xxsmall:  round($font-xsmall / $font-scale );
+
+// SPRITE
+// ---------------------------------------------
+
+// sprite
+$sprite:              url("../images/layout/sprite.png");
+
+$s-applicants:        0 0;
+$s-edit:              -25px 0;
+$s-page:              -50px 0;
+$s-delete:            -75px 0;
+$s-submit:            -100px 0;
+
+$s-applicants-hover:  0 -25px;
+$s-edit-hover:        -25px -25px;
+$s-page-hover:        -50px -25px;
+$s-delete-hover:      -75px -25px;
+$s-submit-hover:      -100px -25px;
+
+$s-success:           0 -75px;
+$s-error:             -25px -75px;
+$s-notice:            -50px -75px;
+$s-en:                -75px -75px;
+$s-fr:                -100px -75px;
+
+
+
+// sprite-h
+$sprite-h             : url("../images/layout/sprite-h.png");
+
+// buttons one line -12px
+$s-b1l-add            : 4px 0 - 14px;
+$s-b1l-delete         : 4px -50px - 14px;
+$s-b1l-submit         : 4px -100px - 14px;
+$s-b1l-update         : 4px -150px - 14px;
+
+// buttons two lines -6px
+$s-b15l-add           : 4px 0 - 8px;
+$s-b15l-delete        : 4px -50px - 9px;
+$s-b15l-submit        : 4px -100px - 9px;
+$s-b15l-update        : 4px -150px - 9px;
+
+// buttons two lines full
+$s-b2l-add            : 4px 0 - 2px;
+$s-b2l-delete         : 4px -50px - 2px;
+$s-b2l-submit         : 4px -100px - 2px;
+$s-b2l-update         : 4px -150px - 2px;
+
+// arrows
+$s-arrow-top-left     : 0 -400px;
+

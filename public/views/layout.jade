@@ -2,21 +2,63 @@
 html
 	head
 		title Orgnz.it
-		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js")
+		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
 		//script(src="../../js/jquery-1.3.2.min.js")
 		script(src="../../socket.io/socket.io.js")
+		script(src="../../js/layout.js")
 		script(src="../../js/orgnzit.js")
 		script(src="../../js/socket.js")
-		link(rel="stylesheet", type="text/css", href="/css/orgnzit.css")
+		link(rel="stylesheet", type="text/css", href="/css/frontend.css")
 	
 	body
-		div#menu
-			a#addRow Row++
-			a#addCol Col++
 	
-		div#doc
+		div#page-body
+
+			table#table
+				tr#table-header
+					th Col1
+					th Col2
+					th Col3
+					th Col4
+				tr.row
+					td Val1-1
+					td Val1-2
+					td Val1-3
+					td Val1-4
+				tr.row
+					td Val2-1
+					td Val2-2
+					td Val2-3
+					td Val2-4
+				tr.row
+					td Val3-1
+					td Val3-2
+					td Val3-3
+					td Val3-4
+				tr.row
+					td Val4-1
+					td Val4-2
+					td Val4-3
+					td Val4-4
+				tr.row
+					td Val5-1
+					td Val5-2
+					td Val5-3
+					td Val5-4
+				tr.row
+					td Val6-1
+					td Val6-2
+					td Val6-3
+					td Val6-4
+				
 			div#cols
 			div#rows
+
+			a#addRow Row++
+			a#addCol Col++
+
+		div#page-sidebar
+			
 		
 		script
 			var set_doc = function(data){

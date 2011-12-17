@@ -1,0 +1,118 @@
+
+// TITLES
+// ---------------------------------------------
+h1, h2, h3, h4 {
+  color: $title;
+  font-family: $font-heading;
+  letter-spacing: 1px;
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  @include adjust-font-size-to($font-xlarge);
+  // @include leader(2, $font-heading-xxlarge);
+  // @include trailer(1, $font-heading-xxlarge);
+}
+
+h2 {
+  @include adjust-font-size-to($font-large);
+  margin: 0;
+}
+
+h3 {
+  @include adjust-font-size-to($font-medium);
+}
+
+h4 {
+  @include adjust-font-size-to($font-small);
+}
+
+
+// PARAGRAPHS
+// ---------------------------------------------
+p {
+  @include adjust-font-size-to($font-medium);
+  @include leader(1, $font-medium);
+  @include trailer(1, $font-medium);
+}
+strong { font-weight: bold; }
+em { font-style: italic; }
+
+
+// LINKS
+// ---------------------------------------------
+a {
+  color: $link;
+  cursor: pointer;
+  text-decoration: none;
+  
+  &:hover {
+    color: $link-hover;
+  }
+}
+
+
+// LISTS
+// ---------------------------------------------
+ul {
+  @include adjust-font-size-to($font-medium);
+  list-style: disc;
+
+
+  @include leader(1, $font-medium);
+  @include trailer(1, $font-medium);
+
+  & > li {
+    
+  }
+}
+
+dl {
+  margin: 0; padding: 0;
+
+  dt, dd {
+    @include adjust-font-size-to($font-medium);
+    margin: 0; padding: 0;
+  }
+}
+
+
+// ABBR
+// ---------------------------------------------
+abbr {
+  font-variant: small-caps;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+}
+
+
+// QUOTES
+// ---------------------------------------------
+blockquote {
+  font-style: italic;
+  margin: $base-line-height 0 0 50px;
+  
+  &:before, &:after {
+    font-family: $font-sans;
+    color: #CCC;
+    font-size: 50px;
+    float: left;
+  }
+  &:before {
+    content: '“';
+    margin-top: 0px;
+    margin-left: -30px;
+  }
+    
+  cite {
+    font-family: $font-sans;
+    font-style: normal;
+    text-align: right;
+    display: block;
+  }
+}
+
+q {
+  
+}
