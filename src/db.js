@@ -45,3 +45,9 @@ proxy.update = function(data,callback){
 	callback();
 }
 
+proxy.all = function (callback) {
+  coll.find({}, function(reply) {
+    callback(reply.documents);
+  });
+}
+
