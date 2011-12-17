@@ -2,8 +2,10 @@
 
 var express = require('express'),
 	sio = require('socket.io'),
+	documents = require('./src/documents'),
 	doc = require('./src/document'),
 	user = require('./src/user'),
+	// users = require('./src/users'),
 	monitor = require('./src/activityMonitor').monitor,
 	utils = require('./src/utils').utils;
 
@@ -23,23 +25,36 @@ app.set('views', pub + "/views");
 	Routing
 */
 app.get('/', function(req, res){
-	new_doc = new doc(null,function(){
-		res.redirect('/doc/' + new_doc.id, 301) // redirect to /new_doc
-	});
+	res.redirect('/docs', 301);
+});
+
+app.get('/docs', function(req, res) {
+  docs = new documents(function() {
+    res.render('documents', {
+      docs : docs
+    });
+  });
 });
 
 app.get('/doc/:id',function(req,res){
 	the_doc = new doc(req.params.id, function(){
-		if(!req.params.format) // render html
-		res.render('layout',{ id: the_doc.id });
+		if(!req.params.format) {
+  		res.render('layout',{ id: the_doc.id });
+    }
 	});
 });
 
 app.get('/doc/:id/json',function(req,res){
-	the_doc = new doc(req.params.id, function(){
-		res.send(the_doc);
-	});
+  the_doc = new doc(req.params.id, function(){
+    res.send(the_doc);
+  });
 });
+
+// app.get('/users',function(req,res){
+  // users = new users(function(){
+    // res.send(users);
+  // });
+// });
 
 /* Start web server */
 app.listen(3001);
