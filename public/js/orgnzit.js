@@ -108,9 +108,16 @@ orgnzit.UI = {
 		$("#"+id+"_post_msg").live("click", function(){
 			id = $(this).data("id");
 			msg = $(this).siblings(".conversation-text").val();
-			user = "Marc";
 			if(msg.length > 0) {
-				orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
+				if(typeof(localStorage["userId"])=="undefined"){
+					var user = prompt("What name do you want to use ?");
+				} else {
+					var user = localStorage["userId"];
+				}
+				if(user){
+					localStorage["userId"] = user
+					orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
+				}
 			}
 		});
 		
