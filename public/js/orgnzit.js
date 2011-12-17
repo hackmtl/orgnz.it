@@ -7,28 +7,29 @@ orgnzit = {};
 	Template methods
 */
 var tpl = {
-	del_row : _.template("<a id='delete_<%=id%>' class='delete_row'><img src='../images/delete-icon.png'></img></a>")
+	del_row : _.template("<td><a id='delete_<%=id%>' class='delete_row'><img src='../images/delete-icon.png'></img></a></td>")
 };
 
 /*
 	UI methods
 */
 orgnzit.UI = {
-	cols : $("#cols"),
-	rows : $("#table"),
+	cols : "#table thead tr",
+	rows : "#table tbody",
 	
 	// Initialize table */
 	init: function(callback){
 	  
 		for(var i = 0; i < orgnzit.doc.cols.length; i++){
 			var a_col = orgnzit.doc.cols[i],
-				col = orgnzit.UI.render_col(a_col);
-			$(cols).append(col);
+				col = this.render_col(a_col);
+			$(this.cols).append(col);
 		}
+		$(this.cols).append("<th class='controls' />")
 		
 		for(var i = 0; i < orgnzit.doc.rows.length; i++){
 			var row = orgnzit.doc.rows[i];
-			orgnzit.UI.insert_row(row);
+			this.insert_row(row);
 		}
 		
 		$("html").click(function(){
@@ -40,8 +41,7 @@ orgnzit.UI = {
 	
 	insert_row: function(row){
 		row = orgnzit.UI.render_row(row);
-		console.log(row);
-		this.rows.append(row);
+		$(this.rows).append(row);
 	},
 	
 	delete_row: function(id){
@@ -51,7 +51,7 @@ orgnzit.UI = {
 	insert_col: function(data){
 		// add column header
 		var col = orgnzit.UI.render_col(data.col);
-		$("#cols").append(col);
+		$(cols).append(col);
 		
 		rows = $(".row");
 		// add cells to each row
@@ -68,7 +68,7 @@ orgnzit.UI = {
 	
 	render_col: function(a_col){
 		var id = a_col.id;
-		var col = $("<div class='col' id='"+id+"'></div>");
+		var col = $("<th class='col' id='"+id+"'></div>");
 		$(col).html(a_col.name);
 		orgnzit.UI.bind_click(col);
 		return col;
@@ -76,55 +76,53 @@ orgnzit.UI = {
 	
 	render_row: function(a_row){
 		var id = a_row.id;
-		var container = $("<div id='"+id+"_container' class='container'><div>");
-		var row = $("<div class='row' id='"+id+"'></div>");
-		$(container).append(row);
+		var row = $("<tr class='row' id='"+id+"'></div>");
 		
     var delete_row = $(tpl.del_row({id:id}));
-    // var delete_row = $("<a id='delete_"+id+"' class='delete_row'><img src='../images/delete-icon.png'></img></a>");
 		$(delete_row).click(function(){
 			orgnzit.socket.emit('delete_row', id);
 			return false;
-		});
-		$(container).append(delete_row);
-		
-		var message_toggle = $("<a class='toggle_msg'><img src='../images/message.png'></img></a>");
-		$(container).append(message_toggle);
-		
-		var messages = $("<div class='messages' id='"+id+"_messages'></div>");
-		var add_message = $("<a class='add_message' id='"+id+"_add_msg'><img src='../images/add_message.png'></img></a>");
-		$(messages).append(add_message);
-		$(add_message).click(function(){
-			var user = prompt("What name do you want to use ?");
-			if(user){
-				var msg = prompt("Enter your message");
-				if(msg){
-					orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
-				}
-			}
-		});
-		
-		$(container).append(messages);
-		
-		if(a_row.messages)
-		for(var i = 0; i < a_row.messages.length; i++){
-			var message = a_row.messages[i];
-			var message = orgnzit.UI.render_message(message);
-			$(messages).append(message);
-		}
-		
-		$(message_toggle).click(function(){
-			var messages = $('.messages',$(this).parent());
-			if($(messages).hasClass('show')) $(messages).removeClass('show');
-			else $(messages).addClass('show');
 		});
 		
 		for(var i = 0; i < a_row.cells.length; i++){
 			var a_cell = a_row.cells[i];
 			var cell = orgnzit.UI.render_cell(a_cell, i); 
 			$(row).append(cell);
-		}
-		return container;
+		}		
+		$(row).append(delete_row);
+		
+		// var message_toggle = $("<a class='toggle_msg'><img src='../images/message.png'></img></a>");
+		// $(container).append(message_toggle);
+		
+		// var messages = $("<div class='messages' id='"+id+"_messages'></div>");
+		// var add_message = $("<a class='add_message' id='"+id+"_add_msg'><img src='../images/add_message.png'></img></a>");
+		// $(messages).append(add_message);
+		// $(add_message).click(function(){
+		// 	var user = prompt("What name do you want to use ?");
+		// 	if(user){
+		// 		var msg = prompt("Enter your message");
+		// 		if(msg){
+		// 			orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
+		// 		}
+		// 	}
+		// });
+		// 
+		// $(container).append(messages);
+		// 
+		// if(a_row.messages)
+		// for(var i = 0; i < a_row.messages.length; i++){
+		// 	var message = a_row.messages[i];
+		// 	var message = orgnzit.UI.render_message(message);
+		// 	$(messages).append(message);
+		// }
+		// 
+		// $(message_toggle).click(function(){
+		// 	var messages = $('.messages',$(this).parent());
+		// 	if($(messages).hasClass('show')) $(messages).removeClass('show');
+		// 	else $(messages).addClass('show');
+		// });
+		
+		return row;
 	},
 	
 	post_message: function(data, row){
@@ -140,8 +138,8 @@ orgnzit.UI = {
 	},
 	
 	render_cell: function(data, col){
-		var col_id = (col) ? orgnzit.doc.cols[col].id : "";
-		var cell = $("<div class='cell col_"+col_id+"' id='" + data.id + "'></div>");
+		var col_id = (col >= 0) ? orgnzit.doc.cols[col].id : "";
+		var cell = $("<td class='cell col_"+col_id+"' id='" + data.id + "'></div>");
 		$(cell).html(data.value) // ! other types of data (i.e: dropdowns) will need to render accordingly
 		orgnzit.UI.bind_click(cell);
 		return cell;
