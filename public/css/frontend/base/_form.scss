@@ -1,0 +1,112 @@
+form {
+  margin: 0; padding: 0;
+
+  & > div {
+    @include pie-clearfix;
+    margin: lh() 0;
+  }
+}
+  
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 0 lh(1.5) - 1px;
+  padding: lh() 12px 12px;
+
+  & > div {
+    margin: 0 0 lh() 0;
+  }
+}
+
+legend {
+}
+
+label, .label {
+  @include adjust-font-size-to($font-medium);
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  @include adjust-font-size-to($font-medium);
+  @include box-sizing("border-box");
+  margin: 0; padding: 0;
+}
+
+
+// BUTTONS
+// ---------------------------------------------
+button,
+input[type="button"], 
+input[type="reset"], 
+input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button; // make clickable input stylable in iOS
+  *overflow: visible; // Fix inner spacing in IE7
+}
+
+
+// FORM ELEMENTS WITH CONTENT
+// ---------------------------------------------
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+textarea {
+  $padding: lh() - $font-medium - 2px;
+  
+  border: 1px solid black;
+  line-height: $font-medium + 2px;
+
+  display: block;
+  padding: $padding / 2 lh(.5);
+  height: lh();
+}
+
+textarea {
+  overflow: auto; // removes v-scroll in IE6-9
+  vertical-align: top; // improve readability
+
+  min-height: lh(4);
+}
+
+input[type="search"] {
+  -webkit-appearance: textfield; // Fix searchfield appearance in S5 and Ch
+}
+
+
+// RADIO - CHECKBOXES
+// ---------------------------------------------
+input[type="checkbox"],
+input[type="radio"] {
+}
+
+
+// SELECT
+// ---------------------------------------------
+select {
+  cursor: pointer;
+}
+
+
+// Ignored Normalize.css rules
+// ---------------------------
+// button,
+// input {
+//   line-height: normal; // Addresses FF3/4 setting line-height on 'input' using !important in the UA stylesheet
+// }
+
+// input[type="search"]::-webkit-search-decoration {
+//   // Corrects inner padding displayed oddly in S5, Chrome on OSX
+//   -webkit-appearance: none;
+// }
+
+// button::-moz-focus-inner,
+// input::-moz-focus-inner {
+//   // Corrects inner padding and border displayed oddly in FF3/4
+//   border: 0;
+//   padding: 0;
+// }

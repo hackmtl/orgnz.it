@@ -1,0 +1,26 @@
+
+// PSEUDO CLASS
+// ---------------------------------------------
+:focus { 
+  outline: none;
+  // outline-offset: 2px;
+}
+
+::-moz-selection,
+::selection {  }
+
+
+// 
+// ---------------------------------------------
+.s-hidden {
+	display: none !important;
+}
+
+
+.s-error {
+	
+}
+
+.s-notice {
+	
+}

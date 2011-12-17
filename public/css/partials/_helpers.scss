@@ -1,0 +1,30 @@
+
+// HELPERS
+// ---------------------------------------------
+@mixin font-size($to-size, $lines: lines-for-font-size($to-size), $from-size: $base-font-size) {
+	@include adjust-font-size-to($to-size, $lines, $from-size);
+}
+
+@function lh($n: 1, $line-height: $base-line-height) {
+  @return $line-height * $n;
+}
+
+@function alh($h) {
+  $lines: ceil($h / $base-line-height);
+  @return ($lines * $base-line-height) - $h;
+}
+
+@mixin text-input($n: 1, $side-padding: 4px, $font-size: $font-medium) {
+  $lines: ceil($n);
+
+  @if $lines != $n {
+    $margin: lh($lines - $n) / 2 0;
+  }
+  $padding: floor( lh($n) - $font-size - 2px );
+  
+  line-height: $font-size + 2px;
+  display: block;
+  float: left;
+  padding: $padding / 2 $side-padding;
+  height: lh($n);
+}

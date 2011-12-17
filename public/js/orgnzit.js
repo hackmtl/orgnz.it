@@ -15,7 +15,7 @@ var tpl = {
 */
 orgnzit.UI = {
 	cols : $("#cols"),
-	rows : $("#rows"),
+	rows : $("#table"),
 	
 	// Initialize table */
 	init: function(callback){
@@ -40,7 +40,8 @@ orgnzit.UI = {
 	
 	insert_row: function(row){
 		row = orgnzit.UI.render_row(row);
-		$("#rows").append(row);
+		console.log(row);
+		this.rows.append(row);
 	},
 	
 	delete_row: function(id){

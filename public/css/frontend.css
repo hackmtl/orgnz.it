@@ -1,0 +1,423 @@
+@charset "UTF-8";
+/* line 1, frontend/base/_viewport.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 6, frontend/base/_viewport.scss */
+body {
+  background: #e3e3e3;
+  color: #333333;
+  font-family: Helvetica, Verdana, Arial, sans-serif;
+  min-height: 100%;
+}
+
+/* line 53, ../../../../Users/kalema/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.alpha.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
+body {
+  font-size: 100%;
+  line-height: 1.5em;
+}
+
+/* line 57, ../../../../Users/kalema/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.alpha.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
+html > body {
+  font-size: 16px;
+}
+
+/* line 114, ../../../../Users/kalema/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.alpha.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 4, frontend/base/_text.scss */
+h1, h2, h3, h4 {
+  color: #333333;
+  font-family: Helvetica, Verdana, Arial, sans-serif;
+  letter-spacing: 1px;
+  text-rendering: optimizeLegibility;
+}
+
+/* line 11, frontend/base/_text.scss */
+h1 {
+  font-size: 1.188em;
+  line-height: 1.263em;
+}
+
+/* line 17, frontend/base/_text.scss */
+h2 {
+  font-size: 1em;
+  line-height: 1.5em;
+  margin: 0;
+}
+
+/* line 22, frontend/base/_text.scss */
+h3 {
+  font-size: 0.813em;
+  line-height: 1.846em;
+}
+
+/* line 26, frontend/base/_text.scss */
+h4 {
+  font-size: 0.688em;
+  line-height: 2.182em;
+}
+
+/* line 33, frontend/base/_text.scss */
+p {
+  font-size: 0.813em;
+  line-height: 1.846em;
+  margin-top: 1.846em;
+  margin-bottom: 1.846em;
+}
+
+/* line 38, frontend/base/_text.scss */
+strong {
+  font-weight: bold;
+}
+
+/* line 39, frontend/base/_text.scss */
+em {
+  font-style: italic;
+}
+
+/* line 44, frontend/base/_text.scss */
+a {
+  color: red;
+  cursor: pointer;
+  text-decoration: none;
+}
+/* line 49, frontend/base/_text.scss */
+a:hover {
+  color: red;
+}
+
+/* line 57, frontend/base/_text.scss */
+ul {
+  font-size: 0.813em;
+  line-height: 1.846em;
+  list-style: disc;
+  margin-top: 1.846em;
+  margin-bottom: 1.846em;
+}
+
+/* line 70, frontend/base/_text.scss */
+dl {
+  margin: 0;
+  padding: 0;
+}
+/* line 73, frontend/base/_text.scss */
+dl dt, dl dd {
+  font-size: 0.813em;
+  line-height: 1.846em;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 82, frontend/base/_text.scss */
+abbr {
+  font-variant: small-caps;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+}
+
+/* line 92, frontend/base/_text.scss */
+blockquote {
+  font-style: italic;
+  margin: 24px 0 0 50px;
+}
+/* line 96, frontend/base/_text.scss */
+blockquote:before, blockquote:after {
+  font-family: Helvetica, Verdana, Arial, sans-serif;
+  color: #CCC;
+  font-size: 50px;
+  float: left;
+}
+/* line 102, frontend/base/_text.scss */
+blockquote:before {
+  content: '“';
+  margin-top: 0px;
+  margin-left: -30px;
+}
+/* line 108, frontend/base/_text.scss */
+blockquote cite {
+  font-family: Helvetica, Verdana, Arial, sans-serif;
+  font-style: normal;
+  text-align: right;
+  display: block;
+}
+
+/* line 1, frontend/base/_form.scss */
+form {
+  margin: 0;
+  padding: 0;
+}
+/* line 4, frontend/base/_form.scss */
+form > div {
+  *zoom: 1;
+  margin: 24px 0;
+}
+/* line 38, ../../../../Users/kalema/.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.alpha.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+form > div:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* line 10, frontend/base/_form.scss */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 0 35px;
+  padding: 24px 12px 12px;
+}
+/* line 15, frontend/base/_form.scss */
+fieldset > div {
+  margin: 0 0 24px 0;
+}
+
+/* line 23, frontend/base/_form.scss */
+label, .label {
+  font-size: 0.813em;
+  line-height: 1.846em;
+  display: block;
+}
+
+/* line 31, frontend/base/_form.scss */
+button,
+input,
+select,
+textarea {
+  font-size: 0.813em;
+  line-height: 1.846em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 43, frontend/base/_form.scss */
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+  *overflow: visible;
+}
+
+/* line 58, frontend/base/_form.scss */
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+textarea {
+  border: 1px solid black;
+  line-height: 15px;
+  display: block;
+  padding: 4.5px 12px;
+  height: 24px;
+}
+
+/* line 69, frontend/base/_form.scss */
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  min-height: 96px;
+}
+
+/* line 76, frontend/base/_form.scss */
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+
+/* line 90, frontend/base/_form.scss */
+select {
+  cursor: pointer;
+}
+
+/* line 1, frontend/base/_table.scss */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+}
+
+/* line 1, frontend/layouts/_page.scss */
+#page {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 5, frontend/layouts/_page.scss */
+#page-sidebar {
+  background: #FFF;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+}
+
+/* line 12, frontend/layouts/_page.scss */
+#page-body {
+  overflow: auto;
+  min-height: 100%;
+}
+
+/* line 26, frontend/layouts/_page.scss */
+#doc .locked {
+  background: #ededed;
+}
+/* line 29, frontend/layouts/_page.scss */
+#doc .locked .mine {
+  background: #aaa;
+}
+/* line 32, frontend/layouts/_page.scss */
+#doc .locked textarea {
+  position: fixed;
+  width: 400px;
+  height: 60px;
+  border: 1px solid #000;
+  -webkit-box-shadow: 2px 2px 5px #000;
+  opacity: 0.9;
+  font-size: 1em;
+}
+
+/* line 43, frontend/layouts/_page.scss */
+#menu {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  float: left;
+  font-size: 1.2em;
+}
+
+/* line 50, frontend/layouts/_page.scss */
+#menu a {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  float: left;
+  margin-right: 20px;
+  text-shadow: 1px 1px #aaa;
+}
+
+/* line 1, frontend/layouts/_table.scss */
+#table {
+  padding-top: 48px;
+}
+/* line 4, frontend/layouts/_table.scss */
+#table th, #table td {
+  width: 300px;
+}
+/* line 9, frontend/layouts/_table.scss */
+#table #table-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 48px;
+}
+
+/* line 3, frontend/modules/_rows.scss */
+#rows .row {
+  float: left;
+}
+/* line 6, frontend/modules/_rows.scss */
+#rows .row .cell {
+  float: left;
+  width: 100px;
+  border: 1px solid #aaa;
+  padding: 5px;
+  margin: 2px;
+  font-size: 1em;
+  height: 1em;
+  overflow: hidden;
+}
+/* line 16, frontend/modules/_rows.scss */
+#rows .container {
+  float: left;
+  clear: left;
+}
+/* line 20, frontend/modules/_rows.scss */
+#rows .delete_row {
+  float: left;
+  font-size: 0.8em;
+  cursor: pointer;
+  margin-top: 10px;
+  color: #aaa;
+}
+/* line 27, frontend/modules/_rows.scss */
+#rows .toggle_msg {
+  float: left;
+  cursor: pointer;
+}
+/* line 31, frontend/modules/_rows.scss */
+#rows .toggle_msg img {
+  width: 30px;
+  margin-top: 2px;
+}
+/* line 35, frontend/modules/_rows.scss */
+#rows .messages {
+  float: left;
+  clear: left;
+  width: 100%;
+  min-height: 60px;
+  border: 1px dashed #aaa;
+  display: none;
+  margin-left: 2px;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+/* line 46, frontend/modules/_rows.scss */
+#rows .messages .add_message img {
+  float: right;
+  width: 30px;
+}
+/* line 50, frontend/modules/_rows.scss */
+#rows .messages.show {
+  display: block;
+}
+
+/* line 3, frontend/modules/_cols.scss */
+#cols .col {
+  background: #e3e9ff;
+  float: left;
+  width: 100px;
+  padding: 5px;
+  margin: 2px;
+  overflow: hidden;
+  height: 1em;
+  border: 1px solid #e3e9ff;
+}
+/* line 14, frontend/modules/_cols.scss */
+#cols .col.locked {
+  background: #ededed;
+}
+/* line 18, frontend/modules/_cols.scss */
+#cols .col.mine {
+  background: #aaaaaa;
+}
+/* line 21, frontend/modules/_cols.scss */
+#cols .delete_col {
+  position: relative;
+  cursor: pointer;
+}
+/* line 25, frontend/modules/_cols.scss */
+#cols .container {
+  clear: none;
+  float: left;
+}
+
+/* line 4, frontend/base/_states.scss */
+:focus {
+  outline: none;
+}
+
+/* line 15, frontend/base/_states.scss */
+.s-hidden {
+  display: none !important;
+}

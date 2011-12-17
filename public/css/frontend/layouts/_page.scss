@@ -1,0 +1,57 @@
+#page {
+  width: 100%; height: 100%;
+}
+
+#page-sidebar {
+    background: #FFF;
+    position: fixed;
+    top: 0; right: 0;
+    width: 300px; height: 100%;
+}
+
+#page-body {
+    overflow: auto;
+    min-height: 100%;
+}
+
+#page-content {
+
+}
+
+
+
+
+
+
+#doc .locked {
+    background: #ededed;
+
+    .mine {
+      background: #aaa;
+    }
+    textarea {
+      position: fixed;
+      width: 400px;
+      height: 60px;
+      border: 1px solid #000;
+      -webkit-box-shadow: 2px 2px 5px #000;
+      opacity: 0.9;
+      font-size: 1em;
+    }
+}
+
+#menu {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    float: left;
+    font-size: 1.2em;
+}
+#menu a {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    float: left;
+    margin-right: 20px;
+    text-shadow: 1px 1px #aaa;
+}
