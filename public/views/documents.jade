@@ -2,12 +2,33 @@
 html
   head
     title Orgnz.it
+    script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
     link(rel="stylesheet", type="text/css", href="/css/orgnzit.css")
 
   body
-    h1 User list :
+    h1 Documents list :
+    
+    #global_menu
+      ul
+        li 
+          a(href="/docs") Documents List
+        li
+          a(href="/doc") New Document
+        li Users List
+
+    #docs_list
+
+    !='<script>'
+    !='var docs = ' + JSON.stringify(docs)
+    !='</script>'
 
     script
-      var docs = function(row){
-        console.log(row);
-      }
+      out = '';
+      out += '<ul>';
+      $.each(docs, function(docNum, doc) {
+        out += '<li>';
+        out += '<a href="/doc/' + doc.id + '">' + doc.id + '</a>';
+        out += '</li>';
+      });
+      out += '</ul>';
+      $('#docs_list').html(out);
