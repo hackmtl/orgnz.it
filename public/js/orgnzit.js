@@ -101,7 +101,7 @@ orgnzit.UI = {
 			$(messages).append(message);
 		}
 		
-		var add_message = $("<textarea class='conversation-text' id='"+id+"_add_msg'></textarea><input data-id='"+id+"' id='"+id+"_post_msg' type='submit' value='Post' />");
+		var add_message = $("<textarea class='conversation-text' id='"+id+"_add_msg'></textarea><input data-id='"+id+"' id='"+id+"_post_msg' type=\"submit\" class=\"button\" value='Post' />");
 		$(messages).append(add_message);
 		$("#"+id+"_post_msg").live("click", function(){
 			id = $(this).data("id");
@@ -122,7 +122,7 @@ orgnzit.UI = {
 	},
 	
 	render_message: function(data){
-		var message = $("<div class='message'><a class='user'></a> wrote: <span class='msg'></span></div>");
+		var message = $("<div class='message'><p class='msg'></p><p><a class='user'></a></p></div>");
 		$('.user', message).html(data.user);
 		$('.msg', message).html(data.msg);
 		return message;
@@ -156,11 +156,13 @@ orgnzit.UI = {
 	bind_click: function(cell){
 		var $cell = $(cell);
 
-		$cell.children('.editor').on('focus click', function(){
+		$cell.on('focus click', '.editor', function(){
 			var that = this,
 				cellId = $cell.attr('id');
 
-			if($cell.hasClass('locked')) {
+			if($cell.hasClass('s-focus')) {
+				return false;
+			} else if($cell.hasClass('locked')) {
 				orgnzit.socket.emit('request_unlock', cellId);
 			} else {
 				$(".editor:not([readonly])").each(function(){
@@ -169,7 +171,6 @@ orgnzit.UI = {
 				});
 				orgnzit.socket.emit('request_lock', cellId);
 			}
-			return false;
 		});
 	},
 	
@@ -204,13 +205,9 @@ orgnzit.UI = {
 			val = editor.val();
 
 		_cell.addClass("s-focus");
-
-		// .html("").append(editor);
 		
 		editor
 			.removeAttr('readonly')
-			.focus()
-			.click(function(){ return false; })
 			.keyup(function(){ orgnzit.socket.emit('ping', id); });
 		
 
