@@ -33,6 +33,21 @@ proxy.get = function(id, callback){
 	});
 }
 
+proxy.getById = function(_id, callback){
+  /* 
+    return cached version of doc if it exists - use Redis instead of in-memory ?
+    turned off for now 
+  */
+  collDoc.find(1, {_id:id}, function(reply){
+    if(reply.documents.length == 0){
+      callback(null);
+    } else{
+      doc = reply.documents[0];
+      callback(doc);
+    }
+  });
+}
+
 // static save */
 proxy.save = function(doc, callback){
 	collDoc.save(doc);
@@ -41,7 +56,7 @@ proxy.save = function(doc, callback){
 
 // static update */
 proxy.update = function(data,callback){
-	collDoc.update({id:data.id}, data);
+	collDoc.update({_id:data._id}, data);
 	callback();
 }
 
@@ -52,6 +67,12 @@ proxy.upsert = function(verif, data){
 
 proxy.all = function (callback) {
   collDoc.find({}, function(reply) {
+    callback(reply.documents);
+  });
+}
+
+proxy.find = function (params, callback) {
+  collDoc.find(params, function(reply) {
     callback(reply.documents);
   });
 }
