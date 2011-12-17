@@ -6,7 +6,7 @@ var express = require('express'),
 	doc = require('./src/document'),
         usernameGenerator = require('./src/usernameGenerator'),
 	user = require('./src/user'),
-	// users = require('./src/users'),
+	users = require('./src/users'),
 	monitor = require('./src/activityMonitor').monitor,
 	utils = require('./src/utils').utils;
 
@@ -39,6 +39,17 @@ app.get('/docs', function(req, res) {
   });
 });
 
+app.get('/users', function(req, res) {
+  // return native mongodb row, should filter
+  user_list = new users(function() {
+console.log(user_list);
+    res.render('users', {
+      users : user_list,
+      layout : false
+    });
+  });
+});
+
 app.get('/usernameGenerator', function(req, res) {
    generator = new usernameGenerator(function() {
        console.log("generator")
@@ -62,11 +73,7 @@ app.get('/doc/:id/json',function(req,res){
   });
 });
 
-// app.get('/users',function(req,res){
-  // users = new users(function(){
-    // res.send(users);
-  // });
-// });
+
 
 /* Start web server */
 app.listen(3001);

@@ -18,40 +18,38 @@ usernameGenerator = module.exports = function usernameGenerator(callback){
 usernameGenerator.prototype = {
 
   data : function(callback) {
-    //self = this;
-    console.log("Hello " + adjectives.length)
-    //console.log(adjectives)
     this.createAll();
     callback();
   },
 
-  createAll : function()
-  {
-      console.log(adjectives.length)
-      console.log(animals)
-      //Create randomized Version of Lists
-      rndAdj = this.randomizeArray(adjectives);
-      rndAnim = this.randomizeArray(animals);
 
-      //Add all names to Db
-      for (i=0; (i < rndAnim.length && i < rndAdj.length );i = i+1)
-      { 
-    	  data = {name: (rndAdj[i] + " " + rndAnim[i]), taken:false}
-    	  toto = usersDb.upsert(data, data)
-    	  console.log(toto)
+  createAll : function() {
+    //Create randomized Version of Lists
+    rndAdj = this.randomizeArray(adjectives);
+    rndAnim = this.randomizeArray(animals);
+
+    //Add all names to Db
+    for( i = 0; (i < rndAnim.length && i < rndAdj.length ); i = i + 1) {
+      data = {
+        name : (rndAdj[i] + " " + rndAnim[i]),
+        taken : false
       }
-      
+      usersDb.upsert(data, data);
+    }
   },
 
-  randomizeArray: function(orderedList)
-  {
+ 
+  randomizeArray: function(orderedList) {
     var rndList = [];
-    var tmpList = orderedList;
-    while(tmpList.length > 0)
-    { 
-      var idx = Math.floor(Math.random()*tmpList.length)
+    var tmpList = [];
+    for( i = 0; i < orderedList.length; i = i + 1)
+    tmpList.push(orderedList[i]);
+
+    while(tmpList.length > 0) {
+      var idx = Math.floor(Math.random() * tmpList.length)
       rndList.push(tmpList[idx]);
-      tmpList.splice(idx, 1) ; // Remove it if really found!
+      tmpList.splice(idx, 1);
+      // Remove it if really found!
     }
     return rndList;
   }

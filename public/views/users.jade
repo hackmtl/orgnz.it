@@ -6,29 +6,29 @@ html
     link(rel="stylesheet", type="text/css", href="/css/orgnzit.css")
 
   body
-    h1 Documents list :
+    h1 Users list :
     
     #global_menu
       ul
-        li Documents List
+        li 
+          a(href="/docs") Documents List
         li
           a(href="/doc") New Document
-        li
-          a(href="/users") Users List
+        li Users List
 
-    #docs_list
+    #users_list
 
     !='<script>'
-    !='var docs = ' + JSON.stringify(docs)
+    !='var users = ' + JSON.stringify(users)
     !='</script>'
 
     script
       out = '';
       out += '<ul>';
-      $.each(docs, function(docNum, doc) {
+      $.each(users, function(userNum, user) {
         out += '<li>';
-        out += '<a href="/doc/' + doc.id + '">' + doc.id + '</a>';
+        out += user.name;
         out += '</li>';
       });
       out += '</ul>';
-      $('#docs_list').html(out);
+      $('#users_list').html(out);

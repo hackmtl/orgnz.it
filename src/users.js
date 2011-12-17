@@ -1,9 +1,9 @@
-var db = require('./db').proxy,
+var usersDb = require('./db_users').proxy,
 	utils = require('./utils').utils,
 	config = require('./config');
 
 users = module.exports = function users(callback){
-	this.data(function(){
+	this.data(function(users){
 		callback();
 	});
 }
@@ -11,31 +11,14 @@ users = module.exports = function users(callback){
 /*
 	Model
 */
-doc.prototype = {
-	
-	data: function(callback){
-		self = this;
-		db.get(this.id, function(data){
-			if(data){
-				self.cols = data.cols;
-				self.rows = data.rows;
-				callback();
-			}
-			else{
-				self.cols = self._cols();
-				self.rows = self._rows();
-				self.save(callback)
-			}
-		});
-	},
-		
-	save: function(callback){
-		db.save(this,callback);
-	},
-	
-	update: function(callback){
-		db.update(this,callback);
-	}
 
-	
+users.prototype = {
+
+  data : function(callback) {
+    usersDb.all(function(data) {
+      this.user_list = data;
+      callback();
+    });
+  }
+
 }
