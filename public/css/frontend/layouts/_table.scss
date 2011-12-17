@@ -1,14 +1,44 @@
 #table {
+    border-collapse: collapse;
+    border-spacing: 0;
+
     padding-top: lh(2); // #table-header
 
-    th, td {
-        width: 300px;
+    tr {
+        &:nth-child(even) {
+            th, td {
+                background: $light-grey;   
+            }
+        }
     }
 
 
-    #table-header {
-        position: fixed;
-        top: 0; left: 0;
+    th, td {
+        border-right: 1px solid $grey;
+        border-bottom: 1px solid $grey;
+        line-height: lh(2);
+        padding: 0 lh(.5);
+        width: 300px; height: lh(2);
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+
+    td {
+        &.s-focus {
+            @include single-box-shadow(#FFF, 0, 0, 0, 1px, inset);
+        }
+    }
+
+    thead {
+        display: block;
         height: lh(2);
+
+        tr {
+            position: fixed;
+            top: 0; left: 0;
+            height: lh(2);
+        }
     }
 }
