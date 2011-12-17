@@ -3,7 +3,9 @@
 // ---------------------------------------------
 
 // grey scheme
-$grey                       : #e3e3e3;
+$xlight-grey                : #f3f3f3;
+$light-grey                 : #eaeaea;
+$grey                       : #acacac;
 $dark-grey                  : #333;
 
 $orange: red;
@@ -30,7 +32,7 @@ $info-text                : #406864;
 
 
 // layout
-$background               : $grey;
+$background               : $xlight-grey;
 
 $focus-color			  : $orange;
 
