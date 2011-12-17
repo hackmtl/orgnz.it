@@ -3,8 +3,10 @@
     border-left: 1px solid #FFF;
     @include single-box-shadow($dark-grey, 0, 0, 12px, -1px);
 
+    overflow: auto;
     position: fixed;
     top: 0; right: 0;
+    padding-bottom: lh(2);
     width: 300px; height: 100%;
 
     .documents-list {
