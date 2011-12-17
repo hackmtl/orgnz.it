@@ -347,7 +347,7 @@ input:focus, textarea:focus, select:focus {
 /* line 67, frontend/layouts/_table.scss */
 #table .delete_col {
   position: absolute;
-  top: 12px;
+  top: 16.8px;
   right: 12px;
 }
 /* line 72, frontend/layouts/_table.scss */
