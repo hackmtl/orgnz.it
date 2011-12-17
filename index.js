@@ -4,6 +4,7 @@ var express = require('express'),
 	sio = require('socket.io'),
 	documents = require('./src/documents'),
 	doc = require('./src/document'),
+        usernameGenerator = require('./src/usernameGenerator'),
 	user = require('./src/user'),
 	// users = require('./src/users'),
 	monitor = require('./src/activityMonitor').monitor,
@@ -32,6 +33,15 @@ app.get('/docs', function(req, res) {
   docs = new documents(function() {
     res.render('documents', {
       docs : docs,
+      layout : false
+    });
+  });
+});
+
+app.get('/usernameGenerator', function(req, res) {
+   generator = new usernameGenerator(function() {
+       console.log("generator")
+       res.render('usernameGenerator', {
       layout : false
     });
   });
