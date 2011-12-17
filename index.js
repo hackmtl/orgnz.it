@@ -29,6 +29,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/docs', function(req, res) {
+  // return native mongodb row, should filter
   docs = new documents(function() {
     res.render('documents', {
       docs : docs,

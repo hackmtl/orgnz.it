@@ -92,43 +92,33 @@ orgnzit.UI = {
 		}		
 		$(row).append(delete_row);
 		
-		// var message_toggle = $("<a class='toggle_msg'><img src='../images/message.png'></img></a>");
-		// $(container).append(message_toggle);
+		var messages = $("<div class='messages' style='display:none;' id='"+id+"_messages'></div>");
+		$(row).find(".controls").append(messages);
+		if(a_row.messages)
+		for(var i = 0; i < a_row.messages.length; i++){
+			var message = a_row.messages[i];
+			var message = orgnzit.UI.render_message(message);
+			$(messages).append(message);
+		}
 		
-		// var messages = $("<div class='messages' id='"+id+"_messages'></div>");
-		// var add_message = $("<a class='add_message' id='"+id+"_add_msg'><img src='../images/add_message.png'></img></a>");
-		// $(messages).append(add_message);
-		// $(add_message).click(function(){
-		// 	var user = prompt("What name do you want to use ?");
-		// 	if(user){
-		// 		var msg = prompt("Enter your message");
-		// 		if(msg){
-		// 			orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
-		// 		}
-		// 	}
-		// });
-		// 
-		// $(container).append(messages);
-		// 
-		// if(a_row.messages)
-		// for(var i = 0; i < a_row.messages.length; i++){
-		// 	var message = a_row.messages[i];
-		// 	var message = orgnzit.UI.render_message(message);
-		// 	$(messages).append(message);
-		// }
-		// 
-		// $(message_toggle).click(function(){
-		// 	var messages = $('.messages',$(this).parent());
-		// 	if($(messages).hasClass('show')) $(messages).removeClass('show');
-		// 	else $(messages).addClass('show');
-		// });
+		var add_message = $("<textarea class='conversation-text' id='"+id+"_add_msg'></textarea><input data-id='"+id+"' id='"+id+"_post_msg' type='submit' value='Post' />");
+		$(messages).append(add_message);
+		$("#"+id+"_post_msg").live("click", function(){
+			id = $(this).data("id");
+			msg = $(this).siblings(".conversation-text").val();
+			user = "Chevreuil Rapide";
+			if(msg.length > 0) {
+				orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
+			}
+		});
 		
 		return row;
 	},
 	
 	post_message: function(data, row){
 		var message = orgnzit.UI.render_message(data);
-		$("#" + row + "_messages").append(message);
+		message.insertBefore($("#" + row + "_messages").find(".conversation-text"));
+		this.refresh_messages("#" + row + "_messages");
 	},
 	
 	render_message: function(data){
@@ -232,6 +222,11 @@ orgnzit.UI = {
 			});
 			$(_cell).append(delete_col);
 		}
+		this.refresh_messages($(_cell).siblings(".controls").find(".messages"));
+	},
+	
+	refresh_messages : function(messages){
+		$("#active-conversations").html($(messages).html());
 	},
 	
 	refresh_locked : function(){
