@@ -270,9 +270,18 @@ input:focus, textarea:focus, select:focus {
   position: fixed;
   top: 0;
   right: 0;
-  padding-bottom: 48px;
+  padding-bottom: 72px;
   width: 300px;
   height: 100%;
+}
+/* line 12, frontend/layouts/_page-sidebar.scss */
+#page-sidebar .logo {
+  background: url(../images/logo.png) no-repeat 0 0;
+  position: fixed;
+  bottom: 12px;
+  right: 24px;
+  width: 100px;
+  height: 27px;
 }
 
 /* line 1, frontend/layouts/_table.scss */
@@ -291,45 +300,57 @@ input:focus, textarea:focus, select:focus {
 }
 /* line 16, frontend/layouts/_table.scss */
 #table tr:nth-child(even) th.s-focus, #table tr:nth-child(even) td.s-focus {
-  background: #c6d2b6;
+  background: #eaeaea;
 }
 /* line 24, frontend/layouts/_table.scss */
 #table th, #table td {
   border-right: 1px solid #acacac;
   border-bottom: 1px solid #acacac;
+  position: relative;
+  margin: 0;
+  padding: 0;
   width: 300px;
   height: 48px;
 }
-/* line 29, frontend/layouts/_table.scss */
+/* line 31, frontend/layouts/_table.scss */
 #table th:last-child, #table td:last-child {
   border-right: none;
 }
-/* line 34, frontend/layouts/_table.scss */
+/* line 36, frontend/layouts/_table.scss */
 #table th {
   background: #acacac;
 }
-/* line 39, frontend/layouts/_table.scss */
+/* line 42, frontend/layouts/_table.scss */
 #table td.locked {
   background: #d4bdb6;
 }
-/* line 43, frontend/layouts/_table.scss */
+/* line 46, frontend/layouts/_table.scss */
 #table td.s-focus {
-  background: #c6d2b6;
-  outline: 1px solid #9aa58c;
+  background: #f3f3f3;
 }
-/* line 49, frontend/layouts/_table.scss */
+/* line 50, frontend/layouts/_table.scss */
+#table td.s-focus .editor {
+  outline: 2px solid #ed538f;
+}
+/* line 56, frontend/layouts/_table.scss */
 #table thead {
   display: block;
   height: 48px;
 }
-/* line 53, frontend/layouts/_table.scss */
+/* line 60, frontend/layouts/_table.scss */
 #table thead tr {
   position: fixed;
   top: 0;
   left: 0;
   height: 48px;
 }
-/* line 60, frontend/layouts/_table.scss */
+/* line 67, frontend/layouts/_table.scss */
+#table .delete_col {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+/* line 72, frontend/layouts/_table.scss */
 #table .editor {
   background: transparent;
   border: none;
@@ -341,14 +362,17 @@ input:focus, textarea:focus, select:focus {
   margin: 0;
   padding: 6px 12px;
   width: 100%;
-  height: 36px;
+  height: 48px;
 }
 
 /* line 1, frontend/modules/_messages.scss */
 #active-conversations {
-  padding: 24px;
+  overflow: hidden;
+  *zoom: 1;
+  padding: 24px 24px 72px;
+  .message: last-child;
 }
-/* line 4, frontend/modules/_messages.scss */
+/* line 5, frontend/modules/_messages.scss */
 #active-conversations textarea {
   border: 2px solid #acacac;
   -webkit-border-radius: 4px;
@@ -364,12 +388,12 @@ input:focus, textarea:focus, select:focus {
   padding: 12px;
   width: 100%;
 }
-/* line 12, frontend/modules/_messages.scss */
+/* line 13, frontend/modules/_messages.scss */
 #active-conversations input[type=submit] {
   float: right;
 }
 
-/* line 17, frontend/modules/_messages.scss */
+/* line 20, frontend/modules/_messages.scss */
 .message {
   border-bottom: 1px solid #acacac;
   overflow: hidden;
@@ -377,15 +401,15 @@ input:focus, textarea:focus, select:focus {
   margin: 0 0 23px;
   padding: 0 0 24px;
 }
-/* line 22, frontend/modules/_messages.scss */
+/* line 25, frontend/modules/_messages.scss */
 .message p {
   margin: 0;
 }
-/* line 26, frontend/modules/_messages.scss */
+/* line 29, frontend/modules/_messages.scss */
 .message a {
   color: #acacac;
 }
-/* line 30, frontend/modules/_messages.scss */
+/* line 33, frontend/modules/_messages.scss */
 .message .user {
   font-style: italic;
   float: right;
@@ -405,11 +429,22 @@ input:focus, textarea:focus, select:focus {
   -o-box-shadow: 0 0 2px 0 #1a1a1a;
   box-shadow: 0 0 2px 0 #1a1a1a;
   color: #FFF;
+  font-weight: bold;
   line-height: 36px;
   display: inline-block;
   margin: 0 0 12px;
   padding: 0 12px;
   height: 36px;
+}
+/* line 14, frontend/modules/_buttons.scss */
+.button:hover {
+  color: #FFF;
+}
+
+/* line 19, frontend/modules/_buttons.scss */
+#addCol, #addRow {
+  float: right;
+  margin-right: 24px;
 }
 
 /* line 4, frontend/base/_states.scss */

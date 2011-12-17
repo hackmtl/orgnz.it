@@ -4,9 +4,19 @@
     @include border-radius(4px);
     @include single-box-shadow($xdark-grey, 0, 0, 2px, 0);
     color: #FFF;
+    font-weight: bold;
     line-height: lh(1.5);
 
     display: inline-block;
     margin: 0 0 lh(.5); padding: 0 lh(.5);
     height: lh(1.5);
+
+    &:hover {
+        color: #FFF;
+    }
+}
+
+#addCol, #addRow {
+    float: right;
+    margin-right: lh();
 }

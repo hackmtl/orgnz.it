@@ -66,10 +66,12 @@ orgnzit.UI = {
 		$(".col_"+id).remove(); // cells in this column
 	},
 	
-	render_col: function(a_col){
-		var id = a_col.id;
-		var col = $("<th class='col' id='"+id+"'></th>");
-		$(col).html(a_col.name);
+	render_col: function(data){
+		var id = data.id,
+			col = $("<th class='col' id='"+id+"'></th>"),
+			editor = $('<input class="editor" value="'+data.name+'" readonly="readonly" />');
+		
+		$(col).append(editor);
 		orgnzit.UI.bind_click(col);
 		return col;
 	},
@@ -80,7 +82,7 @@ orgnzit.UI = {
 		
     	var delete_row = $(tpl.del_row({id:id}));
 		
-		$(delete_row).click(function(){
+		$(delete_row).find('.delete_row').on('click', function(){
 			orgnzit.socket.emit('delete_row', id);
 			return false;
 		});
