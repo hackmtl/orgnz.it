@@ -1,8 +1,8 @@
-var db = require('./db').proxy,
-         utils = require('./utils').utils,
-config = require('./config'); 
-var         animals = require('./data/Animals.js');
-var         adjectives = require('./data/Adjectives.js');
+var usersDb = require('./db_users').proxy,
+        utils = require('./utils').utils,
+        config = require('./config'),
+        animals = require('./data/Animals.js'),
+        adjectives = require('./data/Adjectives.js');
 
         
 usernameGenerator = module.exports = function usernameGenerator(callback){
@@ -36,9 +36,9 @@ usernameGenerator.prototype = {
       //Add all names to Db
       for (i=0; (i < rndAnim.length && i < rndAdj.length );i = i+1)
       { 
-	  data = {name: (rndAdj[i] + " " + rndAnim[i]), taken:false}
-	  toto = db.usernames.update(data,data,true)
-	  console.log(toto)
+    	  data = {name: (rndAdj[i] + " " + rndAnim[i]), taken:false}
+    	  toto = usersDb.upsert(data, data)
+    	  console.log(toto)
       }
       
   },
