@@ -21,19 +21,20 @@ utils.getUserinfo = function(userId) {
       console.log(user);
       userInfo = user;
     });
-
   } else {
     usersDb.find({
       taken : false
     }, function(userList) {
-      console.log(userList);
       userInfo = userList[0];
-      usersDb.update(userId, {
+      console.log('6666666666666666666666666666');
+      console.log(userInfo);
+      usersDb.update(userInfo._id, {
         taken : true
       });
     });
 
   }
+  console.log('++++++++++++++++');
   console.log(userInfo);
   return userInfo;
 }

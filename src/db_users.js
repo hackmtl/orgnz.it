@@ -55,9 +55,8 @@ proxy.save = function(doc, callback){
 }
 
 // static update */
-proxy.update = function(data,callback){
+proxy.update = function(data){
 	collDoc.update({_id:data._id}, data);
-	callback();
 }
 
 proxy.upsert = function(verif, data){
