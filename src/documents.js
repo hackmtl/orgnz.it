@@ -18,7 +18,7 @@ documents.prototype = {
     self = this;
     db.all(function(data) {
       this.docs = data;
-      callback({pouet : 'toto'});
+      callback();
     });
   }
 
