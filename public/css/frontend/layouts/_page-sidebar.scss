@@ -9,7 +9,11 @@
     padding-bottom: lh(2);
     width: 300px; height: 100%;
 
-    .documents-list {
-        
+    .logo {
+        background: url(../images/logo.png) no-repeat 0 0;
+
+        position: fixed;
+        bottom: lh(.5); right: lh(.5);
+        width: 100px; height: 27px;
     }
 }
