@@ -1,5 +1,5 @@
 var cache = require('./cache').cache,
-	db = require('../node_modules/mongous').Mongous,
+	db = require('mongous').Mongous,
 	utils = require('./utils'),
 	config = require('./config')
 

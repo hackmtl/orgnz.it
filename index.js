@@ -1,4 +1,4 @@
-require.paths.unshift(__dirname + '/socket.io/lib/');
+//require.paths.unshift(__dirname + '/socket.io/lib/');
 
 var express = require('express'),
 	sio = require('socket.io'),
