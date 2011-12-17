@@ -108,7 +108,11 @@ orgnzit.UI = {
 		$("#"+id+"_post_msg").live("click", function(){
 			id = $(this).data("id");
 			msg = $(this).siblings(".conversation-text").val();
-			user = "Chevreuil Rapide";
+			if(localStorage["userId"]) {
+				user = localStorage["userId"];
+			} else {
+				user = null;
+			}
 			if(msg.length > 0) {
 				orgnzit.socket.emit('post_message', { user:user, msg:msg, row:id });
 			}
@@ -125,8 +129,11 @@ orgnzit.UI = {
 	
 	render_message: function(data){
 		var message = $("<div class='message'><p class='msg'></p><p><a class='user'></a></p></div>");
-		$('.user', message).html(data.user);
+		$('.user', message).html(data.user.name);
 		$('.msg', message).html(data.msg);
+		if(localStorage["userId"] == "undefined"){
+			localStorage["userId"] = data.user._id;
+		}
 		return message;
 	},
 	
