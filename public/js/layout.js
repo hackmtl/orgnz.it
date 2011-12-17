@@ -6,6 +6,7 @@ $(function() {
             sidebarWidth = $('#page-sidebar').outerWidth();
 
         $('#page-body').width(documentWidth - sidebarWidth);
+        $('#page-body table tr').width(documentWidth - sidebarWidth);
     }).trigger('resize');
 
 });

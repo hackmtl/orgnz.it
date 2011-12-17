@@ -78,7 +78,8 @@ orgnzit.UI = {
 		var id = a_row.id;
 		var row = $("<tr class='row' id='"+id+"'></div>");
 		
-    var delete_row = $(tpl.del_row({id:id}));
+    	var delete_row = $(tpl.del_row({id:id}));
+		
 		$(delete_row).click(function(){
 			orgnzit.socket.emit('delete_row', id);
 			return false;
@@ -148,22 +149,23 @@ orgnzit.UI = {
 	update_cell : function(data){
 		var new_cell = orgnzit.UI.render_cell(data),
 			_cell = $("#" + data.id);
-		$(_cell).html($(new_cell).html());
+		
+		_cell.html($(new_cell).html());
 	},
 	
 	update_col : function(data){
 		var new_col = orgnzit.UI.render_col(data),
 			_col = $("#" + data.id);
-		$(_col).replaceWith(new_col);
+		
+		_col.replaceWith(new_col);
 	},
 	
 	bind_click: function(cell){
 		$(cell).click(function(){
 			var that = this;
-			if($(cell).hasClass('locked')){
+			if($(cell).hasClass('locked')) {
 				orgnzit.socket.emit('request_unlock', $(this).attr("id"));
-			}
-			else{
+			} else {
 				$(".editor").each(function(){
 					var id = $(this).parent().attr("id");
 					if(id != $(that).attr("id")) orgnzit.socket.emit('request_unlock', id);
@@ -177,7 +179,7 @@ orgnzit.UI = {
 	unlock : function(data){
 		id = data.id;
 		var _cell = $("#"+id);
-		$(_cell).removeClass("locked mine");
+		$(_cell).removeClass("locked s-focus");
 		$('.remove_col',$(_cell)).remove();
 		
 		if(orgnzit.editing === id){
@@ -202,23 +204,19 @@ orgnzit.UI = {
 		id = data.id;
 		var _cell = $("#"+id),
 			val = $(_cell).html(),
-			textarea = $("<textarea id='edit_"+id+"' class='editor'>"+val+"</textarea>"),
-			pos = $(_cell).offset();
+			editor = $('<input id="edit_"'+id+'" class="editor" value="'+val+'" />');
 
-		$(_cell).addClass("mine").html("").append(textarea);
+		_cell.addClass("s-focus").html("").append(editor);
 		
-		$(textarea).focus().click(function(){
-			return false;
-		});
-		$(textarea).keyup(function(){
-			orgnzit.socket.emit('ping', id);
-		});
-		
-		$(textarea).css( {"left":pos.left + 60, "top":pos.top + 15} );
+		editor
+			.focus()
+			.click(function(){ return false; })
+			.keyup(function(){ orgnzit.socket.emit('ping', id); });
 		
 		if($(_cell).hasClass('col')){
 			var delete_col = $("<a id='delete_"+id+"' class='delete_col'><img src='../images/delete-icon.png'></img></a>");
-			$(delete_col).click(function(){
+			
+			delete_col.click(function(){
 				orgnzit.socket.emit('delete_col', id);
 			});
 			$(_cell).append(delete_col);
