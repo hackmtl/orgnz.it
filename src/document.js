@@ -1,4 +1,4 @@
-var db = require('./db').proxy,
+var docsDb = require('./db_docs').proxy,
 	utils = require('./utils').utils,
 	config = require('./config');
 
@@ -17,7 +17,7 @@ doc.prototype = {
 	
 	data: function(callback){
 		self = this;
-		db.get(this.id, function(data){
+		docsDb.get(this.id, function(data){
 			if(data){
 				self.cols = data.cols;
 				self.rows = data.rows;
@@ -32,11 +32,11 @@ doc.prototype = {
 	},
 		
 	save: function(callback){
-		db.save(this,callback);
+		docsDb.save(this,callback);
 	},
 	
 	update: function(callback){
-		db.update(this,callback);
+		docsDb.update(this,callback);
 	},
 	
 	_rows : function(){

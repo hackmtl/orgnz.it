@@ -7,8 +7,9 @@ $xlight-grey                : #f3f3f3;
 $light-grey                 : #eaeaea;
 $grey                       : #acacac;
 $dark-grey                  : #333;
+$xdark-grey                 : darken(#333, 10%);
 
-$orange: red;
+$pink                       : #ed538f;
 
 // success scheme
 $success-background       : #c6d2b6;
@@ -34,7 +35,7 @@ $info-text                : #406864;
 // layout
 $background               : $xlight-grey;
 
-$focus-color			  : $orange;
+$focus-color			  : $pink;
 
 $text                     : $dark-grey;
 $text-strong              : #000;
@@ -42,9 +43,9 @@ $title                    : $dark-grey;
 $error                    : #f32639;
 $success                  : #99cc33;
 
-$link                     : $orange;
-$link-hover               : $orange;
-$link-active              : $orange;
+$link                     : $pink;
+$link-hover               : $pink;
+$link-active              : $pink;
 
 
 // Z-INDEX

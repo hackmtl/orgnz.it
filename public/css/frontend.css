@@ -84,13 +84,13 @@ em {
 
 /* line 44, frontend/base/_text.scss */
 a {
-  color: red;
+  color: #ed538f;
   cursor: pointer;
   text-decoration: none;
 }
 /* line 49, frontend/base/_text.scss */
 a:hover {
-  color: red;
+  color: #ed538f;
 }
 
 /* line 57, frontend/base/_text.scss */
@@ -258,44 +258,6 @@ input:focus, textarea:focus, select:focus {
   min-height: 100%;
 }
 
-/* line 19, frontend/layouts/_page.scss */
-#doc .locked {
-  background: #ededed;
-}
-/* line 22, frontend/layouts/_page.scss */
-#doc .locked .mine {
-  background: #aaa;
-}
-/* line 25, frontend/layouts/_page.scss */
-#doc .locked textarea {
-  position: fixed;
-  width: 400px;
-  height: 60px;
-  border: 1px solid #000;
-  -webkit-box-shadow: 2px 2px 5px #000;
-  opacity: 0.9;
-  font-size: 1em;
-}
-
-/* line 36, frontend/layouts/_page.scss */
-#menu {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  margin-left: 5px;
-  float: left;
-  font-size: 1.2em;
-}
-
-/* line 43, frontend/layouts/_page.scss */
-#menu a {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-  float: left;
-  margin-right: 20px;
-  text-shadow: 1px 1px #aaa;
-}
-
 /* line 1, frontend/layouts/_page-sidebar.scss */
 #page-sidebar {
   background: #eeeeee;
@@ -304,9 +266,11 @@ input:focus, textarea:focus, select:focus {
   -moz-box-shadow: 0 0 12px -1px #333333;
   -o-box-shadow: 0 0 12px -1px #333333;
   box-shadow: 0 0 12px -1px #333333;
+  overflow: auto;
   position: fixed;
   top: 0;
   right: 0;
+  padding-bottom: 48px;
   width: 300px;
   height: 100%;
 }
@@ -321,44 +285,51 @@ input:focus, textarea:focus, select:focus {
 #table tr:nth-child(even) th, #table tr:nth-child(even) td {
   background: #eaeaea;
 }
+/* line 12, frontend/layouts/_table.scss */
+#table tr:nth-child(even) th.locked, #table tr:nth-child(even) td.locked {
+  background: #d4bdb6;
+}
 /* line 16, frontend/layouts/_table.scss */
+#table tr:nth-child(even) th.s-focus, #table tr:nth-child(even) td.s-focus {
+  background: #c6d2b6;
+}
+/* line 24, frontend/layouts/_table.scss */
 #table th, #table td {
   border-right: 1px solid #acacac;
   border-bottom: 1px solid #acacac;
-  line-height: 36px;
-  padding: 6px 12px;
   width: 300px;
-  height: 36px;
+  height: 48px;
 }
-/* line 23, frontend/layouts/_table.scss */
+/* line 29, frontend/layouts/_table.scss */
 #table th:last-child, #table td:last-child {
   border-right: none;
 }
-/* line 28, frontend/layouts/_table.scss */
+/* line 34, frontend/layouts/_table.scss */
 #table th {
   background: #acacac;
 }
-/* line 33, frontend/layouts/_table.scss */
-#table td.s-focus {
-  -webkit-box-shadow: inset 0 0 0 1px white;
-  -moz-box-shadow: inset 0 0 0 1px white;
-  -o-box-shadow: inset 0 0 0 1px white;
-  box-shadow: inset 0 0 0 1px white;
-  outline: 1px solid #ed538f;
-}
 /* line 39, frontend/layouts/_table.scss */
+#table td.locked {
+  background: #d4bdb6;
+}
+/* line 43, frontend/layouts/_table.scss */
+#table td.s-focus {
+  background: #c6d2b6;
+  outline: 1px solid #9aa58c;
+}
+/* line 49, frontend/layouts/_table.scss */
 #table thead {
   display: block;
   height: 48px;
 }
-/* line 43, frontend/layouts/_table.scss */
+/* line 53, frontend/layouts/_table.scss */
 #table thead tr {
   position: fixed;
   top: 0;
   left: 0;
   height: 48px;
 }
-/* line 50, frontend/layouts/_table.scss */
+/* line 60, frontend/layouts/_table.scss */
 #table .editor {
   background: transparent;
   border: none;
@@ -368,99 +339,77 @@ input:focus, textarea:focus, select:focus {
   -ms-box-sizing: border-box;
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 6px 12px;
   width: 100%;
   height: 36px;
 }
 
-/* line 3, frontend/modules/_rows.scss */
-#rows .row {
-  float: left;
+/* line 1, frontend/modules/_messages.scss */
+#active-conversations {
+  padding: 24px;
 }
-/* line 6, frontend/modules/_rows.scss */
-#rows .row .cell {
-  float: left;
-  width: 100px;
-  border: 1px solid #aaa;
-  padding: 5px;
-  margin: 2px;
-  font-size: 1em;
-  height: 1em;
-  overflow: hidden;
-}
-/* line 16, frontend/modules/_rows.scss */
-#rows .container {
-  float: left;
-  clear: left;
-}
-/* line 20, frontend/modules/_rows.scss */
-#rows .delete_row {
-  float: left;
-  font-size: 0.8em;
-  cursor: pointer;
-  margin-top: 10px;
-  color: #aaa;
-}
-/* line 27, frontend/modules/_rows.scss */
-#rows .toggle_msg {
-  float: left;
-  cursor: pointer;
-}
-/* line 31, frontend/modules/_rows.scss */
-#rows .toggle_msg img {
-  width: 30px;
-  margin-top: 2px;
-}
-/* line 35, frontend/modules/_rows.scss */
-#rows .messages {
-  float: left;
-  clear: left;
+/* line 4, frontend/modules/_messages.scss */
+#active-conversations textarea {
+  border: 2px solid #acacac;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 24px 0;
+  padding: 12px;
   width: 100%;
-  min-height: 60px;
-  border: 1px dashed #aaa;
-  display: none;
-  margin-left: 2px;
-  margin-bottom: 20px;
-  padding: 5px;
 }
-/* line 46, frontend/modules/_rows.scss */
-#rows .messages .add_message img {
+/* line 12, frontend/modules/_messages.scss */
+#active-conversations input[type=submit] {
   float: right;
-  width: 30px;
-}
-/* line 50, frontend/modules/_rows.scss */
-#rows .messages.show {
-  display: block;
 }
 
-/* line 3, frontend/modules/_cols.scss */
-#cols .col {
-  background: #e3e9ff;
-  float: left;
-  width: 100px;
-  padding: 5px;
-  margin: 2px;
+/* line 17, frontend/modules/_messages.scss */
+.message {
+  border-bottom: 1px solid #acacac;
   overflow: hidden;
-  height: 1em;
-  border: 1px solid #e3e9ff;
+  *zoom: 1;
+  margin: 0 0 23px;
+  padding: 0 0 24px;
 }
-/* line 14, frontend/modules/_cols.scss */
-#cols .col.locked {
-  background: #ededed;
+/* line 22, frontend/modules/_messages.scss */
+.message p {
+  margin: 0;
 }
-/* line 18, frontend/modules/_cols.scss */
-#cols .col.mine {
-  background: #aaaaaa;
+/* line 26, frontend/modules/_messages.scss */
+.message a {
+  color: #acacac;
 }
-/* line 21, frontend/modules/_cols.scss */
-#cols .delete_col {
-  position: relative;
-  cursor: pointer;
+/* line 30, frontend/modules/_messages.scss */
+.message .user {
+  font-style: italic;
+  float: right;
 }
-/* line 25, frontend/modules/_cols.scss */
-#cols .container {
-  clear: none;
-  float: left;
+
+/* line 1, frontend/modules/_buttons.scss */
+.button {
+  background: #ed538f;
+  border: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 2px 0 #1a1a1a;
+  -moz-box-shadow: 0 0 2px 0 #1a1a1a;
+  -o-box-shadow: 0 0 2px 0 #1a1a1a;
+  box-shadow: 0 0 2px 0 #1a1a1a;
+  color: #FFF;
+  line-height: 36px;
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 0 12px;
+  height: 36px;
 }
 
 /* line 4, frontend/base/_states.scss */

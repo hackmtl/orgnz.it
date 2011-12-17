@@ -1,4 +1,4 @@
-var db = require('./db').proxy,
+var docsDb = require('./db_docs').proxy,
 	utils = require('./utils').utils,
 	config = require('./config');
 
@@ -15,8 +15,7 @@ documents = module.exports = function documents(callback){
 documents.prototype = {
 
   data : function(callback) {
-    self = this;
-    db.all(function(data) {
+    docsDb.all(function(data) {
       this.docs = data;
       callback();
     });
